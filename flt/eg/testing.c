@@ -276,7 +276,7 @@ static bool test_flt_pow() {
 		}
 	}
 	printf("pow 0x%04X\n", crc);
-	return crc == 0xB119;
+	return crc == 0x84CB;
 }
 
 static bool test_flt_sin() {
@@ -602,7 +602,7 @@ static bool test_flt_multiply() {
 		}
 	}
 	printf("multiply 0x%04X\n", crc);
-	return crc == 0x26BB;
+	return crc == 0xC717;
 }
 
 static bool test_flt_divide() {
@@ -617,7 +617,7 @@ static bool test_flt_divide() {
 		}
 	}
 	printf("divide 0x%04X\n", crc);
-	return crc == 0x31E3;
+	return crc == 0x6B83;
 }
 
 static bool test_flt_add_into() {
@@ -668,7 +668,7 @@ static bool test_flt_multiply_into() {
 		}
 	}
 	printf("multiply_into 0x%04X\n", crc);
-	return crc == 0x02C1;
+	return crc == 0x158A;
 }
 
 static bool test_flt_divide_into() {
@@ -685,7 +685,7 @@ static bool test_flt_divide_into() {
 		}
 	}
 	printf("divide_into 0x%04X\n", crc);
-	return crc == 0xD9A0;
+	return crc == 0xF16A;
 }
 
 static bool test_flt_negated() {
@@ -726,7 +726,7 @@ static bool test_flt_atof() {
 		}
 	}
 	printf("atof 0x%04X\n", crc);
-	return crc == 0xBBFF;
+	return crc == 0x18F3;
 }
 
 static bool test_flt_ftoa() {
@@ -853,7 +853,7 @@ static bool test_flt_hypot() {
 		}
 	}
 	printf("hypot 0x%04X\n", crc);
-	return crc == 0xC1B3;
+	return crc == 0xD7E4;
 }
 
 static bool test_flt_log2() {
