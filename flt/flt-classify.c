@@ -1,3 +1,8 @@
+/*
+    Contents: "classify" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 E_CLASS flt_classify(const FLT f) {
@@ -50,4 +55,7 @@ int flt_fsgn(const FLT f) {
 	else
 		return t.s? -1: +1;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> development

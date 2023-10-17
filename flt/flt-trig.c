@@ -1,3 +1,8 @@
+/*
+    Contents: "trig" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 static FLT flt_tmp_sin_alt(flt_tmp *pt);

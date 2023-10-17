@@ -1,3 +1,8 @@
+/*
+    Contents: "poly" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 void flt_tmp_evaluate(flt_tmp *pt, const int limit, const int *ps, const uint32_t *pm, const int *pe) {

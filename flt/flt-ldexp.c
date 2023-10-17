@@ -1,3 +1,8 @@
+/*
+    Contents: "ldexp" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 FLT flt_ldexp(const FLT f, const int exponent) {

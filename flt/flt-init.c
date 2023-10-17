@@ -1,3 +1,8 @@
+/*
+    Contents: "init" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 void flt_tmp_initialize(flt_tmp *pt, const E_CLASS c, const int s, const uint32_t m, const int e) {

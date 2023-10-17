@@ -1,3 +1,8 @@
+/*
+    Contents: "testing" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>

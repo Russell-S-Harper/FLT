@@ -1,3 +1,8 @@
+/*
+    Contents: "basic" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 static uint32_t uint_multiply(const uint16_t a, const uint16_t b);

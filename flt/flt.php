@@ -1,5 +1,9 @@
 <?php
-
+/*
+    Contents: "FLT" PHP source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 // Usage: php flt.php [-i input-file] [-o output-file] [-d 0|1] [-x extra-gcc-options]
 
 define('FLT_VERSION', '1.0');	// Initial release
@@ -992,4 +996,7 @@ function process_unhandled($message) {
 function process_ignored($message) {
 	file_put_contents('php://stderr', '*** WARNING: ignored message ***'.PHP_EOL.print_r($message, true), FILE_APPEND);
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> development

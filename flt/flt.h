@@ -1,3 +1,8 @@
+/*
+    Contents: "FLT" C header file (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #ifndef __FLT_H
 #define __FLT_H
 

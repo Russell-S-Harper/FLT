@@ -1,3 +1,8 @@
+/*
+    Contents: "abs" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 FLT flt_fabs(const FLT f) {

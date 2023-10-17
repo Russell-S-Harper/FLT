@@ -1,3 +1,8 @@
+/*
+    Contents: "round" C source code (c) 2023
+  Repository: https://github.com/Russell-S-Harper/FLT
+     Contact: flt@russell-harper.com
+*/
 #include "flt-tmp.h"
 
 static void flt_tmp_ceil(flt_tmp *pt);
