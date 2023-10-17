@@ -14,7 +14,7 @@ FLT requirements:
 To use FLT in your project:
 
 - clone this repository or download the source code
-- (optional) create a FLT library `flt.lib` by compiling the source files `-I . flt-*.c` (see below for an example)
+- (optional) create a FLT library `flt.lib` by compiling the source files `flt-*.c` (see below for an example)
 - convert your C `*.c` to FLT `*-flt.c` using the PHP script `flt.php`
 - compile `*-flt.c` as usual
 
