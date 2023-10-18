@@ -55,7 +55,3 @@ int flt_fsgn(const FLT f) {
 	else
 		return t.s? -1: +1;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> development

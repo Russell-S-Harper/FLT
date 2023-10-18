@@ -996,7 +996,3 @@ function process_unhandled($message) {
 function process_ignored($message) {
 	file_put_contents('php://stderr', '*** WARNING: ignored message ***'.PHP_EOL.print_r($message, true), FILE_APPEND);
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> development
