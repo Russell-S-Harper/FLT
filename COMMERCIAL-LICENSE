@@ -8,9 +8,9 @@ This Commercial Distribution License ("Commercial License") is a legal agreement
 
 2. One-time Nominal Fee:
 
-   - To acquire this Commercial License, the Licensee shall pay a one-time nominal fee to the Repository Owner, as agreed upon between the parties.
+   a. To acquire this Commercial License, the Licensee shall pay a one-time nominal fee to the Repository Owner, as agreed upon between the parties.
 
-   - The purpose of the fee is to offset the Repository Owner's costs in managing the increased support load and the time critical nature of tasks associated with commercial users.
+   b. The purpose of the fee is to offset the Repository Owner's costs in managing the increased support load and the time critical nature of tasks associated with commercial users.
 
 3. Usage Limitation:
 
@@ -18,11 +18,11 @@ This Commercial Distribution License ("Commercial License") is a legal agreement
 
 4. Code Modification:
 
-   - The Licensee is required to ensure that if the code is modified prior to distribution, then the comments at the top of the modified file should be appended with the specific revisions made and correct contact information regarding these modifications.
+   a. The Licensee is required to ensure that if the code is modified prior to distribution, then the comments at the top of the modified file should be appended with the specific revisions made and correct contact information regarding these modifications.
 
-   - The existing comments at the top of each source and header file with headings "Contents", "Repository", and "Contact" should not be altered.
+   b. The existing comments at the top of each source and header file with headings "Contents", "Repository", and "Contact" should not be altered.
 
-   - It is preferable to make any revisions through the existing mechanisms provided by GitHub, where they may benefit all users.
+   c. It is preferable to make any revisions through the existing mechanisms provided by GitHub, where they may benefit all users.
 
 5. No Warranty:
 
