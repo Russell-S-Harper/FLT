@@ -7,33 +7,23 @@
 
 int main() {
 	char buffer[250];
-	int count;
-	float e, f, g, h, i;
+	int i, j, count;
+	float F[5], total;
 
 	for (;;) {
-		printf("Enter up to five numbers (ctrl-C to exit): ");
+		printf("Enter up to five numbers (Ctrl-C to exit): ");
 		fgets(buffer, sizeof(buffer), stdin);
-		count = sscanf(buffer, "%f %f %f %f %f", &e, &f, &g, &h, &i);
-		switch (count) {
-			case 5:
-				printf("Average (%d): %.3g\n", count, (e + f + g + h + i) / 5.0f);
-				break;
-			case 4:
-				printf("Average (%d): %.3g\n", count, (e + f + g + h) / 4.0f);
-				break;
-			case 3:
-				printf("Average (%d): %.3g\n", count, (e + f + g) / 3.0f);
-				break;
-			case 2:
-				printf("Average (%d): %.3g\n", count, (e + f) / 2.0f);
-				break;
-			case 1:
-				printf("Average (%d): %.3g\n", count, e);
-				break;
-			default:
-				printf("Average (%d): %.3g\n", count, e);
-				break;
+		j = sscanf(buffer, "%f %f %f %f %f", F + 0, F + 1, F + 2, F + 3, F + 4);
+		for (i = count = 0, total = 0.0; i < j; ++i) {
+			if (!isnan(F[i])) {
+				total += F[i];
+				++count;
+			}
 		}
+		if (count)
+			printf("Average (%d): %.3g\n", count, total / count);
+		else
+			printf("No numbers entered!\n");
 	}
 	return 0;
 }
