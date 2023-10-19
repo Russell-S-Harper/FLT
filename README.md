@@ -86,7 +86,7 @@ While the `cc65` suite of tools was the inspiration, there are a lot of other "t
     - `sinh`, `cosh`, `tanh`, `asinh`, `acosh`, `atanh`
     - `isinf`, `isnan`, `isnormal`, `issubnormal`, `iszero`, `isfinite`
     - comparison operators: `==`, `>`, `<`, `>=`, `<=`, `!=`
-    - operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`
+    - mathematical operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`
     - `atof`, `ftoa`, `ltof`, `ultof`, `ftol`, `ftoul`
     - `fmin`, `fmax`, `fsgn`
 
@@ -107,7 +107,7 @@ will be converted to incorrect code like:
 
         if (1 == lsr = scanf("%10s", gsb(-1)), f = atof(gsb(1)), lsr) { ... }
 
-The "1 ==" is problematic so rather than trying to support this construction, we recommend revising to something like:
+The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like:
 
         if (scanf("%10f", &f) == 1) { ... }`
 
