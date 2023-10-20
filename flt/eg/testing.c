@@ -14,36 +14,38 @@
 
 #define TEST(F)	if (!test_flt_##F()) fprintf(stderr, "fail: %s\n", #F)
 
-static bool test_flt_ldexp();			static bool test_flt_frexp();		static bool test_flt_modf();		static bool test_flt_fmod();
-static bool test_flt_fabs();			static bool test_flt_ceil();		static bool test_flt_floor();		static bool test_flt_sqrt();
-static bool test_flt_log();				static bool test_flt_log10();		static bool test_flt_exp();			static bool test_flt_exp10();
-static bool test_flt_pow();				static bool test_flt_sin();			static bool test_flt_cos();			static bool test_flt_tan();
-static bool test_flt_asin();			static bool test_flt_acos();		static bool test_flt_atan();		static bool test_flt_atan2();
-static bool test_flt_sinh();			static bool test_flt_cosh();		static bool test_flt_tanh();		static bool test_flt_asinh();
-static bool test_flt_acosh();			static bool test_flt_atanh();		static bool test_flt_classify();	static bool test_flt_isinf();
-static bool test_flt_isnan();			static bool test_flt_isnormal();	static bool test_flt_issubnormal();	static bool test_flt_iszero();
-static bool test_flt_isfinite();		static bool test_flt_compare();		static bool test_flt_add();			static bool test_flt_subtract();
-static bool test_flt_multiply();		static bool test_flt_divide();		static bool test_flt_add_into();	static bool test_flt_subtract_into();
-static bool test_flt_multiply_into();	static bool test_flt_divide_into();	static bool test_flt_negated();		static bool test_flt_inverted();
-static bool test_flt_atof();			static bool test_flt_ftoa();		static bool test_flt_ltof();		static bool test_flt_ultof();
-static bool test_flt_ftol();			static bool test_flt_ftoul();		static bool test_flt_fmin();		static bool test_flt_fmax();
-static bool test_flt_fsgn();			static bool test_flt_hypot();		static bool test_flt_log2();		static bool test_flt_exp2();
+static bool test_flt_ldexp();		static bool test_flt_frexp();			static bool test_flt_modf();			static bool test_flt_fmod();
+static bool test_flt_fabs();		static bool test_flt_ceil();			static bool test_flt_floor();			static bool test_flt_round();
+static bool test_flt_trunc();		static bool test_flt_sqrt();			static bool test_flt_log();				static bool test_flt_log10();
+static bool test_flt_exp();			static bool test_flt_exp10();			static bool test_flt_pow();				static bool test_flt_sin();
+static bool test_flt_cos();			static bool test_flt_tan();				static bool test_flt_asin();			static bool test_flt_acos();
+static bool test_flt_atan();		static bool test_flt_atan2();			static bool test_flt_sinh();			static bool test_flt_cosh();
+static bool test_flt_tanh();		static bool test_flt_asinh();			static bool test_flt_acosh();			static bool test_flt_atanh();
+static bool test_flt_classify();	static bool test_flt_isinf();			static bool test_flt_isnan();			static bool test_flt_isnormal();
+static bool test_flt_issubnormal();	static bool test_flt_iszero();			static bool test_flt_isfinite();		static bool test_flt_compare();
+static bool test_flt_add();			static bool test_flt_subtract();		static bool test_flt_multiply();		static bool test_flt_divide();
+static bool test_flt_add_into();	static bool test_flt_subtract_into();	static bool test_flt_multiply_into();	static bool test_flt_divide_into();
+static bool test_flt_negated();		static bool test_flt_inverted();		static bool test_flt_atof();			static bool test_flt_ftoa();
+static bool test_flt_ltof();		static bool test_flt_ultof();			static bool test_flt_ftol();			static bool test_flt_ftoul();
+static bool test_flt_fmin();		static bool test_flt_fmax();			static bool test_flt_fsgn();			static bool test_flt_hypot();
+static bool test_flt_log2();		static bool test_flt_exp2();
 
 int main() {
-	TEST(ldexp);			TEST(frexp);		TEST(modf);			TEST(fmod);
-	TEST(fabs);				TEST(ceil);			TEST(floor);		TEST(sqrt);
-	TEST(log);				TEST(log10);		TEST(exp);			TEST(exp10);
-	TEST(pow);				TEST(sin);			TEST(cos);			TEST(tan);
-	TEST(asin);				TEST(acos);			TEST(atan);			TEST(atan2);
-	TEST(sinh);				TEST(cosh);			TEST(tanh);			TEST(asinh);
-	TEST(acosh);			TEST(atanh);		TEST(classify);		TEST(isinf);
-	TEST(isnan);			TEST(isnormal);		TEST(issubnormal);	TEST(iszero);
-	TEST(isfinite);			TEST(compare);		TEST(add);			TEST(subtract);
-	TEST(multiply);			TEST(divide);		TEST(add_into);		TEST(subtract_into);
-	TEST(multiply_into);	TEST(divide_into);	TEST(negated);		TEST(inverted);
-	TEST(atof);				TEST(ftoa);			TEST(ltof);			TEST(ultof);
-	TEST(ftol);				TEST(ftoul);		TEST(fmin);			TEST(fmax);
-	TEST(fsgn);				TEST(hypot);		TEST(log2);			TEST(exp2);
+	TEST(ldexp);		TEST(frexp);			TEST(modf);				TEST(fmod);
+	TEST(fabs);			TEST(ceil);				TEST(floor);			TEST(round);
+	TEST(trunc); 		TEST(sqrt);				TEST(log);				TEST(log10);
+	TEST(exp);			TEST(exp10);			TEST(pow);				TEST(sin);
+	TEST(cos);			TEST(tan);				TEST(asin);				TEST(acos);
+	TEST(atan);			TEST(atan2);			TEST(sinh);				TEST(cosh);
+	TEST(tanh);			TEST(asinh);			TEST(acosh);			TEST(atanh);
+	TEST(classify);		TEST(isinf);			TEST(isnan);			TEST(isnormal);
+	TEST(issubnormal);	TEST(iszero);			TEST(isfinite);			TEST(compare);
+	TEST(add);			TEST(subtract);			TEST(multiply);			TEST(divide);
+	TEST(add_into);		TEST(subtract_into);	TEST(multiply_into);	TEST(divide_into);
+	TEST(negated);		TEST(inverted);			TEST(atof);				TEST(ftoa);
+	TEST(ltof);			TEST(ultof);			TEST(ftol);				TEST(ftoul);
+	TEST(fmin);			TEST(fmax);				TEST(fsgn);				TEST(hypot);
+	TEST(log2);			TEST(exp2);
 	return EXIT_SUCCESS;
 }
 
@@ -197,6 +199,32 @@ static bool test_flt_floor() {
 	}
 	printf("floor 0x%04X\n", crc);
 	return crc == 0x7091;
+}
+
+static bool test_flt_round() {
+	char s[50];
+	unsigned short crc;
+	int i;
+	for (i = 0, crc = 0; i < sizeof(values)/sizeof(FLT); ++i) {
+		snprintf(s, sizeof(s), "round(%s) = %s", flt_ftoa(values[i], "%e"), flt_ftoa(flt_round(values[i]), "%e"));
+		crc = crc16(crc, s);
+		printf("round %ld %s\n", strlen(s), s);
+	}
+	printf("round 0x%04X\n", crc);
+	return crc == 0x1C72;
+}
+
+static bool test_flt_trunc() {
+	char s[50];
+	unsigned short crc;
+	int i;
+	for (i = 0, crc = 0; i < sizeof(values)/sizeof(FLT); ++i) {
+		snprintf(s, sizeof(s), "trunc(%s) = %s", flt_ftoa(values[i], "%e"), flt_ftoa(flt_trunc(values[i]), "%e"));
+		crc = crc16(crc, s);
+		printf("trunc %ld %s\n", strlen(s), s);
+	}
+	printf("trunc 0x%04X\n", crc);
+	return crc == 0x3E9E;
 }
 
 static bool test_flt_sqrt() {

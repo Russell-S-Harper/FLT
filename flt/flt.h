@@ -54,6 +54,8 @@ FLT flt_modf(const FLT f, FLT *pg);
 FLT flt_fmod(const FLT f, const FLT g);
 
 FLT flt_fabs(const FLT f);
+FLT flt_round(const FLT f);
+FLT flt_trunc(const FLT f);
 FLT flt_ceil(const FLT f);
 FLT flt_floor(const FLT f);
 

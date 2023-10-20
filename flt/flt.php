@@ -139,15 +139,16 @@ function preprocess($code, $pass, $extra) {
 		array('float', 'FLT'),			array('double', 'FLT'),					array('long FLT', 'long double'),
 		array('DBL_MIN', 'FLT_MIN'),	array('DBL_TRUE_MIN', 'FLT_TRUE_MIN'),	array('DBL_MAX', 'FLT_MAX'),				array('DBL_EPSILON', 'FLT_EPSILON'),
 		array('acosf?', 'flt_acos'),	array('acoshf?', 'flt_acosh'),			array('asinf?', 'flt_asin'),				array('asinhf?', 'flt_asinh'),
-		array('atan2f?', 'flt_atan2'),	array('atanf?', 'flt_atan'),			array('atanhf?', 'flt_atanh'),				array('ceilf?', 'flt_ceil'),
-		array('cosf?', 'flt_cos'),		array('coshf?', 'flt_cosh'),			array('exp10f?', 'flt_exp10'),				array('exp2f?', 'flt_exp2'),
-		array('expf?', 'flt_exp'),		array('fabsf?', 'flt_fabs'),			array('floorf?', 'flt_floor'),				array('fmodf?', 'flt_fmod'),
-		array('frexpf?', 'flt_frexp'),	array('hypotf?', 'flt_hypot'),			array('ldexpf?', 'flt_ldexp'),				array('log10f?', 'flt_log10'),
-		array('log2f?', 'flt_log2'),	array('logf?', 'flt_log'),				array('modff?', 'flt_modf'),				array('powf?', 'flt_pow'),
-		array('sinf?', 'flt_sin'),		array('sinhf?', 'flt_sinh'),			array('sqrtf?', 'flt_sqrt'),				array('tanf?', 'flt_tan'),
-		array('tanhf?', 'flt_tanh'),	array('atoff?', 'flt_atof'),			array('isfinite', 'flt_isfinite'),			array('isinf', 'flt_isinf'),
+		array('atan2f?', 'flt_atan2'),	array('atanf?', 'flt_atan'),			array('atanhf?', 'flt_atanh'),				array('atoff?', 'flt_atof'),
+		array('ceilf?', 'flt_ceil'),	array('cosf?', 'flt_cos'),				array('coshf?', 'flt_cosh'),				array('exp10f?', 'flt_exp10'),
+		array('exp2f?', 'flt_exp2'),	array('expf?', 'flt_exp'),				array('fabsf?', 'flt_fabs'),				array('floorf?', 'flt_floor'),
+		array('fmaxf?', 'flt_fmax'),	array('fminf?', 'flt_fmin'),			array('fmodf?', 'flt_fmod'),				array('frexpf?', 'flt_frexp'),
+		array('fsgnf?', 'flt_fsgn'),	array('hypotf?', 'flt_hypot'),			array('isfinite', 'flt_isfinite'),			array('isinf', 'flt_isinf'),
 		array('isnan', 'flt_isnan'),	array('isnormal', 'flt_isnormal'),		array('issubnormal', 'flt_issubnormal'),	array('iszero', 'flt_iszero'),
-		array('fminf?', 'flt_fmin'),	array('fmaxf?', 'flt_fmax'),			array('fsgnf?', 'flt_fsgn')
+		array('ldexpf?', 'flt_ldexp'),	array('log10f?', 'flt_log10'),			array('log2f?', 'flt_log2'),				array('logf?', 'flt_log'),
+		array('modff?', 'flt_modf'),	array('powf?', 'flt_pow'),				array('roundf?', 'flt_round'),				array('sinf?', 'flt_sin'),
+		array('sinhf?', 'flt_sinh'),	array('sqrtf?', 'flt_sqrt'),			array('tanf?', 'flt_tan'),					array('tanhf?', 'flt_tanh'),
+		array('truncf?', 'flt_trunc')
 	);
 	// First check if gcc is installed and is a supported version
 	$version = floatval(shell_exec('which gcc > /dev/null && gcc -dumpfullversion -dumpversion'));

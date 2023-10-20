@@ -80,13 +80,15 @@ While the `cc65` suite of tools was the inspiration, there are a lot of other "t
 - As well as single-precision floating point, double-precision floating point literals, variables, and functions are also converted to `FLT` and `flt_*`. The C standard only specifies that the type `double` provides at LEAST as much precision as the type `float`, so this is permitted!
 - Provides NaN, ±infinity, ±zero, and subnormal numbers
 - Functions provided, can also use `float` versions, e.g. `sinf`, `cosf`, `tanf`, ...
-    - `ldexp`, `frexp`, `modf`, `fmod`, `fabs`, `ceil`, `floor`
-    - `sqrt`, `hypot`, `log`, `log10`, `log2`, `exp`, `exp10`, `exp2`, `pow`
+    - `ldexp`, `frexp`, `modf`, `fmod`
+    - `fabs`, `round`, `trunc`, `ceil`, `floor`
+    - `sqrt`, `hypot`
+    - `log`, `log10`, `log2`, `exp`, `exp10`, `exp2`, `pow`
     - `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2`
     - `sinh`, `cosh`, `tanh`, `asinh`, `acosh`, `atanh`
     - `isinf`, `isnan`, `isnormal`, `issubnormal`, `iszero`, `isfinite`
-    - comparison operators: `==`, `>`, `<`, `>=`, `<=`, `!=`
     - mathematical operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`
+    - comparison operators: `==`, `>`, `<`, `>=`, `<=`, `!=`
     - `atof`, `ftoa`, `ltof`, `ultof`, `ftol`, `ftoul`
     - `fmin`, `fmax`, `fsgn`
 
