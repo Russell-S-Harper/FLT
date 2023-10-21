@@ -17,5 +17,5 @@ FLT flt_frexp(const FLT f, int *exponent) {
 	*exponent = t.e;
 	t.e = 0;
 	tmp_to_flt(&t, &result);
-	return result;	
+	return result;
 }

@@ -20,7 +20,7 @@ FLT flt_fmod(const FLT f, const FLT g) {
 		flt_tmp_multiply(&t, &u);
 		flt_tmp_modf(&t, &u);
 		flt_tmp_multiply(&t, &v);
-		t.s = sign;	
+		t.s = sign;
 		tmp_to_flt(&t, &result);
 	} else {
 		/* Default to NaN */

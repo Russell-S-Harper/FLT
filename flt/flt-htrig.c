@@ -148,7 +148,7 @@ FLT flt_atanh(const FLT f) {
 		flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);			/* 1.0 */
 		flt_tmp_add(&t, &v);									/* 1 + t */
 		flt_tmp_multiply(&t, &u);								/* (1 + t)/(1 - t) */
-		flt_tmp_log2(&t); 										/* log2((1 + t)/(1 - t)) */	
+		flt_tmp_log2(&t); 										/* log2((1 + t)/(1 - t)) */
 		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -2);		/* 2log(2)/4 = log(2)/2 */
 		flt_tmp_multiply(&t, &u);								/* log((1 + t)/(1 - t))/2 */
 		tmp_to_flt(&t, &result);

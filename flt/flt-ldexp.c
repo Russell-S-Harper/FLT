@@ -12,5 +12,5 @@ FLT flt_ldexp(const FLT f, const int exponent) {
 	if (t.c == E_NORMAL)
 		t.e += exponent;
 	tmp_to_flt(&t, &result);
-	return result;	
+	return result;
 }

@@ -10,7 +10,7 @@ E_CLASS flt_classify(const FLT f) {
 	uint32_t temporary, mantissa, exponent;
 	temporary = *(uint32_t *)&f;
 	mantissa = temporary & 0x7FFFFF;
-	exponent = (temporary >> 23) & 0xFF; 
+	exponent = (temporary >> 23) & 0xFF;
 	switch (exponent) {
 		case 0x00:
 			return mantissa? E_SUBNORMAL: E_ZERO;

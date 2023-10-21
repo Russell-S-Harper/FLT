@@ -24,7 +24,7 @@ FLT flt_sin(const FLT f) {
 	flt_tmp t;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		flt_tmp_sin(&t);		
+		flt_tmp_sin(&t);
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_sin_alt(&t);
@@ -36,7 +36,7 @@ FLT flt_cos(const FLT f) {
 	flt_tmp t;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		flt_tmp_cos(&t);		
+		flt_tmp_cos(&t);
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_cos_alt(&t);
@@ -48,7 +48,7 @@ FLT flt_tan(const FLT f) {
 	flt_tmp t;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		flt_tmp_tan(&t);		
+		flt_tmp_tan(&t);
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_tan_alt(&t);
@@ -62,7 +62,7 @@ FLT flt_asin(const FLT f) {
 	/* t.e < 0 is a quick check for |t| < 1, and
 		!t.e && t.m == TMP_1 is a quick check for |t| = 1 */
 	if (t.c == E_NORMAL && (t.e < 0 || (!t.e && t.m == TMP_1))) {
-		flt_tmp_asin(&t);		
+		flt_tmp_asin(&t);
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_asin_alt(&t);
@@ -76,7 +76,7 @@ FLT flt_acos(const FLT f) {
 	/* t.e < 0 is a quick check for |t| < 1, and
 		!t.e && t.m == TMP_1 is a quick check for |t| = 1 */
 	if (t.c == E_NORMAL && (t.e < 0 || (!t.e && t.m == TMP_1))) {
-		flt_tmp_acos(&t);		
+		flt_tmp_acos(&t);
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_acos_alt(&t);
@@ -88,7 +88,7 @@ FLT flt_atan(const FLT f) {
 	flt_tmp t;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		flt_tmp_atan(&t);		
+		flt_tmp_atan(&t);
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_atan_alt(&t);
@@ -135,7 +135,7 @@ FLT flt_atan2(const FLT y, const FLT x) {
 	else
 		flt_tmp_initialize(&t, E_NAN, 0, 0, 0);						/* NaN */
 	tmp_to_flt(&t, &result);
-	return result;	
+	return result;
 }
 
 /* Constrain the argument to +/- 2PI */
@@ -163,7 +163,7 @@ static FLT flt_tmp_sin_alt(flt_tmp *pt) {
 			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
-									
+
 static void flt_tmp_sin(flt_tmp *pt) {
 	/* These correspond to the nonic polynomial:
 		-0.00000215892011192075t^9 + 0.0000610420280696605t^8 - 0.000574181046317104t^7 + 0.00138096821267958t^6

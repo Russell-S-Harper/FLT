@@ -147,7 +147,7 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 					*/
 					pt->c = E_INFINITE;
 				if (!u_is_odd)
-					/*	pow(+/-0, u), where u is a negative even integer, returns +Inf 
+					/*	pow(+/-0, u), where u is a negative even integer, returns +Inf
     					pow(+/-0, u), where u is a positive even integer, returns +0 */
 					pt->s = 0;
 				break;

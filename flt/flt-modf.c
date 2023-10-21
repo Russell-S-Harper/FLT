@@ -20,7 +20,7 @@ FLT flt_modf(const FLT f, FLT *pg) {
 		tmp_to_flt(&t, &result);
 	} else
 		*pg = result = f;
-	return result;	
+	return result;
 }
 
 /* Note not static because also used by pow, fmod, ceil, and floor */
