@@ -113,14 +113,15 @@ function get_parameters($argc, $argv) {
 					"        if (scanf(\"%10f\", &f) == 1) { ... }".PHP_EOL.
 					"    which will be converted to correct code like:".PHP_EOL.
 					"        if (lsr = scanf(\"%10s\", gsb(-1)), f = atof(gsb(1)), lsr == 1) { ... }".PHP_EOL.
-                    "  - Also note that FLT parameters in *scanf are handled as strings with much".PHP_EOL.
-                    "    reduced criteria with respect to what is valid or not. So a call like:".PHP_EOL.
+                    "  - Also note that FLT parameters in *scanf are handled as strings with reduced".PHP_EOL.
+                    "    criteria with respect to what is valid or not. So a call like:".PHP_EOL.
                     "        sscanf(\"X Y Z\", \"%f %f %f\", ...);".PHP_EOL.
-                    "    may return 3 indicating three \"matches\". A workaround is to use !isnan(f)".PHP_EOL.
+                    "    may return 3 indicating three \"matches\". A workaround is to use !isnan()".PHP_EOL.
                     "    on each variable to confirm if it is valid.".PHP_EOL.
 					"  - The variadic functions vprintf, vscanf, and related are not supported.".PHP_EOL.
-					"  - Polynomial approximations are used for exp, log, and trignometric functions,".PHP_EOL.
-					"    and could display some accuracy issues near boundary conditions.".PHP_EOL.
+					"  - Polynomial approximations are used for exp, log, and trigonometric".PHP_EOL.
+					"    functions. Near boundary conditions, these functions, as well as pow and ".PHP_EOL.
+					"    hyperbolic trigonometric functions, could display some accuracy issues.".PHP_EOL.
 					PHP_EOL.
 					"Examples:".PHP_EOL.
 					"  php flt.php -i eg/paranoia.c -o eg/paranoia-flt.c -x '-DNOSIGNAL -DSingle'".PHP_EOL.
@@ -165,7 +166,7 @@ function preprocess($code, $pass, $extra) {
 		exit(1);
 	}
 	// Comment out #include <math.h> and #include <float.h>!
-	$code = preg_replace('/(#include\s+["<](?:math|float)\.h[">])/', '/* \1 */', $code);					
+	$code = preg_replace('/(#\s+include\s+["<](?:math|float)\.h[">])/', '/* \1 */', $code);
 	// Normalize
 	$pass = substr('0'.$pass, -2);
 	// Files
@@ -369,7 +370,7 @@ function get_next_token($input, $fn = 'flt_') {
 	for ($i = 0, $limit = strlen($input); $i < $limit && preg_match('/[A-Za-z0-9_]/', $input[$i]); ++$i)
 		$token .= $input[$i];
 	// Function?
-	if (strpos($token, $fn) === 0) {
+	if (strpos($token, $fn) === 0 || ($i < $limit && $input[$i] == '(')) {
 		// Append any whitespace
 		for ( ; $i < $limit && preg_match('/\s/', $input[$i]); ++$i)
 			$token .= $input[$i];
@@ -676,7 +677,7 @@ function process_cast(&$lines, $message, &$modified, $regex) {
 		list($l, $start, $finish) = get_token_extent($message->locations[0]);
 		if (!in_array($l, $modified)) {
 			$line = $lines[$l];
-			$lines[$l] = preg_replace('/=\s*\(\s*'.$regex.'\s*\)\s*/', '= ', $line, 1, $count);
+			$lines[$l] = preg_replace('/\(\s*'.$regex.'\s*\)/', '', $line, 1, $count);
 			if ($count)
 				$modified[] = $l;
 			else
