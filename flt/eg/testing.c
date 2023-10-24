@@ -317,7 +317,7 @@ static bool test_flt_sin() {
 		printf("sin %ld %s\n", strlen(s), s);
 	}
 	printf("sin 0x%04X\n", crc);
-	return crc == 0xBBF6;
+	return crc == 0xFA81;
 }
 
 static bool test_flt_cos() {
@@ -330,7 +330,7 @@ static bool test_flt_cos() {
 		printf("cos %ld %s\n", strlen(s), s);
 	}
 	printf("cos 0x%04X\n", crc);
-	return crc == 0x7225;
+	return crc == 0x9F83;
 }
 
 static bool test_flt_tan() {
@@ -343,7 +343,7 @@ static bool test_flt_tan() {
 		printf("tan %ld %s\n", strlen(s), s);
 	}
 	printf("tan 0x%04X\n", crc);
-	return crc == 0xA710;
+	return crc == 0xB206;
 }
 
 static bool test_flt_asin() {

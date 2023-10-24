@@ -119,9 +119,9 @@ function get_parameters($argc, $argv) {
                     "    may return 3 indicating three \"matches\". A workaround is to use !isnan()".PHP_EOL.
                     "    on each variable to confirm if it is valid.".PHP_EOL.
 					"  - The variadic functions vprintf, vscanf, and related are not supported.".PHP_EOL.
-					"  - Polynomial approximations are used for exp, log, and trigonometric".PHP_EOL.
-					"    functions. Near boundary conditions, these functions, as well as pow and ".PHP_EOL.
-					"    hyperbolic trigonometric functions, could display some accuracy issues.".PHP_EOL.
+					"  - Polynomial approximations are used for sin, cos, atan, exp2, and log2. Near".PHP_EOL.
+					"    boundary conditions, these functions, as well as those dependent on them,".PHP_EOL.
+					"    could display some accuracy issues.".PHP_EOL.
 					PHP_EOL.
 					"Examples:".PHP_EOL.
 					"  php flt.php -i eg/paranoia.c -o eg/paranoia-flt.c -x '-DNOSIGNAL -DSingle'".PHP_EOL.

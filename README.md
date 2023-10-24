@@ -118,7 +118,7 @@ which will be converted to correct code like:
 
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", ...);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
-- Polynomial approximations are used for `exp`, `log`, and trigonometric functions. Near boundary conditions, these functions, as well as `pow` and hyperbolic trigonometric functions, could display some accuracy issues.
+- Polynomial approximations are used for `sin`, `cos`, `atan`, `exp2`, and `log2`. Near boundary conditions, these functions, as well as those dependent on them, could display some accuracy issues.
 
 ## To Do
 
