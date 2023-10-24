@@ -166,7 +166,7 @@ function preprocess($code, $pass, $extra) {
 		exit(1);
 	}
 	// Comment out #include <math.h> and #include <float.h>!
-	$code = preg_replace('/(#\s+include\s+["<](?:math|float)\.h[">])/', '/* \1 */', $code);
+	$code = preg_replace('/(#\s*include\s*["<](?:math|float)\.h[">])/', '/* \1 */', $code);
 	// Normalize
 	$pass = substr('0'.$pass, -2);
 	// Files

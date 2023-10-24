@@ -62,11 +62,11 @@ Be sure to adhere to the licensing terms provided in this repository to ensure p
 
 ## How It Works
 
-Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. With a bit of substitution hocus-pocus it is possible to use `PHP` and `gcc` to parse the source and determine where to substitute FLT code!
+Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. With a bit of substitution hocus-pocus it is possible to use `gcc` and `PHP` to parse the source code and determine where to substitute FLT code!
 
 ## Inspiration
 
-The [`cc65`](https://github.com/cc65/cc65) repository for the `cc65` suite of tools has a multi-year project under development to support [native floating point](https://github.com/mrdudz/cc65/tree/fptest/libsrc/float/), but as they mention "You can not use any of this to write software yet. Don't bother." There still appears to be a lot of work remaining. We considered contributing to the project but in reviewing the code, we felt the commitment to ramp-up was too much for what we can offer.
+The [`cc65`](https://github.com/cc65/cc65) repository for the `cc65` suite of tools has a multi-user multi-year project under development to support [native floating point](https://github.com/mrdudz/cc65/tree/fptest/libsrc/float/), but as they mention "You can not use any of this to write software yet. Don't bother." There still appears to be a lot of work remaining. We considered contributing to the project but in reviewing the code, we felt the commitment to ramp-up was too much for what we can offer.
 
 We thought instead "Would it be possible to do a light integration with no modifications to the existing compiler?" Say alias a 32-bit integer as a float type, and write functions with that? While writing the floating point routines was easy enough (except for `pow` – so many special cases!), we were stuck on converting floating point code to FLT. We researched many options like: adapting a [C99 parser in Python](https://github.com/eliben/pycparser), or using [CIL via OCaml](https://cil-project.github.io/cil/doc/html/cil/), or a [C++ to C converter](https://www.codeconvert.ai/c++-to-c-converter). But they were all lacking.
 
@@ -101,7 +101,6 @@ These limitations may be revised as the project evolves:
 - Currently `gcc -fdiagnostics-format=json` v9.0+ does not provide enough information to parse certain constructions such as a cast spanning multiple lines, or the `scanf` example below. It is recommended to thoroughly test the programs after compiling to ensure correct functionality.
 - I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "e/E" & five "f/F" parameters, and for `*scanf`, up to five parameters, can be specified.
 - Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like:
-
 
         if (1 == scanf("%10f", &f)) { ... }
 

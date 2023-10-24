@@ -166,18 +166,25 @@ static FLT flt_tmp_sin_alt(flt_tmp *pt) {
 
 static void flt_tmp_sin(flt_tmp *pt) {
 	/* These correspond to the nonic polynomial:
-		-0.00000215892011192075t^9 + 0.0000610420280696605t^8 - 0.000574181046317104t^7 + 0.00138096821267958t^6
-		+ 0.00517151723684t^5 + 0.00445570722228601t^4 - 0.170315304695657t^3 + 0.00153095774193699t^2
-		+ 0.999754290408447t + 0.00000381057198585086 */
-	static int s[] = {1, 0, 1, 0, 0, 0, 1, 0, 0, 0};
-	static uint32_t m[] = {0x4870FB88, 0x4001D83A, 0x4B4251A2, 0x5A80CD4F, 0x54BAEA5A,
-							0x49009733, 0x5733914F, 0x6455356F, 0x7FF7F2D7, 0x7FDC906A};
-	static int e[] = {-19, -14, -11, -10, -8, -8, -3, -10, -1, -19};
+		1.61562503860501E-016t^9 + 0.0000231895792333276t^8 - 0.000291408847052269t^7 + 0.00021655710574473t^6
+		+ 0.00802531250051174t^5 + 0.0002659398626682t^4 - 0.166798898126102t^3 + 0.0000335752931633666t^2
+		+ 0.999996708362343t + 0.00000003867441578098 */
+	static int s[] = {0, 0, 1, 0, 0, 0, 1, 0, 0, 0};
+	static uint32_t m[] = {0x5D226AD3, 0x61439F01, 0x4C641DDF, 0x7189CD7F, 0x41BE4CD7, 0x45B6EC0D, 0x5566AA49, 0x46699928, 0x7FFFE463, 0x530D7C24};
+	static int e[] = {-53, -16, -12, -13, -7, -12, -3, -15, -1, -25};
+	flt_tmp u;
 	int sign;
 	flt_tmp_fmod_2pi(pt);
 	/* sin(-t) = -sin(t) */
 	sign = pt->s;
 	pt->s = 0;
+	/* sin(t > PI) = -sin(t - PI) */
+	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
+	if (flt_tmp_compare(pt, &u, E_GREATER_THAN_OR_EQUAL_TO)) {
+		u.s = 1; /* -PI */
+		flt_tmp_add(pt, &u); /* t - PI */
+		sign ^= 1;
+	}
 	/* Approximate using the polynomial */
 	flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
 	/* Update the sign */
@@ -197,16 +204,24 @@ static FLT flt_tmp_cos_alt(flt_tmp *pt) {
 
 static void flt_tmp_cos(flt_tmp *pt) {
 	/* These correspond to the nonic polynomial:
-		-2.52930713705053E-017t^9 - 0.0000189045324418488t^8 + 0.000475122721920389t^7 - 0.00388275446033337t^6
-		+ 0.00753837102678705t^5 + 0.0281875057309906^4 + 0.0136975100184024t^3 - 0.507055459000441t^2
-		+ 0.00139731339368655t + 0.99996676067338 */
-	static int s[] = {1, 1, 0, 1, 0, 0, 0, 1, 0, 0};
-	static uint32_t m[] = {0x74A4C9C2, 0x4F4A964F, 0x7C8CF235, 0x7F3AE7B6, 0x7B823842,
-							0x7374BDF4, 0x7035C2B2, 0x40E7317B, 0x5B930754, 0x7FFEE92B};
-	static int e[] = {-56, -16, -12, -9, -8, -6, -7, -1, -10, -1};
+		-0.0000025938914155233t^9 + 0.00003667027596855t^8 - 0.000032378226725295t^7 - 0.00133294801582341t^6
+		- 0.0000617994214713396t^5 + 0.0417092547798761t^4 - 0.0000171843197505819t^3 - 0.499996430678849t^2
+		- 0.0000002843402115928t + 1.0000000021811 */
+	static int s[] = {1, 0, 1, 1, 1, 0, 1, 1, 1, 0};
+	static uint32_t m[] = {0x57095B8C, 0x4CE7345A, 0x43E6ED99, 0x575B2823, 0x40CD27E8,
+							0x556BA96A, 0x481385D8, 0x7FFFC41E, 0x4C53B5E7, 0x40000002};
+	static int e[] = {-19, -15, -15, -10, -14, -5, -16, -2, -22, 0};
+	flt_tmp u;
 	flt_tmp_fmod_2pi(pt);
 	/* cos(t) = cos(-t) */
 	pt->s = 0;
+	/* cos(t > PI) = cos(2PI - t) */
+	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
+	if (flt_tmp_compare(pt, &u, E_GREATER_THAN_OR_EQUAL_TO)) {
+		u.e = 2; /* 2PI */
+		pt->s = 1; /* -t */
+		flt_tmp_add(pt, &u); /* -t + 2PI = 2PI - t */
+	}
 	/* Approximate using the polynomial */
 	flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
 }
