@@ -3,8 +3,8 @@
   Repository: https://github.com/Russell-S-Harper/FLT
      Contact: flt@russell-harper.com
 */
-#ifndef __FLT_TMP_H
-#define __FLT_TMP_H
+#ifndef _FLT_TMP_H
+#define _FLT_TMP_H
 
 #include <stdint.h>
 
@@ -45,4 +45,4 @@ void flt_tmp_log2(flt_tmp *pt);
 void flt_tmp_exp2(flt_tmp *pt);
 FLT flt_tmp_exp2_alt(flt_tmp *pt);
 
-#endif /* __FLT_TMP_H */
+#endif /* _FLT_TMP_H */

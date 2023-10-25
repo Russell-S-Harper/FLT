@@ -166,6 +166,7 @@ function preprocess($code, $pass, $extra) {
 		exit(1);
 	}
 	// Comment out #include <math.h> and #include <float.h>!
+	// The header file flt-parse.h also has code to prevent their inclusion.
 	$code = preg_replace('/(#\s*include\s*["<](?:math|float)\.h[">])/', '/* \1 */', $code);
 	// Normalize
 	$pass = substr('0'.$pass, -2);
@@ -175,7 +176,7 @@ function preprocess($code, $pass, $extra) {
 	$e_file = '__FLT_TMP_'.$pass.'.txt';
 	// Preprocess with gcc
 	file_put_contents($i_file, $code);
-	shell_exec('gcc -fdiagnostics-format=text -E '.$extra.' -I . -include flt-parse.h -include flt.h '.$i_file.' > '.$o_file.' 2> '.$e_file);
+	shell_exec('gcc -fdiagnostics-format=text -E -I. -include flt-parse.h -include flt.h '.$extra.' '.$i_file.' > '.$o_file.' 2> '.$e_file);
 	$code = file_get_contents($o_file);
 	// Convert backslash and double quote escape sequences
 	$code = str_replace(array('\\\\', '\\"'), array('\x5c', '\x22'), $code);

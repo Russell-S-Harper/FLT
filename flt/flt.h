@@ -3,8 +3,8 @@
   Repository: https://github.com/Russell-S-Harper/FLT
      Contact: flt@russell-harper.com
 */
-#ifndef __FLT_H
-#define __FLT_H
+#ifndef _FLT_H
+#define _FLT_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -15,10 +15,10 @@
 	Exponent width: 8 bits
 	Significand precision: 24 bits (23 explicitly stored)
 */
-#ifndef __FLT_TDF
-#define __FLT_TDF
+#ifndef _FLT_TDF
+#define _FLT_TDF
 typedef uint32_t FLT;
-#endif /* __FLT_TDF */
+#endif /* _FLT_TDF */
 
 /* Predefined constants for +/-INFINITY, NAN, +/-ZERO, +/-ONE, and +/-PI/2 */
 #define FLT_POS_INF		(0x7F800000)
@@ -119,4 +119,4 @@ FLT flt_hypot(const FLT f, const FLT g);
 FLT flt_log2(const FLT f);
 FLT flt_exp2(const FLT f);
 
-#endif /* __FLT_H */
+#endif /* _FLT_H */
