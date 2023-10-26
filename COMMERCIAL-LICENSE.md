@@ -1,41 +1,55 @@
-# Individual License for "FLT" Repository
+# Commercial License for "FLT" Repository
 
-This Individual License is a legal agreement between you (the "Licensee"), acting as an "Individual User" or a "Commercial User", and the owner of the "FLT" Repository (the "Repository Owner"). By accessing, using, or distributing the code from the "FLT" Repository, you agree to comply with these terms and conditions:
+This Commercial License is a legal agreement between you (the "Licensee"), acting as a "Commercial User", and the owner of the "FLT" Repository (the "Repository Owner"). By acquiring this Commercial License, you are granted the right to distribute the code from the "FLT" Repository in source or compiled form, subject to the following terms and conditions:
 
-1. Grant of Rights to Individual Users:
+1. Grant of Distribution Rights:
 
-   Individual Users are hereby granted a worldwide, royalty-free, non-exclusive, non-transferable license to use and distribute the code contained in the "FLT" Repository in source or compiled form for personal and non-commercial purposes.
+    The Repository Owner grants the Licensee a worldwide, royalty-free, non-exclusive, non-transferable license to distribute the code contained in the "FLT" Repository in source or compiled form.
 
-2. Grant of Rights to Commercial Users:
+2. One-time Nominal Fee:
 
-   a. Commercial Users are hereby granted a worldwide, royalty-free, non-exclusive, non-transferable license to use the code contained in the "FLT" Repository for internal product development, prototyping, and demonstrations at exhibitions.
+    a. To acquire this Commercial License, the Licensee shall pay a one-time nominal fee to the Repository Owner, as agreed upon between the parties.
 
-   b. Without a Commercial License, Commercial Users are expressly prohibited from distributing the code contained in the "FLT" Repository in source or compiled form to third parties or end users.
+    b. The purpose of the fee is to offset the Repository Owner's costs in managing the increased support load and the time critical nature of tasks associated with Commercial Users.
 
-   c. If Commercial Users wish to distribute the code in source or compiled form, a separate Commercial License must be acquired from the Repository Owner, subject to a one-time nominal fee. This separate Commercial License will grant distribution rights.
+3. Usage Limitation:
 
-   d. It is recommended that Commercial Users take advantage of the allowances provided in this License with respect to development, prototyping, and demonstrations to confirm that the "FLT" Repository is sufficient for their needs, prior to obtaining a Commercial License.
+    The Licensee may distribute the code in source or compiled form to third parties or end users, subject to compliance with the terms of this Commercial License.
 
-3. Code Modification:
+4. Code Modification:
 
-   a. All Users, both Individual and Commercial, are required to ensure that if the code is modified prior to distribution, then the comments at the top of the modified file should be appended with the specific revisions made and correct contact information regarding these modifications.
+    a. The Licensee is required to ensure that if the code is modified prior to distribution, then the comments at the top of the modified file should be appended with the specific revisions made and correct contact information regarding these modifications.
 
-   b. The existing comments at the top of each source and header file with headings "Contents", "Repository", and "Contact" should not be altered.
+    b. The existing comments at the top of each source and header file with headings "Contents", "Repository", and "Contact" should not be altered.
 
-   c. It is preferable to make any revisions through the existing mechanisms provided by GitHub, where they may benefit all users.
-
-4. Reminder of Issues:
-
-   All Users, both Individual and Commercial, are encouraged to maintain open communication with the Repository Owner and notify them of any issues or problems encountered while using the code.
+    c. It is preferable to make any revisions through the existing mechanisms provided by GitHub, where they may benefit all users.
 
 5. No Warranty:
 
-   The code in the "FLT" Repository is provided "as is," without any warranties or guarantees of its functionality, reliability, or fitness for any particular purpose.
+    The code provided under this Commercial License is provided "as is," without any warranties or guarantees of its functionality, reliability, or fitness for any particular purpose.
 
-6. Termination:
+6. Compliance with Main Repository License:
 
-   The Repository Owner reserves the right to terminate the License for any User, Individual or Commercial, or any other entity found in violation of the terms of this License.
+    The Licensee shall comply with all the terms and conditions of the main repository license associated with the "FLT" Repository in addition to the terms set forth in this Commercial License.
 
-7. Entire Agreement:
+7. Termination:
 
-   This License constitutes the entire agreement between the Licensee and the Repository Owner regarding the code in the "FLT" Repository.
+    The Repository Owner reserves the right to terminate this Commercial License if the Licensee is found in violation of the terms set forth herein or the main repository license.
+
+This Commercial License is an extension of the Individual License for the "FLT" Repository and is specific to Commercial Users seeking distribution rights. Please note that this Commercial License is subject to the terms and conditions outlined in the Individual License. By acquiring this Commercial License, the Licensee acknowledges and agrees to be bound by the terms of both licenses.
+
+The one-time nominal fee and any specific details regarding distribution rights will be agreed upon separately between the Licensee and the Repository Owner. For inquiries regarding this Commercial License, please contact the Repository Owner at flt@russell-harper.com.
+
+By acquiring this Commercial License, the Licensee demonstrates their commitment to the responsible use and distribution of the code from the "FLT" Repository.
+
+[Date]
+
+[Licensee Name]
+
+[Licensee Contact Information]
+
+[Repository Owner Name]
+
+[Repository Owner Contact Information]
+
+[License Identifier]
