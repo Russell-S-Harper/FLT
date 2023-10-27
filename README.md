@@ -102,6 +102,7 @@ These limitations may be revised as the project evolves:
 - I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "e/E" & five "f/F" parameters, and for `*scanf`, up to five parameters, can be specified.
 - Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like:
 
+
         if (1 == scanf("%10f", &f)) { ... }
 
 will be converted to incorrect code like:
@@ -122,7 +123,25 @@ which will be converted to correct code like:
 
 ## To Do
 
-- Looking for sample real-world source code to test against -- will be expecting a lot of revisions!
+- Expecting a lot of revisions!
+- Looking for sample real-world source code to test against
+- Current worst-case precisions, in decimal digits:
+
+|  fn  | digits |
+|------|--------|
+| sin  |    7.1 |
+| cos  |    7.2 |
+| atan |    6.9 |
+| exp2 |    6.6 |
+| log2 |    6.5 |
+
+(Note the maximum possible precision is 7.2 decimal digits.)
+
+- Researching CORDIC routines
+    - good results with `log2` (7.2 decimal digits), but at the expense of almost four times the number of floating point operations
+    - `exp2` seems resistant to any attempts to improve accuracy, always getting 6.6 decimal digits!
+    - looking into `sin`, `cos`, and `atan`
+    - so far polynomial approximation is a better tradeoff w.r.t. speed vs. accuracy
 
 ## License
 
