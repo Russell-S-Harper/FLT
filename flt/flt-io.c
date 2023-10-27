@@ -439,7 +439,7 @@ static char flt_tmp_get_next_digit(flt_tmp *pt) {
 	}
 	if (flt_tmp_compare(pt, &k1, E_GREATER_THAN_OR_EQUAL_TO)) {
 		flt_tmp_add(pt, &kn1);
-		digit += 1;
+		++digit;
 	}
 	/* Advance to the next digit */
 	flt_tmp_multiply(pt, &k10);
