@@ -267,7 +267,7 @@ void flt_tmp_negate(flt_tmp *pt) {
 }
 
 void flt_tmp_invert(flt_tmp *pt) {
-	uint32_t remainder, mantissa;
+	uint32_t rem_hi, rem_lo, man_hi, man_lo;
 	int i;
 	if (pt->c == E_NORMAL) {
 		pt->e = -pt->e;
@@ -276,16 +276,23 @@ void flt_tmp_invert(flt_tmp *pt) {
 			return;
 		/* Standard binary division */
 		i = TMP_2_BITS;
-		remainder = TMP_2;
-		mantissa = pt->m;
+		rem_hi = TMP_2;
+		man_hi = pt->m;
+		rem_lo = man_lo = 0;
 		pt->m = 0;
 		while (--i) {
 			pt->m <<= 1;
-			if (remainder >= mantissa) {
+			if (rem_hi > man_hi || (rem_hi == man_hi && rem_lo >= man_lo)) {
 				pt->m += 1;
-				remainder -= mantissa;
+				if (rem_lo < man_lo)
+					--rem_hi;
+				rem_lo -= man_lo;
+				rem_hi -= man_hi;
 			}
-			mantissa >>= 1;
+			man_lo >>= 1;
+			if (man_hi & 1)
+				man_lo |= TMP_2;
+			man_hi >>= 1;
 		}
 		flt_tmp_normalize(pt);
 	} else {
