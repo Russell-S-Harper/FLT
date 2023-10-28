@@ -124,8 +124,8 @@ which will be converted to correct code like:
 ## To Do
 
 - Expecting a lot of revisions!
-- Looking for sample real-world source code to test against
-- Current worst-case precisions, in decimal digits:
+- Looking for sample real-world source code to test against.
+- Current worst-case precision for the polynomial approximations, in decimal digits:
 
 |  fn  | digits |
 |------|--------|
@@ -137,7 +137,7 @@ which will be converted to correct code like:
 
 (Note the maximum possible precision is 7.2 decimal digits.)
 
-- Researching CORDIC routines
+- Researching CORDIC routines:
     - good results with `log2` (7.2 decimal digits), but at the expense of almost four times the number of floating point operations
     - `exp2` seems resistant to any attempts to improve accuracy, always getting 6.6 decimal digits!
     - looking into `sin`, `cos`, and `atan`
