@@ -23,7 +23,7 @@ Example to generate `eg/averages`:
 ```
 	cd «repository-directory»/flt
 	php flt.php -i eg/averages.c -o eg/averages-flt.c
-	gcc -o eg/averages -I . eg/averages-flt.c flt-*.c
+	gcc -o eg/averages eg/averages-flt.c flt-*.c
 ```
 
 You can review `eg/averages-flt.c` (code will be at the end) and you will see it has no floating point code -- all converted to FLT.
@@ -45,7 +45,7 @@ To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bi
 ```
 	cd «repository-directory»/flt
 	php flt.php -i eg/paranoia.c -o eg/paranoia-flt.c -x '-DNOSIGNAL -DSingle'
-	gcc -o eg/paranoia -I . eg/paranoia-flt.c flt-*.c
+	gcc -o eg/paranoia eg/paranoia-flt.c flt-*.c
 ```
 
 One way to build `flt.lib` using the `cc65` suite, recommended to reduce the size of executables. Assumes the paths of `cc65`, `ca65`, and `ar65` are in `$PATH`.
