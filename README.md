@@ -129,18 +129,18 @@ which will be converted to correct code like:
 
 |  fn  | digits |
 |------|--------|
-| sin  |    7.1 |
+| sin  |    7.2 |
 | cos  |    7.2 |
 | atan |    6.9 |
 | exp2 |    6.6 |
 | log2 |    6.5 |
 
-(Note the maximum possible precision is 7.2 decimal digits.)
+(Note the maximum possible precision for FLT is 7.2 decimal digits.)
 
 - Researching CORDIC routines:
-    - good results with `log2` (7.2 decimal digits), but at the expense of almost four times the number of floating point operations
+    - good results with `log2` (7.2 decimal digits), but at the expense of almost four times the number of floating point operations!
     - `exp2` seems resistant to any attempts to improve accuracy, always getting 6.6 decimal digits!
-    - looking into `sin`, `cos`, and `atan`
+    - looking into `atan`
     - so far polynomial approximation is a better tradeoff w.r.t. speed vs. accuracy
 
 ## License

@@ -166,24 +166,32 @@ static FLT flt_tmp_sin_alt(flt_tmp *pt) {
 
 static void flt_tmp_sin(flt_tmp *pt) {
 	/* These correspond to the nonic polynomial:
-		1.61562503860501E-016t^9 + 0.0000231895792333276t^8 - 0.000291408847052269t^7 + 0.00021655710574473t^6
-		+ 0.00802531250051174t^5 + 0.0002659398626682t^4 - 0.166798898126102t^3 + 0.0000335752931633666t^2
-		+ 0.999996708362343t + 0.00000003867441578098 */
+		0.00000191939248768592t^9 + 0.00000367850039052996t^8 - 0.000206017385118935t^7 + 0.00000905377337007012t^6
+		+ 0.00832678456370062t^5 + 0.00000286491679624314t^4 - 0.166667386624051t^3 + 0.0000000922267828359t^2
+		+ 0.999999995443107t + 0.00000000002710620617 */
 	static int s[] = {0, 0, 1, 0, 0, 0, 1, 0, 0, 0};
-	static uint32_t m[] = {0x5D226AD3, 0x61439F01, 0x4C641DDF, 0x7189CD7F, 0x41BE4CD7, 0x45B6EC0D, 0x5566AA49, 0x46699928, 0x7FFFE463, 0x530D7C24};
-	static int e[] = {-53, -16, -12, -13, -7, -12, -3, -15, -1, -25};
+	static uint32_t m[] = {0x406774B8, 0x7B6E13E8, 0x6C032F74, 0x4BF2D48C, 0x4436886C,
+							0x602172A9, 0x55556D7E, 0x63071AE3, 0x7FFFFFF6, 0x7736E000};
+	static int e[] = {-19, -19, -13, -17, -7, -19, -3, -24, -1, -36};
 	flt_tmp u;
 	int sign;
 	flt_tmp_fmod_2pi(pt);
 	/* sin(-t) = -sin(t) */
 	sign = pt->s;
 	pt->s = 0;
-	/* sin(t > PI) = -sin(t - PI) */
+	/* sin(t >= PI) = -sin(t - PI) */
 	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
 	if (flt_tmp_compare(pt, &u, E_GREATER_THAN_OR_EQUAL_TO)) {
 		u.s = 1; /* -PI */
 		flt_tmp_add(pt, &u); /* t - PI */
 		sign ^= 1;
+	}
+	/* sin(t > PI/2) = sin(PI - t) */
+	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 0); /* PI/2 */
+	if (flt_tmp_compare(pt, &u, E_GREATER_THAN)) {
+		u.e = 1; /* PI */
+		pt->s = 1; /* -t */
+		flt_tmp_add(pt, &u); /* PI - t */
 	}
 	/* Approximate using the polynomial */
 	flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
@@ -217,10 +225,10 @@ static void flt_tmp_cos(flt_tmp *pt) {
 	pt->s = 0;
 	/* cos(t > PI) = cos(2PI - t) */
 	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
-	if (flt_tmp_compare(pt, &u, E_GREATER_THAN_OR_EQUAL_TO)) {
+	if (flt_tmp_compare(pt, &u, E_GREATER_THAN)) {
 		u.e = 2; /* 2PI */
 		pt->s = 1; /* -t */
-		flt_tmp_add(pt, &u); /* -t + 2PI = 2PI - t */
+		flt_tmp_add(pt, &u); /* 2PI - t */
 	}
 	/* Approximate using the polynomial */
 	flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
