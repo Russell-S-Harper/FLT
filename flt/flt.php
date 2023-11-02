@@ -247,12 +247,6 @@ function compile(&$lines, &$substitutions, $pass, $debug) {
 			case "aggregate value used where an integer was expected":
 				process_cast($lines, $message, $modified, INT_TYPE_REGEX);
 				break;
-			case "incompatible types when assigning to type ‘int’ from type ‘FLT’":
-				process_assignment($lines, $message, $modified, 'flt_ftol');
-				break;
-			case "incompatible types when assigning to type ‘FLT’ from type ‘int’":
-				process_assignment($lines, $message, $modified, 'flt_ltof');
-				break;
 			case "expected declaration specifiers or ‘...’ before ‘*’ token":
 				process_non_gcc_extension($lines, $substitutions, $message, $modified);
 				break;
@@ -262,17 +256,33 @@ function compile(&$lines, &$substitutions, $pass, $debug) {
 					process_ignored($message);
 				break;
 			default:
-				if (preg_match("/invalid operands to binary [-\+\*\/]=? \(have ‘FLT’ and ‘FLT’\)/", $message->message))
+    			if (preg_match("/incompatible types when assigning to type ‘".INT_TYPE_REGEX."’ from type ‘FLT’/", $message->message))
+					process_assignment($lines, $message, $modified, 'flt_ftol');
+    			else if (preg_match("/incompatible types when assigning to type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} from type ‘FLT’/", $message->message))
+					process_assignment($lines, $message, $modified, 'flt_ftol');
+				else if (preg_match("/incompatible types when assigning to type ‘FLT’ from type ‘".INT_TYPE_REGEX."’/", $message->message))
+					process_assignment($lines, $message, $modified, 'flt_ltof');
+				else if (preg_match("/incompatible types when assigning to type ‘FLT’ from type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\}/", $message->message))
+					process_assignment($lines, $message, $modified, 'flt_ltof');
+				else if (preg_match("/invalid operands to binary [-\+\*\/]=? \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_arithmetic_binary_operands($lines, $message, $modified);
 				else if (preg_match("/invalid operands to binary ([<>]=?|[=!]=) \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_comparison_binary_operands($lines, $message, $modified);
-				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘int’ and ‘FLT’\)/", $message->message))
+				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘".INT_TYPE_REGEX."’ and ‘FLT’\)/", $message->message))
 					process_first_operand($lines, $message, $modified);
-				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘int’\)/", $message->message))
+				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} and ‘FLT’\)/", $message->message))
+					process_first_operand($lines, $message, $modified);
+				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘struct <anonymous>’ and ‘FLT’\)/", $message->message))
+					process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
+				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘".INT_TYPE_REGEX."’\)/", $message->message))
 					process_second_operand($lines, $message, $modified);
+				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\}\)/", $message->message))
+					process_second_operand($lines, $message, $modified);
+				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘struct <anonymous>’\)/", $message->message))
+					process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
 				else if (preg_match("/incompatible type for argument [0-9]+ of ‘flt_[^’]+’/", $message->message))
 					process_incompatible_type($lines, $message, $modified);
-				else if (preg_match("/format ‘%[EeFfGg]’ expects argument of type ‘double’, but argument [0-9]+ has type ‘FLT’/", $message->message))
+				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double)’, but argument [0-9]+ has type ‘FLT’/", $message->message))
 					process_printf_argument($lines, $message, $modified);
 				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double) \*’, but argument [0-9]+ has type ‘FLT \*’/", $message->message))
 					process_scanf_argument($lines, $message, $modified);
@@ -673,20 +683,20 @@ function process_unary_plus(&$lines, $message, &$modified) {
 }
 
 function process_cast(&$lines, $message, &$modified, $regex) {
-	if (count($message->locations) == 1) {
+	foreach ($message->locations as $location) {
 		// Remove the cast!
-		list($l, $start, $finish) = get_token_extent($message->locations[0]);
+		list($l, $start, $finish) = get_token_extent($location);
 		if (!in_array($l, $modified)) {
 			$line = $lines[$l];
+			$count = 0;
 			$lines[$l] = preg_replace('/\(\s*'.$regex.'\s*\)/', '', $line, 1, $count);
 			if ($count)
 				$modified[] = $l;
+			// Didn't find anything? Likely a cast across multiple lines, gcc doesn't give enough info to address this case
 			else
-				// Didn't find anything? Likely a cast across multiple lines, gcc doesn't give enough info to address this
 				process_unhandled($message);
 		}
-	} else
-		process_unhandled($message);
+	}
 }
 
 function process_incompatible_type(&$lines, $message, &$modified) {
