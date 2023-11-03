@@ -1,6 +1,6 @@
 # FLT
 
-FLT brings floating point support to C compilers lacking it. It is meant as a bridge to allow immediate development of floating point code in lieu of official native support at some future date.
+FLT brings floating point support to C compilers lacking the capability. It is meant as a bridge to allow immediate development of floating point code in lieu of official native support at some future date.
 
 ## Usage
 
@@ -15,7 +15,7 @@ To use FLT in your project:
 
 - clone this repository or download the source code
 - (optional) create a FLT library `flt.lib` by compiling the source files `flt-*.c` (see below for an example)
-- convert your C `*.c` to FLT `*-flt.c` using the PHP script `flt.php`
+- convert your C `*.c` with floating point code to FLT `*-flt.c` using the PHP script `flt.php`
 - compile `*-flt.c` as usual
 
 Example to generate `eg/averages`:
@@ -48,7 +48,7 @@ To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bi
 	gcc -o eg/paranoia eg/paranoia-flt.c flt-*.c
 ```
 
-One way to build `flt.lib` using the `cc65` suite, recommended to reduce the size of executables. Assumes the paths of `cc65`, `ca65`, and `ar65` are in `$PATH`.
+Here is one way to build `flt.lib` using the `cc65` suite. This is recommended to reduce the size of executables. Assumes the paths of `cc65`, `ca65`, and `ar65` are in `$PATH`:
 
 ```
 	cd «repository-directory»/flt
@@ -57,6 +57,10 @@ One way to build `flt.lib` using the `cc65` suite, recommended to reduce the siz
 	ar65 r flt.lib *.o
 	rm *.s *.o
 ```
+
+Other interesting examples [(missing licenses prevent inclusion in this repository)](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#choosing-the-right-license) which can be converted to FLT are:
+
+- [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c) -- see how blazing fast your machine is! (You may have to write your own `dtime()`.)
 
 Be sure to adhere to the licensing terms provided in this repository to ensure proper usage and compliance.
 
@@ -102,7 +106,6 @@ These limitations may be revised as the project evolves:
 - I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "e/E" & five "f/F" parameters, and for `*scanf`, up to five parameters, can be specified.
 - Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like:
 
-
         if (1 == scanf("%10f", &f)) { ... }
 
 will be converted to incorrect code like:
@@ -118,6 +121,7 @@ which will be converted to correct code like:
         if (lsr = scanf("%10s", gsb(-1)), f = atof(gsb(1)), lsr == 1) { ... }
 
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", ...);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
+- Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
 - Polynomial approximations are used for `sin`, `cos`, `atan`, `exp2`, and `log2`. Near boundary conditions, these functions, as well as those dependent on them, could display some accuracy issues.
 
@@ -135,7 +139,7 @@ which will be converted to correct code like:
 | exp2 |    6.6 |
 | log2 |    6.5 |
 
-(Note the maximum possible precision for FLT is 7.2 decimal digits.)
+(Note the maximum possible precision for FLT is 7.2 decimal digits, so `sin` and `cos` are "good enough".)
 
 - Researching CORDIC routines:
     - good results with `log2` (7.2 decimal digits), but at the expense of almost four times the number of floating point operations!

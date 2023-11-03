@@ -41,7 +41,7 @@ function main($argc, $argv) {
 	while (!$done && $pass < 50);
 	if ($done) {
 		$code = postprocess($lines, $substitutions);
-        file_put_contents($params['-o'], $code);
+		file_put_contents($params['-o'], $code);
 		array_map('unlink', glob('__FLT_TMP_*'));
 	} else
 		file_put_contents('php://stderr', '*** ERROR: conversion failure ***'.PHP_EOL.
@@ -113,11 +113,13 @@ function get_parameters($argc, $argv) {
 					"        if (scanf(\"%10f\", &f) == 1) { ... }".PHP_EOL.
 					"    which will be converted to correct code like:".PHP_EOL.
 					"        if (lsr = scanf(\"%10s\", gsb(-1)), f = atof(gsb(1)), lsr == 1) { ... }".PHP_EOL.
-                    "  - Also note that FLT parameters in *scanf are handled as strings with reduced".PHP_EOL.
-                    "    criteria with respect to what is valid or not. So a call like:".PHP_EOL.
-                    "        sscanf(\"X Y Z\", \"%f %f %f\", ...);".PHP_EOL.
-                    "    may return 3 indicating three \"matches\". A workaround is to use !isnan()".PHP_EOL.
-                    "    on each variable to confirm if it is valid.".PHP_EOL.
+					"  - Also note that FLT parameters in *scanf are handled as strings with reduced".PHP_EOL.
+					"    criteria with respect to what is valid or not. So a call like:".PHP_EOL.
+					"        sscanf(\"X Y Z\", \"%f %f %f\", ...);".PHP_EOL.
+					"    may return 3 indicating three \"matches\". A workaround is to use !isnan()".PHP_EOL.
+					"    on each variable to confirm if it is valid.".PHP_EOL.
+					"  - Similar to above, FLT parameters in *printf are also handled as strings, so".PHP_EOL.
+					"    padding is restricted to spaces for FLT values.".PHP_EOL.
 					"  - The variadic functions vprintf, vscanf, and related are not supported.".PHP_EOL.
 					"  - Polynomial approximations are used for sin, cos, atan, exp2, and log2. Near".PHP_EOL.
 					"    boundary conditions, these functions, as well as those dependent on them,".PHP_EOL.
@@ -256,9 +258,9 @@ function compile(&$lines, &$substitutions, $pass, $debug) {
 					process_ignored($message);
 				break;
 			default:
-    			if (preg_match("/incompatible types when assigning to type ‘".INT_TYPE_REGEX."’ from type ‘FLT’/", $message->message))
+				if (preg_match("/incompatible types when assigning to type ‘".INT_TYPE_REGEX."’ from type ‘FLT’/", $message->message))
 					process_assignment($lines, $message, $modified, 'flt_ftol');
-    			else if (preg_match("/incompatible types when assigning to type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} from type ‘FLT’/", $message->message))
+				else if (preg_match("/incompatible types when assigning to type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} from type ‘FLT’/", $message->message))
 					process_assignment($lines, $message, $modified, 'flt_ftol');
 				else if (preg_match("/incompatible types when assigning to type ‘FLT’ from type ‘".INT_TYPE_REGEX."’/", $message->message))
 					process_assignment($lines, $message, $modified, 'flt_ltof');
@@ -266,7 +268,7 @@ function compile(&$lines, &$substitutions, $pass, $debug) {
 					process_assignment($lines, $message, $modified, 'flt_ltof');
 				else if (preg_match("/invalid operands to binary [-\+\*\/]=? \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_arithmetic_binary_operands($lines, $message, $modified);
-				else if (preg_match("/invalid operands to binary ([<>]=?|[=!]=) \(have ‘FLT’ and ‘FLT’\)/", $message->message))
+				else if (preg_match("/invalid operands to binary (?:[<>]=?|[=!]=) \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_comparison_binary_operands($lines, $message, $modified);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘".INT_TYPE_REGEX."’ and ‘FLT’\)/", $message->message))
 					process_first_operand($lines, $message, $modified);
