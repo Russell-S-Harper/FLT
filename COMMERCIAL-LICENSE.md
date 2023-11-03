@@ -14,7 +14,9 @@ This Commercial License is a legal agreement between you (the "Licensee"), actin
 
 3. Usage Limitation:
 
-    The Licensee may distribute the code in source or compiled form to third parties or end users, subject to compliance with the terms of this Commercial License.
+    a. The Licensee may distribute the code in source or compiled form to third parties or end users, subject to compliance with the terms of this Commercial License.
+
+    b. The Licensee is responsible for ensuring that third parties and end users are made aware of the Commercial and Individual Licenses and the terms and conditions set forth herein.
 
 4. Code Modification:
 
@@ -28,19 +30,19 @@ This Commercial License is a legal agreement between you (the "Licensee"), actin
 
     The code provided under this Commercial License is provided "as is," without any warranties or guarantees of its functionality, reliability, or fitness for any particular purpose.
 
-6. Compliance with Main Repository License:
+6. Compliance with Individual License:
 
-    The Licensee shall comply with all the terms and conditions of the main repository license associated with the "FLT" Repository in addition to the terms set forth in this Commercial License.
+    The Licensee shall comply with all the terms and conditions of the Individual License associated with the "FLT" Repository in addition to the terms set forth in this Commercial License.
 
 7. Termination:
 
-    The Repository Owner reserves the right to terminate this Commercial License if the Licensee is found in violation of the terms set forth herein or the main repository license.
+    The Repository Owner reserves the right to terminate this Commercial License if the Licensee is found in violation of the terms set forth herein or the Individual License.
 
-This Commercial License is an extension of the Individual License for the "FLT" Repository and is specific to Commercial Users seeking distribution rights. Please note that this Commercial License is subject to the terms and conditions outlined in the Individual License. By acquiring this Commercial License, the Licensee acknowledges and agrees to be bound by the terms of both licenses.
+8. Entire Agreement:
 
-The one-time nominal fee and any specific details regarding distribution rights will be agreed upon separately between the Licensee and the Repository Owner. For inquiries regarding this Commercial License, please contact the Repository Owner at flt@russell-harper.com.
+    This Commercial License and Individual License constitute the entire agreement between the Licensee and the Repository Owner regarding the code in the "FLT" Repository.
 
-By acquiring this Commercial License, the Licensee demonstrates their commitment to the responsible use and distribution of the code from the "FLT" Repository.
+For inquiries regarding this Commercial License, please contact the Repository Owner at flt@russell-harper.com.
 
 [Date]
 

@@ -38,4 +38,6 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
 7. Entire Agreement:
 
-    This License constitutes the entire agreement between the Licensee and the Repository Owner regarding the code in the "FLT" Repository.
+    This Individual License and, if applicable, Commercial License, constitute the entire agreement between the Licensee and the Repository Owner regarding the code in the "FLT" Repository.
+
+For inquiries regarding this Individual License, please contact the Repository Owner at flt@russell-harper.com.
