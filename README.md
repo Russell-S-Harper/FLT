@@ -60,7 +60,7 @@ Here is one way to build `flt.lib` using the `cc65` suite. This is recommended t
 
 Other interesting examples [(missing licenses prevent inclusion in this repository)](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#choosing-the-right-license) which can be converted to FLT are:
 
-- [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c) -- see how blazing fast your machine is! (You may have to write your own `dtime()`.)
+- [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c) -- see how blazing fast your machine is! Note that you may need to write your own `dtime()`.
 
 Be sure to adhere to the licensing terms provided in this repository to ensure proper usage and compliance.
 
