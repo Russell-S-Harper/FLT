@@ -26,7 +26,7 @@ Example to generate `eg/averages`:
 	gcc -o eg/averages eg/averages-flt.c flt-*.c
 ```
 
-You can review `eg/averages-flt.c` (code will be at the end) and you will see it has no floating point code -- all converted to FLT.
+You can review `eg/averages-flt.c` (code will be at the end) and you will see it has no floating point code – all converted to FLT.
 
 For the `cc65` suite, you will probably want to do something like this. Assumes the `flt-*.c` files have been compiled to `flt.lib`, and the paths of `cc65`, `ca65`, and `ld65` are in `$PATH`.
 
@@ -60,9 +60,9 @@ Here is one way to build `flt.lib` using the `cc65` suite. This is recommended t
 
 Other interesting examples [(missing licenses prevent inclusion in this repository)](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#choosing-the-right-license) which can be converted to FLT are:
 
-- [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c) -- see how blazing fast your machine is! Note that you may need to write your own `dtime()`.
+- [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c) – See how blazing fast your machine is! :wink: Note that you may need to write your own `dtime()`.
 
-Be sure to adhere to the licensing terms provided in this repository to ensure proper usage and compliance.
+Be sure to adhere to the licensing terms provided in this and other repositories mentioned here to ensure proper usage and compliance.
 
 ## How It Works
 
@@ -72,7 +72,7 @@ Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output err
 
 The [`cc65`](https://github.com/cc65/cc65) repository for the `cc65` suite of tools has a multi-user multi-year project under development to support [native floating point](https://github.com/mrdudz/cc65/tree/fptest/libsrc/float/), but as they mention "You can not use any of this to write software yet. Don't bother." There still appears to be a lot of work remaining. We considered contributing to the project but in reviewing the code, we felt the commitment to ramp-up was too much for what we can offer.
 
-We thought instead "Would it be possible to do a light integration with no modifications to the existing compiler?" Say alias a 32-bit integer as a float type, and write functions with that? While writing the floating point routines was easy enough (except for `pow` -- so many special cases!), we were stuck on converting floating point code to FLT. We researched many options like: adapting a [C99 parser in Python](https://github.com/eliben/pycparser), or using [CIL via OCaml](https://cil-project.github.io/cil/doc/html/cil/), or a [C++ to C converter](https://www.codeconvert.ai/c++-to-c-converter). But they were all lacking.
+We thought instead "Would it be possible to do a light integration with no modifications to the existing compiler?" Say alias a 32-bit integer as a float type, and write functions with that? While writing the floating point routines was easy enough (except for `pow` – so many special cases!), we were stuck on converting floating point code to FLT. We researched many options like: adapting a [C99 parser in Python](https://github.com/eliben/pycparser), or using [CIL via OCaml](https://cil-project.github.io/cil/doc/html/cil/), or a [C++ to C converter](https://www.codeconvert.ai/c++-to-c-converter). But they were all lacking.
 
 On a hunch, we looked at `gcc` v9.0+ and noticed it highlighted the locations of offending code during compilation. We thought, okay, we will have to write a clunky parser for the error output. But then we looked through the `man` options and saw `-fdiagnostics-format=json` to output errors in JSON. That was the key! The current version can still have problems with some C code, but it is a very good first step.
 
@@ -149,13 +149,13 @@ which will be converted to correct code like:
 
 ## License
 
-This repository is governed by a dual license -- one for individual users and another for commercial users. Please review the respective licenses in the repository for complete details. For commercial distribution rights, a separate Commercial License is required, which can be obtained by contacting the repository owner flt@russell-harper.com.
+This repository is governed by a dual license – one for individual users and another for commercial users. Please review the respective licenses in the repository for complete details. For commercial distribution rights, a separate Commercial License is required, which can be obtained by contacting the repository owner flt@russell-harper.com.
 
 Your use of this code is subject to these license terms.
 
 ---
 
-If you have any questions, suggestions, would like to discuss commercial distribution rights, or if you find FLT useful for your project, we encourage you to reach out to:
+If you have any questions and/or suggestions, would like to discuss commercial distribution rights, or if you find FLT useful for your project, we encourage you to reach out to:
 
 Russell Harper
 
