@@ -19,15 +19,15 @@ FLT flt_sinh(const FLT f) {
 	/* sinh(t) = (e^t - e^-t)/2 = (2^kt - 2^-kt)/2, where k = 1/log(2) */
 	if (t.c == E_NORMAL) {
 		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1_LOG2, 0);	/* k = 1/log(2) */
-		flt_tmp_multiply(&t, &u);							/* kt */
+		flt_tmp_multiply(&t, &u);				/* kt */
 		flt_tmp_copy(&u, &t);
-		flt_tmp_exp2(&t);									/* 2^kt = e^t */
-		flt_tmp_negate(&u);									/* -kt */
-		flt_tmp_exp2(&u);									/* 2^-kt = e^-t */
-		flt_tmp_negate(&u);									/* -e^-t */
-		flt_tmp_add(&t, &u);								/* e^t - e^-t */
+		flt_tmp_exp2(&t);					/* 2^kt = e^t */
+		flt_tmp_negate(&u);					/* -kt */
+		flt_tmp_exp2(&u);					/* 2^-kt = e^-t */
+		flt_tmp_negate(&u);					/* -e^-t */
+		flt_tmp_add(&t, &u);					/* e^t - e^-t */
 		if (t.c == E_NORMAL)
-			--t.e;											/* (e^t - e^-t)/2 */
+			--t.e;						/* (e^t - e^-t)/2 */
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_sinh_alt(&t);
@@ -41,14 +41,14 @@ FLT flt_cosh(const FLT f) {
 	/* cosh(t) = (e^t + e^-t)/2 = (2^kt + 2^-kt)/2, where k = 1/log(2) */
 	if (t.c == E_NORMAL) {
 		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1_LOG2, 0);	/* k = 1/log(2) */
-		flt_tmp_multiply(&t, &u);							/* kt */
+		flt_tmp_multiply(&t, &u);				/* kt */
 		flt_tmp_copy(&u, &t);
-		flt_tmp_exp2(&t);									/* 2^kt = e^t */
-		flt_tmp_negate(&u);									/* -kt */
-		flt_tmp_exp2(&u);									/* 2^-kt = e^-t */
-		flt_tmp_add(&t, &u);								/* e^t + e^-t */
+		flt_tmp_exp2(&t);					/* 2^kt = e^t */
+		flt_tmp_negate(&u);					/* -kt */
+		flt_tmp_exp2(&u);					/* 2^-kt = e^-t */
+		flt_tmp_add(&t, &u);					/* e^t + e^-t */
 		if (t.c == E_NORMAL)
-			--t.e;											/* (e^t + e^-t)/2 */
+			--t.e;						/* (e^t + e^-t)/2 */
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_cosh_alt(&t);
@@ -64,17 +64,17 @@ FLT flt_tanh(const FLT f) {
 	flt_tmp_initialize(&u, E_NORMAL, t.s, 0x50000000, 3); /* 10.0 */
 	if (t.c == E_NORMAL && flt_tmp_compare(&t, &u, t.s? E_GREATER_THAN: E_LESS_THAN)) {
 		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1_LOG2, 0);	/* k = 1/log(2) */
-		flt_tmp_multiply(&t, &u);							/* kt */
+		flt_tmp_multiply(&t, &u);				/* kt */
 		flt_tmp_copy(&u, &t);
-		flt_tmp_exp2(&t);									/* 2^kt = e^t */
-		flt_tmp_negate(&u);									/* -e^t */
-		flt_tmp_exp2(&u);									/* 2^-kt = e^-kt */
+		flt_tmp_exp2(&t);					/* 2^kt = e^t */
+		flt_tmp_negate(&u);					/* -e^t */
+		flt_tmp_exp2(&u);					/* 2^-kt = e^-kt */
 		flt_tmp_copy(&v, &t);
-		flt_tmp_add(&v, &u);								/* e^kt + e^-t */
-		flt_tmp_invert(&v);									/* 1/(e^t + e^-t) */
-		flt_tmp_negate(&u);									/* -e^-t */
-		flt_tmp_add(&t, &u);								/* e^t - e^-t */
-		flt_tmp_multiply(&t, &v);							/* (e^t - e^-t) / (e^t + e^-t) */
+		flt_tmp_add(&v, &u);					/* e^kt + e^-t */
+		flt_tmp_invert(&v);					/* 1/(e^t + e^-t) */
+		flt_tmp_negate(&u);					/* -e^-t */
+		flt_tmp_add(&t, &u);					/* e^t - e^-t */
+		flt_tmp_multiply(&t, &v);				/* (e^t - e^-t) / (e^t + e^-t) */
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_tanh_alt(&t);
@@ -92,15 +92,15 @@ FLT flt_asinh(const FLT f) {
 		/* Save the sign and set t > 0 */
 		sign = t.s;
 		t.s = 0;
-		flt_tmp_copy(&u, &t);									/* t */
-		flt_tmp_multiply(&u, &t);								/* t^2 */
-		flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);			/* 1.0 */
-		flt_tmp_add(&u, &v);									/* t^2 + 1 */
-		flt_tmp_sqrt_ext(&u);									/* sqrt(t^2 + 1) */
-		flt_tmp_add(&t, &u);									/* t + sqrt(t^2 + 1) */
-		flt_tmp_log2(&t); 										/* log2(t + sqrt(t^2 + 1)) */
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -1);		/* 2log(2)/2 = log(2) */
-		flt_tmp_multiply(&t, &u);								/* log(t + sqrt(t^2 + 1)) */
+		flt_tmp_copy(&u, &t);					/* t */
+		flt_tmp_multiply(&u, &t);				/* t^2 */
+		flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);		/* 1.0 */
+		flt_tmp_add(&u, &v);					/* t^2 + 1 */
+		flt_tmp_sqrt_ext(&u);					/* sqrt(t^2 + 1) */
+		flt_tmp_add(&t, &u);					/* t + sqrt(t^2 + 1) */
+		flt_tmp_log2(&t); 					/* log2(t + sqrt(t^2 + 1)) */
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -1);	/* 2log(2)/2 = log(2) */
+		flt_tmp_multiply(&t, &u);				/* log(t + sqrt(t^2 + 1)) */
 		/* Restore the sign */
 		t.s = sign;
 		tmp_to_flt(&t, &result);
@@ -116,15 +116,15 @@ FLT flt_acosh(const FLT f) {
 	/* arcosh(t) = log(t + sqrt(t^2 - 1)) = log(2)*log(t + sqrt(t^2 - 1)) */
 	/* t.e >= 0 is a quick check for t >= 1 */
 	if (t.c == E_NORMAL && !t.s && t.e >= 0) {
-		flt_tmp_copy(&u, &t);									/* t */
-		flt_tmp_multiply(&u, &t);								/* t^2 */
-		flt_tmp_initialize(&v, E_NORMAL, 1, TMP_1, 0);			/* -1.0 */
-		flt_tmp_add(&u, &v);									/* t^2 - 1 */
-		flt_tmp_sqrt_ext(&u);									/* sqrt(t^2 - 1) */
-		flt_tmp_add(&t, &u);									/* t + sqrt(t^2 - 1) */
-		flt_tmp_log2(&t); 										/* log2(t + sqrt(t^2 - 1)) */
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -1);		/* 2log(2)/2 = log(2) */
-		flt_tmp_multiply(&t, &u);								/* log(t + sqrt(t^2 - 1)) */
+		flt_tmp_copy(&u, &t);					/* t */
+		flt_tmp_multiply(&u, &t);				/* t^2 */
+		flt_tmp_initialize(&v, E_NORMAL, 1, TMP_1, 0);		/* -1.0 */
+		flt_tmp_add(&u, &v);					/* t^2 - 1 */
+		flt_tmp_sqrt_ext(&u);					/* sqrt(t^2 - 1) */
+		flt_tmp_add(&t, &u);					/* t + sqrt(t^2 - 1) */
+		flt_tmp_log2(&t); 					/* log2(t + sqrt(t^2 - 1)) */
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -1);	/* 2log(2)/2 = log(2) */
+		flt_tmp_multiply(&t, &u);				/* log(t + sqrt(t^2 - 1)) */
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_acosh_alt(&t);
@@ -140,17 +140,17 @@ FLT flt_atanh(const FLT f) {
 	/* arctanh(t) = log((1 + t)/(1 - t))/2 = log(2)*log((1 + t)/(1 - t))/2 */
 	/* t.e < 0 is a quick check for t < 1 */
 	if (t.c == E_NORMAL && t.e < 0) {
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1, 0);			/* 1.0 */
-		flt_tmp_copy(&v, &t);									/* t */
-		flt_tmp_negate(&v);										/* -t */
-		flt_tmp_add(&u, &v);									/* 1 - t */
-		flt_tmp_invert(&u);										/* 1/(1 - t) */
-		flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);			/* 1.0 */
-		flt_tmp_add(&t, &v);									/* 1 + t */
-		flt_tmp_multiply(&t, &u);								/* (1 + t)/(1 - t) */
-		flt_tmp_log2(&t); 										/* log2((1 + t)/(1 - t)) */
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -2);		/* 2log(2)/4 = log(2)/2 */
-		flt_tmp_multiply(&t, &u);								/* log((1 + t)/(1 - t))/2 */
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1, 0);		/* 1.0 */
+		flt_tmp_copy(&v, &t);					/* t */
+		flt_tmp_negate(&v);					/* -t */
+		flt_tmp_add(&u, &v);					/* 1 - t */
+		flt_tmp_invert(&u);					/* 1/(1 - t) */
+		flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);		/* 1.0 */
+		flt_tmp_add(&t, &v);					/* 1 + t */
+		flt_tmp_multiply(&t, &u);				/* (1 + t)/(1 - t) */
+		flt_tmp_log2(&t); 					/* log2((1 + t)/(1 - t)) */
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -2);	/* 2log(2)/4 = log(2)/2 */
+		flt_tmp_multiply(&t, &u);				/* log((1 + t)/(1 - t))/2 */
 		tmp_to_flt(&t, &result);
 	} else
 		result = flt_tmp_atanh_alt(&t);

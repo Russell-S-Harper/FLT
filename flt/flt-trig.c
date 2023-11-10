@@ -128,12 +128,12 @@ FLT flt_atan2(const FLT y, const FLT x) {
 		if (x_sign)
 			flt_tmp_initialize(&t, E_NORMAL, 0, TMP_PI_2, 1);		/* PI */
 		else
-			flt_tmp_initialize(&t, E_ZERO, 0, 0, 0);				/* 0 */
+			flt_tmp_initialize(&t, E_ZERO, 0, 0, 0);			/* 0 */
 	} else if (t.c == E_NORMAL && u.c == E_ZERO)
 		/* Along Y axis */
-		flt_tmp_initialize(&t, E_NORMAL, y_sign, TMP_PI_2, 0);		/* +/-PI/2 */
+		flt_tmp_initialize(&t, E_NORMAL, y_sign, TMP_PI_2, 0);			/* +/-PI/2 */
 	else
-		flt_tmp_initialize(&t, E_NAN, 0, 0, 0);						/* NaN */
+		flt_tmp_initialize(&t, E_NAN, 0, 0, 0);					/* NaN */
 	tmp_to_flt(&t, &result);
 	return result;
 }

@@ -21,25 +21,25 @@ typedef uint32_t FLT;
 #endif /* _FLT_TDF */
 
 /* Predefined constants for +/-INFINITY, NAN, +/-ZERO, +/-ONE, and +/-PI/2 */
-#define FLT_POS_INF		(0x7F800000)
-#define FLT_NEG_INF		(0xFF800000)
-#define FLT_NAN			(0x7FFFFFFF)
-#define FLT_POS_0		(0x00000000)
-#define FLT_NEG_0		(0x80000000)
-#define FLT_POS_1		(0x3F800000)
-#define FLT_NEG_1		(0xBF800000)
+#define FLT_POS_INF	(0x7F800000)
+#define FLT_NEG_INF	(0xFF800000)
+#define FLT_NAN		(0x7FFFFFFF)
+#define FLT_POS_0	(0x00000000)
+#define FLT_NEG_0	(0x80000000)
+#define FLT_POS_1	(0x3F800000)
+#define FLT_NEG_1	(0xBF800000)
 #define FLT_POS_PI_2	(0x3FC90FDB)	/* +PI/2 */
 #define FLT_NEG_PI_2	(0xBFC90FDB)	/* -PI/2 */
 
 /* (Possibly) redefined "float.h" constants */
 #undef	FLT_MIN
-#define FLT_MIN			(1.17549435082e-38)
+#define FLT_MIN		(1.17549435082e-38)
 #undef	FLT_TRUE_MIN
 #define FLT_TRUE_MIN	(1.40129846432e-45)
 #undef	FLT_MAX
-#define FLT_MAX			(3.40282346639e+38)
+#define FLT_MAX		(3.40282346639e+38)
 #undef	FLT_EPSILON
-#define	FLT_EPSILON		(1.19209289551e-07)
+#define	FLT_EPSILON	(1.19209289551e-07)
 
 /* Floating point classes and comparisons */
 typedef enum {E_INFINITE = 1, E_NAN, E_NORMAL, E_SUBNORMAL, E_ZERO} E_CLASS;

@@ -16,15 +16,15 @@ FLT flt_pow(const FLT f, const FLT g) {
 	flt_tmp t, u, v, w;
 	flt_to_tmp(&f, &t);
 	flt_to_tmp(&g, &u);
-    /*	pow(t, +/-0) returns 1 for any t, even when t is NaN
-    	pow(+1, u) returns 1 for any u, even when u is NaN */
+	/* pow(t, +/-0) returns 1 for any t, even when t is NaN
+		pow(+1, u) returns 1 for any u, even when u is NaN */
 	flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);
 	if (u.c == E_ZERO || flt_tmp_compare(&t, &v, E_EQUAL_TO))
 		return FLT_POS_1;
-    /*	pow(+Inf, u) returns +0 for any negative u
-    	pow(+Inf, u) returns +Inf for any positive u */
-    if (t.c == E_INFINITE && !t.s && u.c != E_NAN)
-    	return u.s? FLT_POS_0: FLT_POS_INF;
+	/* pow(+Inf, u) returns +0 for any negative u
+		pow(+Inf, u) returns +Inf for any positive u */
+	if (t.c == E_INFINITE && !t.s && u.c != E_NAN)
+		return u.s? FLT_POS_0: FLT_POS_INF;
 	/* Check for integer exponents */
 	flt_tmp_copy(&v, &u);
 	if (v.c == E_NORMAL)
@@ -47,16 +47,15 @@ FLT flt_pow(const FLT f, const FLT g) {
 	return result;
 }
 
-/*	Convenience function to handle pow special cases.
-	Note +Inf^u, t^0, and 1^u are already handled. */
+/* Convenience function to handle pow special cases. Note +Inf^u, t^0, and 1^u are already handled. */
 static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 	flt_tmp v;
 	switch (pt->c) {
 		case E_INFINITE:
 			if (pt->s) {
 				switch (pu->c) {
-					/*	pow(-Inf, u) returns +0 if u is a negative non-integer
-    					pow(-Inf, u) returns +Inf if u is a positive non-integer */
+					/* pow(-Inf, u) returns +0 if u is a negative non-integer
+						pow(-Inf, u) returns +Inf if u is a positive non-integer */
 					case E_INFINITE:
 					case E_NORMAL:
 						return pu->s? FLT_POS_0: FLT_POS_INF;
@@ -66,12 +65,12 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 			break;
 		case E_ZERO:
 			switch (pu->c) {
-    			/*
-    				pow(+/-0, -Inf) returns +Inf
-    				pow(+/-0, +Inf) returns +0
-    				pow(+/-0, u), where u is a negative non-integer, returns +Inf
-    				pow(+/-0, u), where u is a positive non-integer, returns +0
-    			*/
+				/*
+					pow(+/-0, -Inf) returns +Inf
+					pow(+/-0, +Inf) returns +0
+					pow(+/-0, u), where u is a negative non-integer, returns +Inf
+					pow(+/-0, u), where u is a positive non-integer, returns +0
+				*/
 				case E_INFINITE:
 				case E_NORMAL:
 					return pu->s? FLT_POS_INF: FLT_POS_0;
@@ -80,8 +79,8 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 		case E_NORMAL:
 			switch (pu->c) {
 				/*
-    				pow(-1, +/-Inf) returns 1
-			    	pow(t, -Inf) returns +Inf for any |t|<1
+					pow(-1, +/-Inf) returns 1
+					pow(t, -Inf) returns +Inf for any |t|<1
 					pow(t, -Inf) returns +0 for any |t|>1
 					pow(t, +Inf) returns +0 for any |t|<1
 					pow(t, +Inf) returns +Inf for any |t|>1
@@ -103,8 +102,7 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 	return FLT_NAN;
 }
 
-/*	To handle t^u where u is an integer.
-	Note +Inf^u, t^0, and 1^u are already handled. */
+/* To handle t^u where u is an integer. Note +Inf^u, t^0, and 1^u are already handled. */
 static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 	flt_tmp v, w;
 	int sign;
@@ -140,25 +138,25 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 			case E_ZERO:
 				if (pu->s)
 					/*
-    					pow(+0, u), where u is a negative odd integer, returns +Inf
-    					pow(+0, u), where u is a positive odd integer, returns +0
-    					pow(-0, u), where u is a negative odd integer, returns -Inf
-    					pow(-0, u), where u is a positive odd integer, returns -0
+						pow(+0, u), where u is a negative odd integer, returns +Inf
+						pow(+0, u), where u is a positive odd integer, returns +0
+						pow(-0, u), where u is a negative odd integer, returns -Inf
+						pow(-0, u), where u is a positive odd integer, returns -0
 					*/
 					pt->c = E_INFINITE;
 				if (!u_is_odd)
-					/*	pow(+/-0, u), where u is a negative even integer, returns +Inf
-    					pow(+/-0, u), where u is a positive even integer, returns +0 */
+					/* pow(+/-0, u), where u is a negative even integer, returns +Inf
+						pow(+/-0, u), where u is a positive even integer, returns +0 */
 					pt->s = 0;
 				break;
 			case E_INFINITE:
 				if (pu->s)
-					/*	pow(-Inf, u), where u is a negative odd integer, returns -0
-    					pow(-Inf, u), where u is a positive odd integer, returns -Inf */
+					/* pow(-Inf, u), where u is a negative odd integer, returns -0
+						pow(-Inf, u), where u is a positive odd integer, returns -Inf */
 					pt->c = E_ZERO;
 				if (!u_is_odd)
-					/*	pow(-Inf, u), where u is a negative even integer, returns +0
-    					pow(-Inf, u), where u is a positive even integer, returns +Inf */
+					/* pow(-Inf, u), where u is a negative even integer, returns +0
+						pow(-Inf, u), where u is a positive even integer, returns +Inf */
 					pt->s = 0;
 				break;
 			default:

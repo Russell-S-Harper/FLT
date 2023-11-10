@@ -33,7 +33,7 @@ FLT flt_hypot(const FLT f, const FLT g) {
 	flt_tmp_multiply(&u, &v);	/* u^2 */
 	flt_tmp_add(&t, &u);		/* t^2 + u^2 */
 	if (t.c == E_NORMAL)
-		flt_tmp_sqrt(&t);		/* sqrt(t^2 + u^2) */
+		flt_tmp_sqrt(&t);	/* sqrt(t^2 + u^2) */
 	tmp_to_flt(&t, &result);
 	return result;
 }
@@ -56,7 +56,7 @@ static FLT flt_tmp_sqrt_alt(flt_tmp *pt) {
 void flt_tmp_sqrt_ext(flt_tmp *pt) {
 	if (pt->c == E_NORMAL) {
 		if (!pt->s)
-			flt_tmp_sqrt(pt);							/* sqrt(t^2 - 1) */
+			flt_tmp_sqrt(pt);				/* sqrt(t^2 - 1) */
 		else
 			flt_tmp_initialize(pt, E_ZERO, 0, 0, 0);	/* Forcing t < 0 to 0 due to rounding errors */
 	}
@@ -84,10 +84,10 @@ void flt_tmp_sqrt(flt_tmp *pt) {
 		flt_tmp_add(pt, &v);			/* x */
 		for (i = 0; i < 3; ++i) {
 			flt_tmp_copy(&v, pt);		/* x */
-			flt_tmp_invert(&v);			/* 1/x */
+			flt_tmp_invert(&v);		/* 1/x */
 			flt_tmp_multiply(&v, &u);	/* t/x */
 			flt_tmp_add(pt, &v);		/* x + t/x */
-			--pt->e;					/* (x + t/x) / 2 */
+			--pt->e;			/* (x + t/x) / 2 */
 		}
 	}
 	/* Handle odd exponents */

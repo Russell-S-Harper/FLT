@@ -21,7 +21,7 @@ typedef enum {E_BEFORE = 1, E_AFTER} E_ROUNDING;
 
 /* Maximum "F" format can be 51 characters including the null terminator: +#######################################.#########_ */
 #define FMT_F_MAX_LEN	51
-#define FMT_F_BFR_LEN	(5 * FMT_F_MAX_LEN)		/* Can provide up to 5 "F" calls in one printf statement (5 * 51 = 255) */
+#define FMT_F_BFR_LEN	(5 * FMT_F_MAX_LEN)	/* Can provide up to 5 "F" calls in one printf statement (5 * 51 = 255) */
 
 /* Used in *scanf */
 int g_flt_last_scanf_result;

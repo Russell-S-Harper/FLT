@@ -139,18 +139,18 @@ function get_parameters($argc, $argv) {
 function preprocess($code, $pass, $extra) {
 	// List of (mostly) functions to replace
 	$fns = array(
-		array('float', 'FLT'),			array('double', 'FLT'),					array('long FLT', 'long double'),
-		array('DBL_MIN', 'FLT_MIN'),	array('DBL_TRUE_MIN', 'FLT_TRUE_MIN'),	array('DBL_MAX', 'FLT_MAX'),				array('DBL_EPSILON', 'FLT_EPSILON'),
-		array('acosf?', 'flt_acos'),	array('acoshf?', 'flt_acosh'),			array('asinf?', 'flt_asin'),				array('asinhf?', 'flt_asinh'),
-		array('atan2f?', 'flt_atan2'),	array('atanf?', 'flt_atan'),			array('atanhf?', 'flt_atanh'),				array('atoff?', 'flt_atof'),
-		array('ceilf?', 'flt_ceil'),	array('cosf?', 'flt_cos'),				array('coshf?', 'flt_cosh'),				array('exp10f?', 'flt_exp10'),
-		array('exp2f?', 'flt_exp2'),	array('expf?', 'flt_exp'),				array('fabsf?', 'flt_fabs'),				array('floorf?', 'flt_floor'),
-		array('fmaxf?', 'flt_fmax'),	array('fminf?', 'flt_fmin'),			array('fmodf?', 'flt_fmod'),				array('frexpf?', 'flt_frexp'),
-		array('fsgnf?', 'flt_fsgn'),	array('hypotf?', 'flt_hypot'),			array('isfinite', 'flt_isfinite'),			array('isinf', 'flt_isinf'),
-		array('isnan', 'flt_isnan'),	array('isnormal', 'flt_isnormal'),		array('issubnormal', 'flt_issubnormal'),	array('iszero', 'flt_iszero'),
-		array('ldexpf?', 'flt_ldexp'),	array('log10f?', 'flt_log10'),			array('log2f?', 'flt_log2'),				array('logf?', 'flt_log'),
-		array('modff?', 'flt_modf'),	array('powf?', 'flt_pow'),				array('roundf?', 'flt_round'),				array('sinf?', 'flt_sin'),
-		array('sinhf?', 'flt_sinh'),	array('sqrtf?', 'flt_sqrt'),			array('tanf?', 'flt_tan'),					array('tanhf?', 'flt_tanh'),
+		array('float', 'FLT'),		array('double', 'FLT'),			array('long FLT', 'long double'),
+		array('DBL_MIN', 'FLT_MIN'),	array('DBL_TRUE_MIN', 'FLT_TRUE_MIN'),	array('DBL_MAX', 'FLT_MAX'),			array('DBL_EPSILON', 'FLT_EPSILON'),
+		array('acosf?', 'flt_acos'),	array('acoshf?', 'flt_acosh'),		array('asinf?', 'flt_asin'),			array('asinhf?', 'flt_asinh'),
+		array('atan2f?', 'flt_atan2'),	array('atanf?', 'flt_atan'),		array('atanhf?', 'flt_atanh'),			array('atoff?', 'flt_atof'),
+		array('ceilf?', 'flt_ceil'),	array('cosf?', 'flt_cos'),		array('coshf?', 'flt_cosh'),			array('exp10f?', 'flt_exp10'),
+		array('exp2f?', 'flt_exp2'),	array('expf?', 'flt_exp'),		array('fabsf?', 'flt_fabs'),			array('floorf?', 'flt_floor'),
+		array('fmaxf?', 'flt_fmax'),	array('fminf?', 'flt_fmin'),		array('fmodf?', 'flt_fmod'),			array('frexpf?', 'flt_frexp'),
+		array('fsgnf?', 'flt_fsgn'),	array('hypotf?', 'flt_hypot'),		array('isfinite', 'flt_isfinite'),		array('isinf', 'flt_isinf'),
+		array('isnan', 'flt_isnan'),	array('isnormal', 'flt_isnormal'),	array('issubnormal', 'flt_issubnormal'),	array('iszero', 'flt_iszero'),
+		array('ldexpf?', 'flt_ldexp'),	array('log10f?', 'flt_log10'),		array('log2f?', 'flt_log2'),			array('logf?', 'flt_log'),
+		array('modff?', 'flt_modf'),	array('powf?', 'flt_pow'),		array('roundf?', 'flt_round'),			array('sinf?', 'flt_sin'),
+		array('sinhf?', 'flt_sinh'),	array('sqrtf?', 'flt_sqrt'),		array('tanf?', 'flt_tan'),			array('tanhf?', 'flt_tanh'),
 		array('truncf?', 'flt_trunc')
 	);
 	// First check if gcc is installed and is a supported version
@@ -452,7 +452,7 @@ function join_multiline_messages(&$lines, $messages, &$modified) {
 
 function process_arithmetic_binary_operands(&$lines, $message, &$modified) {
 	$operators = array(
-		'+' => 'flt_add',		'-' => 'flt_subtract',			'*' => 'flt_multiply',			'/' => 'flt_divide',
+		'+' => 'flt_add',	'-' => 'flt_subtract',		'*' => 'flt_multiply',		'/' => 'flt_divide',
 		'+=' => 'flt_add_into',	'-=' => 'flt_subtract_into',	'*=' => 'flt_multiply_into',	'/=' => 'flt_divide_into'
 	);
 	$o = $p = $q = -1;
@@ -931,9 +931,9 @@ function process_simple_left_operand(&$lines, &$modified, $o, $o_start) {
 	$p1 = substr($line, 0, $o_start);
 	$left = get_previous_token($p1);
 	if ($left != '') {
-			$working = split_previous_token($left, $p1);
-			$lines[$o] = $working[0].(is_numeric($left)? 'flt_atof("'.$left.'")': 'flt_ltof('.$left.')').$working[1].substr($line, $o_start);
-			$modified[] = $o;
+		$working = split_previous_token($left, $p1);
+		$lines[$o] = $working[0].(is_numeric($left)? 'flt_atof("'.$left.'")': 'flt_ltof('.$left.')').$working[1].substr($line, $o_start);
+		$modified[] = $o;
 	} else
 		// Can't find the left operand, might be on the previous line
 		merge_previous_line($lines, $modified, $o);
@@ -944,9 +944,9 @@ function process_simple_right_operand(&$lines, &$modified, $o, $o_finish) {
 	$p1 = substr($line, $o_finish + 1);
 	$right = get_next_token($p1);
 	if ($right != '') {
-			$working = explode($right, $p1, 2);
-			$lines[$o] = substr($line, 0, $o_finish + 1).$working[0].(is_numeric($right)? 'flt_atof("'.$right.'")': 'flt_ltof('.$right.')').$working[1];
-			$modified[] = $o;
+		$working = explode($right, $p1, 2);
+		$lines[$o] = substr($line, 0, $o_finish + 1).$working[0].(is_numeric($right)? 'flt_atof("'.$right.'")': 'flt_ltof('.$right.')').$working[1];
+		$modified[] = $o;
 	} else
 		// Can't find the right operand, might be on the next line
 		merge_next_line($lines, $modified, $o);
