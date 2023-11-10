@@ -59,8 +59,7 @@ FLT flt_asin(const FLT f) {
 	FLT result;
 	flt_tmp t;
 	flt_to_tmp(&f, &t);
-	/* t.e < 0 is a quick check for |t| < 1, and
-		!t.e && t.m == TMP_1 is a quick check for |t| = 1 */
+	/* t.e < 0 is a quick check for |t| < 1, and !t.e && t.m == TMP_1 is a quick check for |t| = 1 */
 	if (t.c == E_NORMAL && (t.e < 0 || (!t.e && t.m == TMP_1))) {
 		flt_tmp_asin(&t);
 		tmp_to_flt(&t, &result);
@@ -73,8 +72,7 @@ FLT flt_acos(const FLT f) {
 	FLT result;
 	flt_tmp t;
 	flt_to_tmp(&f, &t);
-	/* t.e < 0 is a quick check for |t| < 1, and
-		!t.e && t.m == TMP_1 is a quick check for |t| = 1 */
+	/* t.e < 0 is a quick check for |t| < 1, and !t.e && t.m == TMP_1 is a quick check for |t| = 1 */
 	if (t.c == E_NORMAL && (t.e < 0 || (!t.e && t.m == TMP_1))) {
 		flt_tmp_acos(&t);
 		tmp_to_flt(&t, &result);

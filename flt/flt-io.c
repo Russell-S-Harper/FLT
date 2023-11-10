@@ -349,7 +349,8 @@ static int flt_tmp_normalize_to_base_10(flt_tmp *pt, int precision, const E_ROUN
 	/* Input is expected to be normal and non-negative */
 	if (pt->c != E_NORMAL || pt->s)
 		exit(EXIT_FAILURE);
-	/* Get rounding, i.e. start with half and divide down by the precision. The reason
+	/*
+		Get rounding, i.e. start with half and divide down by the precision. The reason
 		we're not using Banker's rounding here is because in testing, Banker's rounding
 		rarely made a difference. Most of the time the input is multiplied by one or
 		more of k1en8, k1en5, k1en3, k1en2, or k1en1 which don't have "clean"

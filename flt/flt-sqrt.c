@@ -51,8 +51,7 @@ static FLT flt_tmp_sqrt_alt(flt_tmp *pt) {
 	}
 }
 
-/* A more forgiving flt_tmp_sqrt; does a bit extra by handling t < 0 due to
-	rounding errors, as well as handling t = 0, etc. */
+/* A more forgiving flt_tmp_sqrt; does a bit extra by handling t < 0 due to rounding errors, as well as handling t = 0, etc. */
 void flt_tmp_sqrt_ext(flt_tmp *pt) {
 	if (pt->c == E_NORMAL) {
 		if (!pt->s)

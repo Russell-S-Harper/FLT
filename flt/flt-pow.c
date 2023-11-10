@@ -16,13 +16,17 @@ FLT flt_pow(const FLT f, const FLT g) {
 	flt_tmp t, u, v, w;
 	flt_to_tmp(&f, &t);
 	flt_to_tmp(&g, &u);
-	/* pow(t, +/-0) returns 1 for any t, even when t is NaN
-		pow(+1, u) returns 1 for any u, even when u is NaN */
+	/*
+		pow(t, +/-0) returns 1 for any t, even when t is NaN
+		pow(+1, u) returns 1 for any u, even when u is NaN
+	*/
 	flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);
 	if (u.c == E_ZERO || flt_tmp_compare(&t, &v, E_EQUAL_TO))
 		return FLT_POS_1;
-	/* pow(+Inf, u) returns +0 for any negative u
-		pow(+Inf, u) returns +Inf for any positive u */
+	/*
+		pow(+Inf, u) returns +0 for any negative u
+		pow(+Inf, u) returns +Inf for any positive u
+	*/
 	if (t.c == E_INFINITE && !t.s && u.c != E_NAN)
 		return u.s? FLT_POS_0: FLT_POS_INF;
 	/* Check for integer exponents */
@@ -54,8 +58,10 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 		case E_INFINITE:
 			if (pt->s) {
 				switch (pu->c) {
-					/* pow(-Inf, u) returns +0 if u is a negative non-integer
-						pow(-Inf, u) returns +Inf if u is a positive non-integer */
+					/*
+						pow(-Inf, u) returns +0 if u is a negative non-integer
+						pow(-Inf, u) returns +Inf if u is a positive non-integer
+					*/
 					case E_INFINITE:
 					case E_NORMAL:
 						return pu->s? FLT_POS_0: FLT_POS_INF;
@@ -145,18 +151,24 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 					*/
 					pt->c = E_INFINITE;
 				if (!u_is_odd)
-					/* pow(+/-0, u), where u is a negative even integer, returns +Inf
-						pow(+/-0, u), where u is a positive even integer, returns +0 */
+					/*
+						pow(+/-0, u), where u is a negative even integer, returns +Inf
+						pow(+/-0, u), where u is a positive even integer, returns +0
+					*/
 					pt->s = 0;
 				break;
 			case E_INFINITE:
 				if (pu->s)
-					/* pow(-Inf, u), where u is a negative odd integer, returns -0
-						pow(-Inf, u), where u is a positive odd integer, returns -Inf */
+					/*
+						pow(-Inf, u), where u is a negative odd integer, returns -0
+						pow(-Inf, u), where u is a positive odd integer, returns -Inf
+					*/
 					pt->c = E_ZERO;
 				if (!u_is_odd)
-					/* pow(-Inf, u), where u is a negative even integer, returns +0
-						pow(-Inf, u), where u is a positive even integer, returns +Inf */
+					/*
+						pow(-Inf, u), where u is a negative even integer, returns +0
+						pow(-Inf, u), where u is a positive even integer, returns +Inf
+					*/
 					pt->s = 0;
 				break;
 			default:

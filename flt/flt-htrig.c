@@ -131,8 +131,7 @@ FLT flt_acosh(const FLT f) {
 	return result;
 }
 
-/* The usable range of this function is between 0 <= |f| <= 0.999; above 0.999 the errors
-	become increasingly significant. */
+/* The usable range of this function is between 0 <= |f| <= 0.999; above 0.999 the errors become increasingly significant. */
 FLT flt_atanh(const FLT f) {
 	FLT result;
 	flt_tmp t, u, v;

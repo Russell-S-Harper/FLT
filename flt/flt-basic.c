@@ -92,8 +92,7 @@ FLT flt_divide_into(FLT *pf, const FLT g) {
 }
 
 FLT flt_negated(const FLT f) {
-	/* This seems wasteful given what little flt_tmp_negate
-		does but we'll do it this way for consistency! */
+	/* This seems wasteful given what little flt_tmp_negate does but we'll do it this way for consistency! */
 	FLT result;
 	flt_tmp t;
 	flt_to_tmp(&f, &t);
