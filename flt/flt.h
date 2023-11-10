@@ -9,8 +9,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-/*
-	IEEE 754 single-precision
+/* IEEE 754 single-precision
 
 	Sign bit: 1 bit
 	Exponent width: 8 bits
