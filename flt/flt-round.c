@@ -13,7 +13,7 @@ FLT flt_round(const FLT f) {
 	flt_tmp t, u;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		flt_tmp_initialize(&u, E_NORMAL, t.s, TMP_1, -1);	/* +/- 0.5 */
+		flt_tmp_initialize(&u, E_NORMAL, t.s, TMP_1, -1); /* +/- 0.5 */
 		flt_tmp_add(&t, &u);
 		flt_tmp_modf(&t, &u);
 		tmp_to_flt(&u, &result);

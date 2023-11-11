@@ -307,8 +307,7 @@ void flt_tmp_invert(flt_tmp *pt) {
 	}
 }
 
-/* Optimized routine to multiply two 16-bit inputs to generate a 32-bit result
- */
+/* Optimized routine to multiply two 16-bit inputs to generate a 32-bit result */
 static uint32_t uint_multiply(const uint16_t a, const uint16_t b) {
 	uint32_t result = 0;
 	uint16_t i = 0x8000;

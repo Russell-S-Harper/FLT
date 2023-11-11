@@ -27,8 +27,7 @@ FLT flt_log(const FLT f) {
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL && !t.s) {
 		flt_tmp_log2(&t);
-		/* 2log(2)/2 = log(2) */
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -1);
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -1); /* 2log(2)/2 = log(2) */
 		flt_tmp_multiply(&t, &u);
 		tmp_to_flt(&t, &result);
 	} else
@@ -42,8 +41,7 @@ FLT flt_log10(const FLT f) {
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL && !t.s) {
 		flt_tmp_log2(&t);
-		/* log10(2) = 0.301029995663981 */
-		flt_tmp_initialize(&u, E_NORMAL, 0, 0x4D104D42, -2);
+		flt_tmp_initialize(&u, E_NORMAL, 0, 0x4D104D42, -2); /* log10(2) = 0.301029995663981 */
 		flt_tmp_multiply(&t, &u);
 		tmp_to_flt(&t, &result);
 	} else
