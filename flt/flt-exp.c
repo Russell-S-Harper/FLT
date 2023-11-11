@@ -26,8 +26,7 @@ FLT flt_exp(const FLT f) {
 	flt_tmp t, u;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		/* 1/log(2) */
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1_LOG2, 0);
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1_LOG2, 0);	/* 1/log(2) */
 		flt_tmp_multiply(&t, &u);
 		flt_tmp_exp2(&t);
 		tmp_to_flt(&t, &result);
@@ -41,8 +40,7 @@ FLT flt_exp10(const FLT f) {
 	flt_tmp t, u;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		/* log(10)/log(2) = 3.32192809488736 */
-		flt_tmp_initialize(&u, E_NORMAL, 0, 0x6A4D3C26, 1);
+		flt_tmp_initialize(&u, E_NORMAL, 0, 0x6A4D3C26, 1);	/* log(10)/log(2) = 3.32192809488736 */
 		flt_tmp_multiply(&t, &u);
 		flt_tmp_exp2(&t);
 		tmp_to_flt(&t, &result);
@@ -91,7 +89,7 @@ static void flt_tmp_exp2_wrk(flt_tmp *pt) {
 	if (pt->c != E_NORMAL || pt->s)
 		exit(EXIT_FAILURE);
 	/* Handle out of range */
-	flt_tmp_initialize(&u, E_NORMAL, 0, 0x4A800000, 7); /* 149.0 */
+	flt_tmp_initialize(&u, E_NORMAL, 0, 0x4A800000, 7);	/* 149.0 */
 	if (flt_tmp_compare(pt, &u, E_GREATER_THAN)) {
 		flt_tmp_initialize(pt, E_INFINITE, 0, 0, 0);
 		return;
@@ -101,15 +99,13 @@ static void flt_tmp_exp2_wrk(flt_tmp *pt) {
 	pt->e = 0;
 	/* Shortcut if mantissa = 1.0 */
 	if (pt->m == TMP_1)
-		flt_tmp_initialize(pt, E_NORMAL, 0, TMP_1, 1);
+		flt_tmp_initialize(pt, E_NORMAL, 0, TMP_1, 1);	/* 2.0 */
 	/* Approximate using the polynomial */
 	else
 		flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
 	/* Positive powers */
-	for (i = 0; pt->c == E_NORMAL && i < exponent; ++i) {
-		flt_tmp_copy(&u, pt);
-		flt_tmp_multiply(pt, &u);
-	}
+	for (i = 0; pt->c == E_NORMAL && i < exponent; ++i)
+		flt_tmp_multiply(pt, pt);
 	/* Negative powers */
 	for (i = 0; pt->c == E_NORMAL && i > exponent; --i)
 		flt_tmp_sqrt(pt);

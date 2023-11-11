@@ -49,7 +49,7 @@ FLT flt_atof(const char *string) {
 	can_continue = true;
 	exponent = mantissa_sign = exponent_sign = 0;
 	flt_tmp_prepare_constants();
-	flt_tmp_initialize(&t, E_ZERO, 0, 0, 0);
+	flt_tmp_init_0(&t);
 	flt_tmp_copy(&v, &k1);
 	flt_tmp_copy(&w, &k1);
 	for (i = 0; can_continue && string[i]; ++i) {

@@ -12,7 +12,7 @@ FLT flt_ltof(const int32_t a) {
 		flt_tmp_initialize(&t, E_NORMAL, (a < 0) ? 1 : 0, (a < 0) ? -a : a, TMP_1_BITS);
 		flt_tmp_normalize(&t);
 	} else
-		flt_tmp_initialize(&t, E_ZERO, 0, 0, 0);
+		flt_tmp_init_0(&t);
 	tmp_to_flt(&t, &result);
 	return result;
 }
@@ -24,7 +24,7 @@ FLT flt_ultof(const uint32_t a) {
 		flt_tmp_initialize(&t, E_NORMAL, 0, a, TMP_1_BITS);
 		flt_tmp_normalize(&t);
 	} else
-		flt_tmp_initialize(&t, E_ZERO, 0, 0, 0);
+		flt_tmp_init_0(&t);
 	tmp_to_flt(&t, &result);
 	return result;
 }
@@ -80,7 +80,7 @@ void flt_to_tmp(const FLT *pf, flt_tmp *pt) {
 	sign = temporary >> 31;
 	mantissa = temporary & 0x7FFFFF;
 	exponent = (temporary >> 23) & 0xFF;
-	flt_tmp_initialize(pt, E_ZERO, 0, 0, 0);
+	flt_tmp_init_0(pt);
 	switch (pt->c = flt_classify(*pf)) {
 	case E_INFINITE:
 	case E_ZERO:

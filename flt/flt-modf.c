@@ -30,7 +30,7 @@ void flt_tmp_modf(flt_tmp *pt, flt_tmp *pu) {
 	sign = pt->s;
 	pt->s = 0;
 	if (pt->e <= TMP_1_BITS) {
-		flt_tmp_initialize(pu, E_ZERO, 0, 0, 0);
+		flt_tmp_init_0(pu);
 		while (pt->c == E_NORMAL && pt->e >= 0) {
 			flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, pt->e);
 			flt_tmp_add(pu, &v);
@@ -39,7 +39,7 @@ void flt_tmp_modf(flt_tmp *pt, flt_tmp *pu) {
 		}
 	} else {
 		flt_tmp_copy(pu, pt);
-		flt_tmp_initialize(pt, E_ZERO, 0, 0, 0);
+		flt_tmp_init_0(pt);
 	}
 	pt->s = pu->s = sign;
 }

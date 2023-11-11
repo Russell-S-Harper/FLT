@@ -214,7 +214,13 @@ void flt_tmp_add(flt_tmp *pt, const flt_tmp *pu) {
 }
 
 void flt_tmp_multiply(flt_tmp *pt, const flt_tmp *pu) {
+	flt_tmp v;
 	uint16_t a1, a2, b1, b2;
+	/* Handle a common case: t^2 = t * t */
+	if (pu == pt) {
+		flt_tmp_copy(&v, pu);
+		pu = &v;
+	}
 	if (pt->c == E_NORMAL && pu->c == E_NORMAL) {
 		/* Multiply */
 		pt->s ^= pu->s;

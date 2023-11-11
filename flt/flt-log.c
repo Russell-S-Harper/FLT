@@ -84,7 +84,7 @@ void flt_tmp_log2(flt_tmp *pt) {
 	pt->e = 0;
 	/* Shortcut if mantissa = 1.0 */
 	if (pt->m == TMP_1)
-		flt_tmp_initialize(pt, E_ZERO, 0, 0, 0);
+		flt_tmp_init_0(pt);
 	/* Approximate using the polynomial */
 	else
 		flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);

@@ -18,3 +18,17 @@ void flt_tmp_copy(flt_tmp *pt, const flt_tmp *pu) {
 	pt->m = pu->m;
 	pt->e = pu->e;
 }
+
+void flt_tmp_init_0(flt_tmp *pt) {
+	pt->c = E_ZERO;
+	pt->s = 0;
+	pt->m = 0;
+	pt->e = 0;
+}
+
+void flt_tmp_init_1(flt_tmp *pt) {
+	pt->c = E_NORMAL;
+	pt->s = 0;
+	pt->m = TMP_1;
+	pt->e = 0;
+}

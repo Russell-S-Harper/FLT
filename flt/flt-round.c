@@ -13,7 +13,7 @@ FLT flt_round(const FLT f) {
 	flt_tmp t, u;
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL) {
-		flt_tmp_initialize(&u, E_NORMAL, t.s, TMP_1, -1); /* +/- 0.5 */
+		flt_tmp_initialize(&u, E_NORMAL, t.s, TMP_1, -1);	/* +/- 0.5 */
 		flt_tmp_add(&t, &u);
 		flt_tmp_modf(&t, &u);
 		tmp_to_flt(&u, &result);
@@ -77,7 +77,7 @@ static void flt_tmp_ceil(flt_tmp *pt) {
 	flt_tmp_copy(&u, pt);
 	flt_tmp_modf(&u, pt);
 	if (u.c == E_NORMAL) {
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1, 0);
+		flt_tmp_init_1(&u);
 		flt_tmp_add(pt, &u);
 	}
 }

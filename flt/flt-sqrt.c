@@ -23,17 +23,14 @@ FLT flt_sqrt(const FLT f) {
 
 FLT flt_hypot(const FLT f, const FLT g) {
 	FLT result;
-	flt_tmp t, u, v;
+	flt_tmp t, u;
 	/* Using flt_tmp allows calculating sqrt(f^2 + g^2) without overflow */
 	flt_to_tmp(&f, &t);
 	flt_to_tmp(&g, &u);
-	flt_tmp_copy(&v, &t);
-	flt_tmp_multiply(&t, &v);	/* t^2 */
-	flt_tmp_copy(&v, &u);
-	flt_tmp_multiply(&u, &v);	/* u^2 */
+	flt_tmp_multiply(&t, &t);	/* t^2 */
+	flt_tmp_multiply(&u, &u);	/* u^2 */
 	flt_tmp_add(&t, &u);		/* t^2 + u^2 */
-	if (t.c == E_NORMAL)
-		flt_tmp_sqrt(&t);	/* sqrt(t^2 + u^2) */
+	flt_tmp_sqrt_ext(&t);		/* sqrt(t^2 + u^2) */
 	tmp_to_flt(&t, &result);
 	return result;
 }
@@ -58,7 +55,7 @@ void flt_tmp_sqrt_ext(flt_tmp *pt) {
 		if (!pt->s)
 			flt_tmp_sqrt(pt);
 		else
-			flt_tmp_initialize(pt, E_ZERO, 0, 0, 0); /* Forcing t < 0 to 0 due to rounding errors */
+			flt_tmp_init_0(pt);	/* Forcing t < 0 to 0 due to rounding errors */
 	}
 	/* All others leave t unmodified */
 }
@@ -78,9 +75,9 @@ void flt_tmp_sqrt(flt_tmp *pt) {
 		/* Using Newton's method to find the square root */
 		/* Initial guess is 0.411954965695194t + 0.600722632796001 */
 		flt_tmp_copy(&u, pt);
-		flt_tmp_initialize(&v, E_NORMAL, 0, 0x6975E171, -2); /* 0.411954965695194 */
+		flt_tmp_initialize(&v, E_NORMAL, 0, 0x6975E171, -2);	/* 0.411954965695194 */
 		flt_tmp_multiply(pt, &v);
-		flt_tmp_initialize(&v, E_NORMAL, 0, 0x4CE47AAF, -1); /* 0.600722632796001 */
+		flt_tmp_initialize(&v, E_NORMAL, 0, 0x4CE47AAF, -1);	/* 0.600722632796001 */
 		flt_tmp_add(pt, &v);			/* x */
 		for (i = 0; i < 3; ++i) {
 			flt_tmp_copy(&v, pt);		/* x */
@@ -92,7 +89,7 @@ void flt_tmp_sqrt(flt_tmp *pt) {
 	}
 	/* Handle odd exponents */
 	if (exponent & 1) {
-		flt_tmp_initialize(&u, E_NORMAL, 0, 0x5A82799A, 0); /* sqrt(2) = 1.4142135623731 */
+		flt_tmp_initialize(&u, E_NORMAL, 0, 0x5A82799A, 0);	/* sqrt(2) = 1.4142135623731 */
 		flt_tmp_multiply(pt, &u);
 	}
 	/* Restore half the exponent */

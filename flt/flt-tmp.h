@@ -30,6 +30,8 @@ typedef struct {E_CLASS c; int s, e; uint32_t m;} flt_tmp;
 void flt_to_tmp(const FLT *pf, flt_tmp *pt);
 void tmp_to_flt(const flt_tmp *pt, FLT *pf);
 void flt_tmp_initialize(flt_tmp *pt, const E_CLASS c, const int s, const uint32_t m, const int e);
+void flt_tmp_init_0(flt_tmp *pt);
+void flt_tmp_init_1(flt_tmp *pt);
 void flt_tmp_copy(flt_tmp *pt, const flt_tmp *pu);
 void flt_tmp_normalize(flt_tmp *pt);
 bool flt_tmp_compare(const flt_tmp *pt, const flt_tmp *pu, E_COMPARE compare);

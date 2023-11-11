@@ -20,7 +20,7 @@ FLT flt_pow(const FLT f, const FLT g) {
 		pow(t, +/-0) returns 1 for any t, even when t is NaN
 		pow(+1, u) returns 1 for any u, even when u is NaN
 	*/
-	flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);
+	flt_tmp_init_1(&v);
 	if (u.c == E_ZERO || flt_tmp_compare(&t, &v, E_EQUAL_TO))
 		return FLT_POS_1;
 	/*
@@ -115,7 +115,7 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 	bool u_is_odd = flt_tmp_is_odd(pu);
 	/* Continue */
 	if (pt->c == E_NORMAL) {
-		/* Convert negative exponent t^-u = (1/t)^u; */
+		/* Convert negative exponent t^-u = (1/t)^u */
 		if (pu->s) {
 			pu->s = 0;
 			flt_tmp_invert(pt);
@@ -124,14 +124,13 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 		sign = u_is_odd ? pt->s : 0;
 		pt->s = 0;
 		/* Problem has now been reduced to t^u with t, u > 0 */
-		flt_tmp_initialize(&v, E_NORMAL, 0, TMP_1, 0);
+		flt_tmp_init_1(&v);
 		while (v.c == E_NORMAL && pu->e >= 0) {
 			/* If the exponent is odd, multiply in the base */
 			if (flt_tmp_is_odd(pu))
 				flt_tmp_multiply(&v, pt);
 			/* Square the base */
-			flt_tmp_copy(&w, pt);
-			flt_tmp_multiply(pt, &w);
+			flt_tmp_multiply(pt, pt);
 			/* Halve the exponent */
 			pu->e -= 1;
 		}
@@ -189,7 +188,7 @@ static bool flt_tmp_is_odd(const flt_tmp *pt) {
 		flt_tmp_modf(&u, &v);
 		/* Check if v/2 has a remainder */
 		if (v.e >= 0) {
-			v.e -= 1; /* v/2 */
+			v.e -= 1;	/* v/2 */
 			flt_tmp_modf(&v, &u);
 			/* Remainder means odd */
 			result = (v.c == E_NORMAL);

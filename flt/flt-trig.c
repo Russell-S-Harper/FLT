@@ -110,28 +110,28 @@ FLT flt_atan2(const FLT y, const FLT x) {
 		if (y_sign) {
 			if (x_sign) {
 				/* x < 0, y < 0, atan2(y, x) = -PI + atan(y/x) */
-				flt_tmp_initialize(&v, E_NORMAL, 1, TMP_PI_2, 1); /* -PI */
+				flt_tmp_initialize(&v, E_NORMAL, 1, TMP_PI_2, 1);	/* -PI */
 				flt_tmp_add(&t, &v);
 			} else
 				/* x > 0, y < 0, atan2(y, x) = -atan(y/x) */
 				flt_tmp_negate(&t);
 		} else if (x_sign) {
 			/* x < 0, y > 0, atan2(y, x) = PI - atan(y/x) */
-			flt_tmp_initialize(&v, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
+			flt_tmp_initialize(&v, E_NORMAL, 0, TMP_PI_2, 1);	/* PI */
 			flt_tmp_negate(&t);
 			flt_tmp_add(&t, &v);
 		}
 	} else if (t.c == E_ZERO && u.c == E_NORMAL) {
 		/* Along X axis */
 		if (x_sign)
-			flt_tmp_initialize(&t, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
+			flt_tmp_initialize(&t, E_NORMAL, 0, TMP_PI_2, 1);	/* PI */
 		else
-			flt_tmp_initialize(&t, E_ZERO, 0, 0, 0); /* 0 */
+			flt_tmp_init_0(&t);
 	} else if (t.c == E_NORMAL && u.c == E_ZERO)
 		/* Along Y axis */
-		flt_tmp_initialize(&t, E_NORMAL, y_sign, TMP_PI_2, 0); /* +/-PI/2 */
+		flt_tmp_initialize(&t, E_NORMAL, y_sign, TMP_PI_2, 0);	/* +/-PI/2 */
 	else
-		flt_tmp_initialize(&t, E_NAN, 0, 0, 0); /* NaN */
+		flt_tmp_initialize(&t, E_NAN, 0, 0, 0);	/* NaN */
 	tmp_to_flt(&t, &result);
 	return result;
 }
@@ -142,7 +142,7 @@ static void flt_tmp_fmod_2pi(flt_tmp *pt) {
 	int sign;
 	sign = pt->s;
 	pt->s = 0;
-	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 2); /* 4*PI/2 = 2*PI */
+	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 2);	/* 4*PI/2 = 2*PI */
 	flt_tmp_copy(&v, &u);
 	flt_tmp_invert(&u);
 	flt_tmp_multiply(pt, &u);
@@ -179,14 +179,14 @@ static void flt_tmp_sin(flt_tmp *pt) {
 	sign = pt->s;
 	pt->s = 0;
 	/* sin(t >= PI) = -sin(t - PI) */
-	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
+	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1);	/* PI */
 	if (flt_tmp_compare(pt, &u, E_GREATER_THAN_OR_EQUAL_TO)) {
 		u.s = 1;		/* -PI */
 		flt_tmp_add(pt, &u);	/* t - PI */
 		sign ^= 1;
 	}
 	/* sin(t > PI/2) = sin(PI - t) */
-	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 0); /* PI/2 */
+	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 0);	/* PI/2 */
 	if (flt_tmp_compare(pt, &u, E_GREATER_THAN)) {
 		u.e = 1;		/* PI */
 		pt->s = 1;		/* -t */
@@ -224,7 +224,7 @@ static void flt_tmp_cos(flt_tmp *pt) {
 	/* cos(t) = cos(-t) */
 	pt->s = 0;
 	/* cos(t > PI) = cos(2PI - t) */
-	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
+	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1);	/* PI */
 	if (flt_tmp_compare(pt, &u, E_GREATER_THAN)) {
 		u.e = 2;		/* 2PI */
 		pt->s = 1;		/* -t */
@@ -278,7 +278,7 @@ static void flt_tmp_asin(flt_tmp *pt) {
 	flt_tmp_copy(&v, pt);
 	flt_tmp_multiply(&v, pt);
 	flt_tmp_negate(&v);
-	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1, 0);
+	flt_tmp_init_1(&u);
 	flt_tmp_add(&u, &v);
 	flt_tmp_sqrt_ext(&u);
 	flt_tmp_invert(&u);
@@ -310,7 +310,7 @@ static void flt_tmp_acos(flt_tmp *pt) {
 	flt_tmp_copy(&v, pt);
 	flt_tmp_multiply(&v, pt);
 	flt_tmp_negate(&v);
-	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1, 0);
+	flt_tmp_init_1(&u);
 	flt_tmp_add(&u, &v);
 	flt_tmp_sqrt_ext(&u);
 	flt_tmp_invert(pt);
@@ -318,7 +318,7 @@ static void flt_tmp_acos(flt_tmp *pt) {
 	flt_tmp_atan(pt);
 	if (sign) {
 		flt_tmp_negate(pt);
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1); /* PI */
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 1);	/* PI */
 		flt_tmp_add(pt, &u);
 	}
 }
@@ -350,8 +350,8 @@ static void flt_tmp_atan(flt_tmp *pt) {
 	/* atan(-t) = -atan(t) */
 	sign = pt->s;
 	pt->s = 0;
-	/* Approximate using one of the polynomials */
-	flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1, 0); /* 1 */
+	/* Approximate using the polynomial */
+	flt_tmp_init_1(&u);
 	/* If less than or equal to one */
 	if (flt_tmp_compare(pt, &u, E_LESS_THAN_OR_EQUAL_TO))
 		flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
@@ -360,7 +360,7 @@ static void flt_tmp_atan(flt_tmp *pt) {
 		flt_tmp_invert(pt);
 		flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
 		flt_tmp_negate(pt);
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 0); /* PI/2 */
+		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_PI_2, 0);	/* PI/2 */
 		flt_tmp_add(pt, &u);
 	}
 	/* Restore sign */
