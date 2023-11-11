@@ -6,7 +6,7 @@
 #ifndef _FLT_TDF
 #define _FLT_TDF
 typedef struct {
-  short h1, h2;
+    short h1, h2;
 } FLT;
 #endif /* _FLT_TDF */
 
