@@ -3,54 +3,42 @@
   Repository: https://github.com/Russell-S-Harper/FLT
      Contact: flt@russell-harper.com
 */
-#ifndef _FLT_H
-#define _FLT_H
+#ifndef	_FLT_H
+#define	_FLT_H
 
 #include <stdbool.h>
 #include <stdint.h>
 
-/* IEEE 754 single-precision
-
-        Sign bit: 1 bit
-        Exponent width: 8 bits
-        Significand precision: 24 bits (23 explicitly stored)
-*/
-#ifndef _FLT_TDF
-#define _FLT_TDF
+/* IEEE 754 single-precision with 1 sign bit, 8 exponent bits, and 24 significand precision bits (23 explicitly stored) */
+#ifndef	_FLT_TDF
+#define	_FLT_TDF
 typedef uint32_t FLT;
-#endif /* _FLT_TDF */
+#endif	/* _FLT_TDF */
 
 /* Predefined constants for +/-INFINITY, NAN, +/-ZERO, +/-ONE, and +/-PI/2 */
-#define FLT_POS_INF (0x7F800000)
-#define FLT_NEG_INF (0xFF800000)
-#define FLT_NAN (0x7FFFFFFF)
-#define FLT_POS_0 (0x00000000)
-#define FLT_NEG_0 (0x80000000)
-#define FLT_POS_1 (0x3F800000)
-#define FLT_NEG_1 (0xBF800000)
-#define FLT_POS_PI_2 (0x3FC90FDB) /* +PI/2 */
-#define FLT_NEG_PI_2 (0xBFC90FDB) /* -PI/2 */
+#define	FLT_POS_INF	(0x7F800000)
+#define	FLT_NEG_INF	(0xFF800000)
+#define	FLT_NAN		(0x7FFFFFFF)
+#define	FLT_POS_0	(0x00000000)
+#define	FLT_NEG_0	(0x80000000)
+#define	FLT_POS_1	(0x3F800000)
+#define	FLT_NEG_1	(0xBF800000)
+#define	FLT_POS_PI_2	(0x3FC90FDB)	/* +PI/2 */
+#define	FLT_NEG_PI_2	(0xBFC90FDB)	/* -PI/2 */
 
 /* (Possibly) redefined "float.h" constants */
-#undef FLT_MIN
-#define FLT_MIN (1.17549435082e-38)
-#undef FLT_TRUE_MIN
-#define FLT_TRUE_MIN (1.40129846432e-45)
-#undef FLT_MAX
-#define FLT_MAX (3.40282346639e+38)
-#undef FLT_EPSILON
-#define FLT_EPSILON (1.19209289551e-07)
+#undef	FLT_MIN
+#define	FLT_MIN		(1.17549435082e-38)
+#undef	FLT_TRUE_MIN
+#define	FLT_TRUE_MIN	(1.40129846432e-45)
+#undef	FLT_MAX
+#define	FLT_MAX		(3.40282346639e+38)
+#undef	FLT_EPSILON
+#define	FLT_EPSILON	(1.19209289551e-07)
 
 /* Floating point classes and comparisons */
-typedef enum { E_INFINITE = 1, E_NAN, E_NORMAL, E_SUBNORMAL, E_ZERO } E_CLASS;
-typedef enum {
-    E_EQUAL_TO = 1,
-    E_LESS_THAN,
-    E_GREATER_THAN,
-    E_LESS_THAN_OR_EQUAL_TO,
-    E_GREATER_THAN_OR_EQUAL_TO,
-    E_NOT_EQUAL_TO
-} E_COMPARE;
+typedef enum {E_INFINITE = 1, E_NAN, E_NORMAL, E_SUBNORMAL, E_ZERO} E_CLASS;
+typedef enum {E_EQUAL_TO = 1, E_LESS_THAN, E_GREATER_THAN, E_LESS_THAN_OR_EQUAL_TO, E_GREATER_THAN_OR_EQUAL_TO, E_NOT_EQUAL_TO} E_COMPARE;
 
 /* Used in *scanf, defined in flt_io.c */
 extern int g_flt_last_scanf_result;
@@ -90,8 +78,7 @@ FLT flt_asinh(const FLT f);
 FLT flt_acosh(const FLT f);
 FLT flt_atanh(const FLT f);
 
-E_CLASS
-flt_classify(const FLT f);
+E_CLASS flt_classify(const FLT f);
 bool flt_isinf(const FLT f);
 bool flt_isnan(const FLT f);
 bool flt_isnormal(const FLT f);
@@ -127,4 +114,4 @@ FLT flt_hypot(const FLT f, const FLT g);
 FLT flt_log2(const FLT f);
 FLT flt_exp2(const FLT f);
 
-#endif /* _FLT_H */
+#endif	/* _FLT_H */
