@@ -44,12 +44,12 @@ typedef uint32_t FLT;
 /* Floating point classes and comparisons */
 typedef enum { E_INFINITE = 1, E_NAN, E_NORMAL, E_SUBNORMAL, E_ZERO } E_CLASS;
 typedef enum {
-    E_EQUAL_TO = 1,
-    E_LESS_THAN,
-    E_GREATER_THAN,
-    E_LESS_THAN_OR_EQUAL_TO,
-    E_GREATER_THAN_OR_EQUAL_TO,
-    E_NOT_EQUAL_TO
+   E_EQUAL_TO = 1,
+   E_LESS_THAN,
+   E_GREATER_THAN,
+   E_LESS_THAN_OR_EQUAL_TO,
+   E_GREATER_THAN_OR_EQUAL_TO,
+   E_NOT_EQUAL_TO
 } E_COMPARE;
 
 /* Used in *scanf, defined in flt_io.c */

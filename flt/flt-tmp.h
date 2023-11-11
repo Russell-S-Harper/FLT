@@ -13,9 +13,9 @@
 /* Internal structure with 7 bits more precision in the mantissa (vs. IEEE 754
  * single-precision) to use for calculations */
 typedef struct {
-    E_CLASS c;
-    int s, e;
-    uint32_t m;
+   E_CLASS c;
+   int s, e;
+   uint32_t m;
 } flt_tmp;
 
 /* Useful macros for flt_tmp */
