@@ -104,14 +104,7 @@ These limitations may be revised as the project evolves:
 - As well, FLT is NOT optimized for speed or space. It is basically a temporary solution to provide floating point support in C compilers currently lacking it.
 - Currently `gcc -fdiagnostics-format=json` v9.0+ does not provide enough information to parse certain constructions such as a cast spanning multiple lines, or the `scanf` example below. It is recommended to thoroughly test the programs after compiling to ensure correct functionality.
 - I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "e/E" & five "f/F" parameters, and for `*scanf`, up to five parameters, can be specified.
-- Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like:
-
-        if (1 == scanf("%10f", &f)) { ... }
-
-will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like:
-
-        if (scanf("%10f", &f) == 1) { ... }`
-
+- Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like: `if (1 == scanf("%10f", &f)) { ... }` will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like: `if (scanf("%10f", &f) == 1) { ... }`.
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", ...);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
