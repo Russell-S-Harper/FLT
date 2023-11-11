@@ -108,17 +108,9 @@ These limitations may be revised as the project evolves:
 
         if (1 == scanf("%10f", &f)) { ... }
 
-will be converted to incorrect code like:
-
-        if (1 == lsr = scanf("%10s", gsb(-1)), f = atof(gsb(1)), lsr) { ... }
-
-The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like:
+will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like:
 
         if (scanf("%10f", &f) == 1) { ... }`
-
-which will be converted to correct code like:
-
-        if (lsr = scanf("%10s", gsb(-1)), f = atof(gsb(1)), lsr == 1) { ... }
 
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", ...);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.

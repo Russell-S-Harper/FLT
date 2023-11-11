@@ -106,13 +106,10 @@ function get_parameters($argc, $argv) {
 					"  - Some expressions involving *scanf may behave differently in FLT. In".PHP_EOL.
 					"    particular, constructions like:".PHP_EOL.
 					"        if (1 == scanf(\"%10f\", &f)) { ... }".PHP_EOL.
-					"    will be converted to incorrect code like:".PHP_EOL.
-					"        if (1 == lsr = scanf(\"%10s\", gsb(-1)), f = atof(gsb(1)), lsr) { ... }".PHP_EOL.
-					"    The \"1 ==\" is problematic so rather than trying to support this".PHP_EOL.
-					"    construction, we recommend revising to something like:".PHP_EOL.
+					"    will be converted to incorrect code. The \"1 ==\" is problematic so rather".PHP_EOL.
+					"    than trying to support this construction, we recommend revising to something".PHP_EOL.
+					"    like:".PHP_EOL.
 					"        if (scanf(\"%10f\", &f) == 1) { ... }".PHP_EOL.
-					"    which will be converted to correct code like:".PHP_EOL.
-					"        if (lsr = scanf(\"%10s\", gsb(-1)), f = atof(gsb(1)), lsr == 1) { ... }".PHP_EOL.
 					"  - Also note that FLT parameters in *scanf are handled as strings with reduced".PHP_EOL.
 					"    criteria with respect to what is valid or not. So a call like:".PHP_EOL.
 					"        sscanf(\"X Y Z\", \"%f %f %f\", ...);".PHP_EOL.
