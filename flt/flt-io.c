@@ -103,8 +103,7 @@ FLT flt_atof(const char *string) {
 		case 'i':
 			switch (mode) {
 			case E_BEGIN:
-				if (tolower(string[i + 1]) == 'n' &&
-					tolower(string[i + 2]) == 'f')
+				if (tolower(string[i + 1]) == 'n' && tolower(string[i + 2]) == 'f')
 					flt_tmp_initialize(&t, E_INFINITE, mantissa_sign, 0, 0);
 			default:
 				can_continue = false;
@@ -113,9 +112,8 @@ FLT flt_atof(const char *string) {
 		case 'n':
 			switch (mode) {
 			case E_BEGIN:
-				if (tolower(string[i + 1]) == 'a' &&
-					tolower(string[i + 2]) == 'n')
-					flt_tmp_initialize(&t, E_NAN, 0, 0, 0);
+				if (tolower(string[i + 1]) == 'a' && tolower(string[i + 2]) == 'n')
+					flt_tmp_init_nan(&t);
 			default:
 				can_continue = false;
 			}
@@ -158,7 +156,7 @@ FLT flt_atof(const char *string) {
 				/* Stop if the character is not recognized */
 			} else {
 				if (mode == E_BEGIN)
-					flt_tmp_initialize(&t, E_NAN, 0, 0, 0);
+					flt_tmp_init_nan(&t);
 				can_continue = false;
 			}
 		}

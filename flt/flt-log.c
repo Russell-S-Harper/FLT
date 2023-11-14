@@ -27,7 +27,7 @@ FLT flt_log(const FLT f) {
 	flt_to_tmp(&f, &t);
 	if (t.c == E_NORMAL && !t.s) {
 		flt_tmp_log2(&t);
-		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_2LOG2, -1); /* 2log(2)/2 = log(2) */
+		flt_tmp_init_log2(&u);
 		flt_tmp_multiply(&t, &u);
 		tmp_to_flt(&t, &result);
 	} else
