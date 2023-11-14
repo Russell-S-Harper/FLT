@@ -108,27 +108,26 @@ These limitations may be revised as the project evolves:
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", …);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
-- The polynomial approximations used in `atan`, and `exp2` could display some accuracy issues near boundary conditions. This also includes these dependent functions: `asin`, `acos`, `atan2`, `exp`, `exp10`, `pow`, `sinh`, `cosh`, and `tanh`.
+- The approximations used in `atan`, and `exp2` could display some accuracy issues near boundary conditions. This also includes these dependent functions: `asin`, `acos`, `atan2`, `exp`, `exp10`, `pow`, `sinh`, `cosh`, and `tanh`.
 
 ## To Do
 
 - Expecting a lot of revisions!
 - Looking for sample real-world source code to test against.
-- Current worst-case precision for the polynomial approximations, in decimal digits:
+- Current worst-case precision for the default approximations, in decimal digits:
 
 |  fn  | digits |
 |------|--------|
-| sin  |    7.2<sup>†</sup> |
-| cos  |    7.2<sup>†</sup> |
-| atan |    6.9 |
-| exp2 |    6.6 |
-| log2 |    7.2<sup>†</sup> |
+| sin  | 7.2<sup>†</sup> |
+| cos  | 7.2<sup>†</sup> |
+| atan | 6.9 |
+| exp2 | 6.6 |
+| log2 | 7.2<sup>†‡</sup> |
 
-† The maximum possible precision for FLT is 7.2 decimal digits, so `sin`, `cos`, and `log2` are "good enough".
+:: † The maximum possible precision for FLT is 7.2 decimal digits, so `sin`, `cos`, and `log2` are "good enough".
+:: ‡ The default uses a CORDIC routine, but building with `-DFAST_LOG2` will use a polynomial approximation for `log2`. The difference is 20 vs. 52 floating point operations, but accuracy drops to 6.5 decimal digits.
 
 - Researching CORDIC routines:
-    - good results with `log2` (7.2 decimal digits), but at the expense of 52 vs. 20 floating point operations!
-    - building with `FAST_LOG2` will use the polynomial approximation for `log2` (accurate to 6.5 decimal digits)
     - `exp2` seems resistant to any attempts to improve accuracy, always getting 6.6 decimal digits!
     - looking into `atan`
 
