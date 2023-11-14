@@ -28,7 +28,7 @@ FLT flt_pow(const FLT f, const FLT g) {
 		pow(+Inf, u) returns +Inf for any positive u
 	*/
 	if (t.c == E_INFINITE && !t.s && u.c != E_NAN)
-		return u.s ? FLT_POS_0 : FLT_POS_INF;
+		return u.s? FLT_POS_0: FLT_POS_INF;
 	/* Check for integer exponents */
 	flt_tmp_copy(&v, &u);
 	if (v.c == E_NORMAL)
@@ -64,7 +64,7 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 			*/
 			case E_INFINITE:
 			case E_NORMAL:
-				return pu->s ? FLT_POS_0 : FLT_POS_INF;
+				return pu->s? FLT_POS_0: FLT_POS_INF;
 			}
 			break;
 		}
@@ -79,7 +79,7 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 		*/
 		case E_INFINITE:
 		case E_NORMAL:
-			return pu->s ? FLT_POS_INF : FLT_POS_0;
+			return pu->s? FLT_POS_INF: FLT_POS_0;
 		}
 		break;
 	case E_NORMAL:
@@ -99,7 +99,7 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 			else {
 				/* Use absolute value of t and v */
 				pt->s = v.s = 0;
-				return flt_tmp_compare(pt, &v, pu->s ? E_LESS_THAN : E_GREATER_THAN)? FLT_POS_INF: FLT_POS_0;
+				return flt_tmp_compare(pt, &v, pu->s? E_LESS_THAN: E_GREATER_THAN)? FLT_POS_INF: FLT_POS_0;
 			}
 		}
 		break;
@@ -121,7 +121,7 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 			flt_tmp_invert(pt);
 		}
 		/* Determine the sign of the result */
-		sign = u_is_odd ? pt->s : 0;
+		sign = u_is_odd? pt->s: 0;
 		pt->s = 0;
 		/* Problem has now been reduced to t^u with t, u > 0 */
 		flt_tmp_init_1(&v);

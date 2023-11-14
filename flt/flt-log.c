@@ -53,7 +53,7 @@ FLT flt_log10(const FLT f) {
 static FLT flt_tmp_log2_alt(flt_tmp *pt) {
 	switch (pt->c) {
 	case E_INFINITE:
-		return pt->s ? FLT_NAN : FLT_POS_INF;
+		return pt->s? FLT_NAN: FLT_POS_INF;
 	case E_NAN:
 	case E_NORMAL:
 		return FLT_NAN;
@@ -87,7 +87,7 @@ void flt_tmp_log2(flt_tmp *pt) {
 	else
 		flt_tmp_evaluate(pt, sizeof(s) / sizeof(int), s, m, e);
 	/* Add in the exponent */
-	flt_tmp_initialize(&u, E_NORMAL, (exponent < 0) ? 1 : 0, (exponent < 0) ? -exponent : exponent, TMP_1_BITS);
+	flt_tmp_initialize(&u, E_NORMAL, (exponent < 0)? 1: 0, abs(exponent), TMP_1_BITS);
 	flt_tmp_normalize(&u);
 	flt_tmp_add(pt, &u);
 }

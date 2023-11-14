@@ -152,7 +152,7 @@ void flt_tmp_add(flt_tmp *pt, const flt_tmp *pu) {
 		if (pt->s == pu->s) {
 			/* Adding */
 			pt->m = am + bm;
-			pt->e = am ? ae : be;
+			pt->e = am? ae: be;
 			flt_tmp_normalize(pt);
 		} else {
 			/* Subtracting */
@@ -164,7 +164,7 @@ void flt_tmp_add(flt_tmp *pt, const flt_tmp *pu) {
 			}
 			/* Confirm non-zero result */
 			if (pt->m) {
-				pt->e = am ? ae : be;
+				pt->e = am? ae: be;
 				flt_tmp_normalize(pt);
 			} else {
 				pt->c = E_ZERO;

@@ -46,7 +46,7 @@ FLT flt_fmin(const FLT f, const FLT g) {
 	else if (u.c == E_NAN)
 		result = f;
 	else
-		result = flt_tmp_compare(&t, &u, E_LESS_THAN) ? f : g;
+		result = flt_tmp_compare(&t, &u, E_LESS_THAN)? f: g;
 	return result;
 }
 
@@ -61,6 +61,6 @@ FLT flt_fmax(const FLT f, const FLT g) {
 	else if (u.c == E_NAN)
 		result = f;
 	else
-		result = flt_tmp_compare(&t, &u, E_GREATER_THAN) ? f : g;
+		result = flt_tmp_compare(&t, &u, E_GREATER_THAN)? f: g;
 	return result;
 }

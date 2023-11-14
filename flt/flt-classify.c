@@ -14,9 +14,9 @@ flt_classify(const FLT f) {
 	exponent = (temporary >> 23) & 0xFF;
 	switch (exponent) {
 	case 0x00:
-		return mantissa ? E_SUBNORMAL : E_ZERO;
+		return mantissa? E_SUBNORMAL: E_ZERO;
 	case 0xFF:
-		return mantissa ? E_NAN : E_INFINITE;
+		return mantissa? E_NAN: E_INFINITE;
 	default:
 		return E_NORMAL;
 	}
@@ -44,5 +44,5 @@ int flt_fsgn(const FLT f) {
 	if (t.c == E_ZERO || t.c == E_NAN)
 		return 0;
 	else
-		return t.s ? -1 : +1;
+		return t.s? -1: +1;
 }

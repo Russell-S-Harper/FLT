@@ -249,7 +249,7 @@ static const char *flt_tmp_e_format(flt_tmp *pt, const char *format) {
 			string[i++] = flt_tmp_get_next_digit(&u);
 		/* Exponent */
 		string[i++] = 'e';
-		string[i++] = (base_10_exponent < 0) ? '-' : '+';
+		string[i++] = (base_10_exponent < 0)? '-': '+';
 		if (base_10_exponent < 0)
 			base_10_exponent = -base_10_exponent;
 		string[i++] = '0' + base_10_exponent / 10;
@@ -259,13 +259,13 @@ static const char *flt_tmp_e_format(flt_tmp *pt, const char *format) {
 	} else {
 		switch (pt->c) {
 		case E_INFINITE:
-			strcpy(string, pt->s ? "-inf" : "+inf");
+			strcpy(string, pt->s? "-inf": "+inf");
 			break;
 		case E_NAN:
 			strcpy(string, "nan");
 			break;
 		case E_ZERO:
-			strcpy(string, pt->s ? "-0." : "+0.");
+			strcpy(string, pt->s? "-0.": "+0.");
 			strncat(string, "000000000", precision);
 			strcat(string, "e+00");
 			break;
@@ -320,13 +320,13 @@ static const char *flt_tmp_f_format(flt_tmp *pt, const char *format) {
 	} else {
 		switch (pt->c) {
 		case E_INFINITE:
-			strcpy(string, pt->s ? "-inf" : "+inf");
+			strcpy(string, pt->s? "-inf": "+inf");
 			break;
 		case E_NAN:
 			strcpy(string, "nan");
 			break;
 		case E_ZERO:
-			strcpy(string, pt->s ? "-0." : "+0.");
+			strcpy(string, pt->s? "-0.": "+0.");
 			strncat(string, "000000000", precision);
 			break;
 		}

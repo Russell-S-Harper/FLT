@@ -158,7 +158,7 @@ static FLT flt_tmp_sin_alt(flt_tmp *pt) {
 	case E_NAN:
 		return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -241,7 +241,7 @@ static FLT flt_tmp_tan_alt(flt_tmp *pt) {
 	case E_NAN:
 		return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -264,7 +264,7 @@ static FLT flt_tmp_asin_alt(flt_tmp *pt) {
 	case E_NORMAL:
 		return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -327,11 +327,11 @@ static void flt_tmp_acos(flt_tmp *pt) {
 static FLT flt_tmp_atan_alt(flt_tmp *pt) {
 	switch (pt->c) {
 	case E_INFINITE:
-		return pt->s ? FLT_NEG_PI_2 : FLT_POS_PI_2;
+		return pt->s? FLT_NEG_PI_2: FLT_POS_PI_2;
 	case E_NAN:
 		return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 

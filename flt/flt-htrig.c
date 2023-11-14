@@ -62,7 +62,7 @@ FLT flt_tanh(const FLT f) {
 	/* tanh(t) = (e^t - e^-t)/(e^t + e^-t) = (2^kt - 2^-kt)/(2^kt + 2^-kt), where k = 1/log(2) */
 	/* At flt_tmp precision, |tanh(t)| -> 1 for |t| >= 10 */
 	flt_tmp_initialize(&u, E_NORMAL, t.s, 0x50000000, 3); /* 10.0 */
-	if (t.c == E_NORMAL && flt_tmp_compare(&t, &u, t.s ? E_GREATER_THAN : E_LESS_THAN)) {
+	if (t.c == E_NORMAL && flt_tmp_compare(&t, &u, t.s? E_GREATER_THAN: E_LESS_THAN)) {
 		flt_tmp_initialize(&u, E_NORMAL, 0, TMP_1_LOG2, 0); /* k = 1/log(2) */
 		flt_tmp_multiply(&t, &u);	/* kt */
 		flt_tmp_copy(&u, &t);
@@ -160,11 +160,11 @@ FLT flt_atanh(const FLT f) {
 static FLT flt_tmp_sinh_alt(flt_tmp *pt) {
 	switch (pt->c) {
 	case E_INFINITE:
-		return pt->s ? FLT_NEG_INF : FLT_POS_INF;
+		return pt->s? FLT_NEG_INF: FLT_POS_INF;
 	case E_NAN:
 		return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -185,11 +185,11 @@ static FLT flt_tmp_tanh_alt(flt_tmp *pt) {
 	switch (pt->c) {
 	case E_INFINITE:
 	case E_NORMAL:
-		return pt->s ? FLT_NEG_1 : FLT_POS_1;
+		return pt->s? FLT_NEG_1: FLT_POS_1;
 	case E_NAN:
 		return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -197,11 +197,11 @@ static FLT flt_tmp_tanh_alt(flt_tmp *pt) {
 static FLT flt_tmp_asinh_alt(flt_tmp *pt) {
 	switch (pt->c) {
 	case E_INFINITE:
-		return pt->s ? FLT_NEG_INF : FLT_POS_INF;
+		return pt->s? FLT_NEG_INF: FLT_POS_INF;
 	case E_NAN:
 		return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -209,7 +209,7 @@ static FLT flt_tmp_asinh_alt(flt_tmp *pt) {
 static FLT flt_tmp_acosh_alt(flt_tmp *pt) {
 	switch (pt->c) {
 	case E_INFINITE:
-		return pt->s ? FLT_NAN : FLT_POS_INF;
+		return pt->s? FLT_NAN: FLT_POS_INF;
 	case E_NAN:
 	case E_NORMAL:
 	case E_ZERO:
@@ -226,10 +226,10 @@ static FLT flt_tmp_atanh_alt(flt_tmp *pt) {
 	case E_NORMAL:
 		/* t = 1? */
 		if (pt->m == TMP_1 && !pt->e)
-			return pt->s ? FLT_NEG_INF : FLT_POS_INF;
+			return pt->s? FLT_NEG_INF: FLT_POS_INF;
 		else
 			return FLT_NAN;
 	case E_ZERO:
-		return pt->s ? FLT_NEG_0 : FLT_POS_0;
+		return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }

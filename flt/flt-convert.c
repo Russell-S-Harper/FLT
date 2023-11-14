@@ -9,7 +9,7 @@ FLT flt_ltof(const int32_t a) {
 	FLT result;
 	flt_tmp t;
 	if (a) {
-		flt_tmp_initialize(&t, E_NORMAL, (a < 0) ? 1 : 0, (a < 0) ? -a : a, TMP_1_BITS);
+		flt_tmp_initialize(&t, E_NORMAL, (a < 0)? 1: 0, (a < 0)? -a: a, TMP_1_BITS);
 		flt_tmp_normalize(&t);
 	} else
 		flt_tmp_init_0(&t);
@@ -39,7 +39,7 @@ int32_t flt_ftol(const FLT f) {
 	flt_tmp_initialize(&u, E_NORMAL, t.s, TMP_1, -1);
 	flt_tmp_add(&t, &u);
 	if (t.c == E_INFINITE || (t.c == E_NORMAL && t.e > TMP_1_BITS))
-		result = t.s ? INT32_MIN : INT32_MAX;
+		result = t.s? INT32_MIN: INT32_MAX;
 	else if (t.c == E_NORMAL && t.e >= 0) {
 		result = t.m >> (TMP_1_BITS - t.e);
 		/* Banker's "un-rounding" */
@@ -120,10 +120,10 @@ void tmp_to_flt(const flt_tmp *pt, FLT *pf) {
 			*pf = (sign << 31) + (exponent << 23) + mantissa;
 		} else if (pt->e > 127)
 			/* Infinity */
-			*pf = pt->s ? FLT_NEG_INF : FLT_POS_INF;
+			*pf = pt->s? FLT_NEG_INF: FLT_POS_INF;
 		else if (pt->e < -157)
 			/* Zero */
-			*pf = pt->s ? FLT_NEG_0 : FLT_POS_0;
+			*pf = pt->s? FLT_NEG_0: FLT_POS_0;
 		else {
 			/* Subnormal - round up last 8 bits */
 			sign = pt->s;
@@ -133,13 +133,13 @@ void tmp_to_flt(const flt_tmp *pt, FLT *pf) {
 	} else {
 		switch (pt->c) {
 		case E_INFINITE:
-			*pf = pt->s ? FLT_NEG_INF : FLT_POS_INF;
+			*pf = pt->s? FLT_NEG_INF: FLT_POS_INF;
 			break;
 		case E_NAN:
 			*pf = FLT_NAN;
 			break;
 		case E_ZERO:
-			*pf = pt->s ? FLT_NEG_0 : FLT_POS_0;
+			*pf = pt->s? FLT_NEG_0: FLT_POS_0;
 			break;
 		}
 	}

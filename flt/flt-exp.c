@@ -53,7 +53,7 @@ FLT flt_exp10(const FLT f) {
 FLT flt_tmp_exp2_alt(flt_tmp *pt) {
 	switch (pt->c) {
 	case E_INFINITE:
-		return pt->s ? FLT_POS_0 : FLT_POS_INF;
+		return pt->s? FLT_POS_0: FLT_POS_INF;
 	case E_NAN:
 		return FLT_NAN;
 	case E_ZERO:
