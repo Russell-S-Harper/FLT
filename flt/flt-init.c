@@ -7,7 +7,7 @@
 
 void flt_tmp_initialize(flt_tmp *pt, const E_CLASS c, const int s, const uint32_t m, const int e) {
 	pt->c = c;
-	pt->s = s;
+	pt->s = (s? 1: 0);
 	pt->m = m;
 	pt->e = e;
 }

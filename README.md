@@ -108,7 +108,7 @@ These limitations may be revised as the project evolves:
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", …);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
-- Polynomial approximations are used for `sin`, `cos`, `atan`, `exp2`, and `log2`. Near boundary conditions, these functions, as well as those dependent on them, could display some accuracy issues.
+- The polynomial approximations used in `atan`, and `exp2` could display some accuracy issues near boundary conditions. This also includes these dependent functions: `asin`, `acos`, `atan2`, `exp`, `exp10`, `pow`, `sinh`, `cosh`, and `tanh`.
 
 ## To Do
 
@@ -118,19 +118,19 @@ These limitations may be revised as the project evolves:
 
 |  fn  | digits |
 |------|--------|
-| sin  |    7.2 |
-| cos  |    7.2 |
+| sin  |    7.2<sup>†</sup> |
+| cos  |    7.2<sup>†</sup> |
 | atan |    6.9 |
 | exp2 |    6.6 |
-| log2 |    6.5 |
+| log2 |    7.2<sup>†</sup> |
 
-(Note the maximum possible precision for FLT is 7.2 decimal digits, so `sin` and `cos` are "good enough".)
+† The maximum possible precision for FLT is 7.2 decimal digits, so `sin`, `cos`, and `log2` are "good enough".
 
 - Researching CORDIC routines:
-    - good results with `log2` (7.2 decimal digits), but at the expense of almost four times the number of floating point operations!
+    - good results with `log2` (7.2 decimal digits), but at the expense of 52 vs. 20 floating point operations!
+    - building with `FAST_LOG2` will use the polynomial approximation for `log2` (accurate to 6.5 decimal digits)
     - `exp2` seems resistant to any attempts to improve accuracy, always getting 6.6 decimal digits!
     - looking into `atan`
-    - so far polynomial approximation is a better tradeoff w.r.t. speed vs. accuracy
 
 ## License
 
