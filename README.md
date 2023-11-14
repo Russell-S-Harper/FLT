@@ -125,6 +125,7 @@ These limitations may be revised as the project evolves:
 | log2 | 7.2<sup>†‡</sup> |
 
 † The maximum possible precision for FLT is 7.2 decimal digits, so `sin`, `cos`, and `log2` are "good enough".
+
 ‡ The default uses a CORDIC routine, but building with `-DFAST_LOG2` will use a polynomial approximation for `log2`. The difference is 20 vs. 52 floating point operations, but accuracy drops to 6.5 decimal digits.
 
 - Researching CORDIC routines:
