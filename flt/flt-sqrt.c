@@ -38,13 +38,13 @@ FLT flt_hypot(const FLT f, const FLT g) {
 /* Convenience function to handle sqrt special cases */
 static FLT flt_tmp_sqrt_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return pt->s? FLT_NAN: FLT_POS_INF;
-	case E_NAN:
-	case E_NORMAL:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+			return pt->s? FLT_NAN: FLT_POS_INF;
+		case E_NAN:
+		case E_NORMAL:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 

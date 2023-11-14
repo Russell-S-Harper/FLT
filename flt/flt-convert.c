@@ -82,20 +82,20 @@ void flt_to_tmp(const FLT *pf, flt_tmp *pt) {
 	exponent = (temporary >> 23) & 0xFF;
 	flt_tmp_init_0(pt);
 	switch (pt->c = flt_classify(*pf)) {
-	case E_INFINITE:
-	case E_ZERO:
-		pt->s = sign;
-		break;
-	case E_NORMAL:
-		pt->s = sign;
-		pt->m = TMP_1 + (mantissa << 7);
-		pt->e = exponent - 127;
-		break;
-	case E_SUBNORMAL:
-		/* flt_tmp can handle a wider range than FLT, so convert to normal */
-		flt_tmp_initialize(pt, E_NORMAL, sign, mantissa, -119);
-		flt_tmp_normalize(pt);
-		break;
+		case E_INFINITE:
+		case E_ZERO:
+			pt->s = sign;
+			break;
+		case E_NORMAL:
+			pt->s = sign;
+			pt->m = TMP_1 + (mantissa << 7);
+			pt->e = exponent - 127;
+			break;
+		case E_SUBNORMAL:
+			/* flt_tmp can handle a wider range than FLT, so convert to normal */
+			flt_tmp_initialize(pt, E_NORMAL, sign, mantissa, -119);
+			flt_tmp_normalize(pt);
+			break;
 	}
 }
 
@@ -132,15 +132,15 @@ void tmp_to_flt(const flt_tmp *pt, FLT *pf) {
 		}
 	} else {
 		switch (pt->c) {
-		case E_INFINITE:
-			*pf = pt->s? FLT_NEG_INF: FLT_POS_INF;
-			break;
-		case E_NAN:
-			*pf = FLT_NAN;
-			break;
-		case E_ZERO:
-			*pf = pt->s? FLT_NEG_0: FLT_POS_0;
-			break;
+			case E_INFINITE:
+				*pf = pt->s? FLT_NEG_INF: FLT_POS_INF;
+				break;
+			case E_NAN:
+				*pf = FLT_NAN;
+				break;
+			case E_ZERO:
+				*pf = pt->s? FLT_NEG_0: FLT_POS_0;
+				break;
 		}
 	}
 }

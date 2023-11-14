@@ -173,42 +173,42 @@ void flt_tmp_add(flt_tmp *pt, const flt_tmp *pu) {
 		}
 	} else {
 		switch (pt->c) {
-		case E_INFINITE:
-			switch (pu->c) {
 			case E_INFINITE:
-				if (pt->s != pu->s)
-					pt->c = E_NAN;
-				break;
-			case E_NAN:
-				pt->c = pu->c;
-				break;
-			}
-			break;
-		case E_NORMAL:
-			switch (pu->c) {
-			case E_INFINITE:
-				pt->s = pu->s;
-			case E_NAN:
-				pt->c = pu->c;
-				break;
-			}
-			break;
-		case E_ZERO:
-			switch (pu->c) {
-			case E_INFINITE:
-				pt->s = pu->s;
-			case E_NAN:
-				pt->c = pu->c;
+				switch (pu->c) {
+					case E_INFINITE:
+						if (pt->s != pu->s)
+							pt->c = E_NAN;
+						break;
+					case E_NAN:
+						pt->c = pu->c;
+						break;
+				}
 				break;
 			case E_NORMAL:
-				/* 0 + u = u, copy u to t */
-				flt_tmp_copy(pt, pu);
+				switch (pu->c) {
+					case E_INFINITE:
+						pt->s = pu->s;
+					case E_NAN:
+						pt->c = pu->c;
+						break;
+				}
 				break;
 			case E_ZERO:
-				pt->s &= pu->s;
+				switch (pu->c) {
+					case E_INFINITE:
+						pt->s = pu->s;
+					case E_NAN:
+						pt->c = pu->c;
+						break;
+					case E_NORMAL:
+						/* 0 + u = u, copy u to t */
+						flt_tmp_copy(pt, pu);
+						break;
+					case E_ZERO:
+						pt->s &= pu->s;
+						break;
+				}
 				break;
-			}
-			break;
 		}
 	}
 }
@@ -234,39 +234,39 @@ void flt_tmp_multiply(flt_tmp *pt, const flt_tmp *pu) {
 		flt_tmp_normalize(pt);
 	} else {
 		switch (pt->c) {
-		case E_INFINITE:
-			switch (pu->c) {
 			case E_INFINITE:
+				switch (pu->c) {
+					case E_INFINITE:
+					case E_NORMAL:
+						pt->s ^= pu->s;
+						break;
+					case E_NAN:
+					case E_ZERO:
+						pt->c = E_NAN;
+						break;
+				}
+				break;
 			case E_NORMAL:
-				pt->s ^= pu->s;
-				break;
-			case E_NAN:
-			case E_ZERO:
-				pt->c = E_NAN;
-				break;
-			}
-			break;
-		case E_NORMAL:
-			switch (pu->c) {
-			case E_INFINITE:
-				pt->s ^= pu->s;
-			case E_NAN:
-			case E_ZERO:
-				pt->c = pu->c;
-				break;
-			}
-			break;
-		case E_ZERO:
-			switch (pu->c) {
-			case E_INFINITE:
-			case E_NAN:
-				pt->c = E_NAN;
+				switch (pu->c) {
+					case E_INFINITE:
+						pt->s ^= pu->s;
+					case E_NAN:
+					case E_ZERO:
+						pt->c = pu->c;
+						break;
+				}
 				break;
 			case E_ZERO:
-				pt->s ^= pu->s;
+				switch (pu->c) {
+					case E_INFINITE:
+					case E_NAN:
+						pt->c = E_NAN;
+						break;
+					case E_ZERO:
+						pt->s ^= pu->s;
+						break;
+				}
 				break;
-			}
-			break;
 		}
 	}
 }
@@ -297,12 +297,12 @@ void flt_tmp_invert(flt_tmp *pt) {
 		flt_tmp_normalize(pt);
 	} else {
 		switch (pt->c) {
-		case E_INFINITE:
-			pt->c = E_ZERO;
-			break;
-		case E_ZERO:
-			pt->c = E_INFINITE;
-			break;
+			case E_INFINITE:
+				pt->c = E_ZERO;
+				break;
+			case E_ZERO:
+				pt->c = E_INFINITE;
+				break;
 		}
 	}
 }

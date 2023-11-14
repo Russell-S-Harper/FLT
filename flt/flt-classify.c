@@ -13,12 +13,12 @@ flt_classify(const FLT f) {
 	mantissa = temporary & 0x7FFFFF;
 	exponent = (temporary >> 23) & 0xFF;
 	switch (exponent) {
-	case 0x00:
-		return mantissa? E_SUBNORMAL: E_ZERO;
-	case 0xFF:
-		return mantissa? E_NAN: E_INFINITE;
-	default:
-		return E_NORMAL;
+		case 0x00:
+			return mantissa? E_SUBNORMAL: E_ZERO;
+		case 0xFF:
+			return mantissa? E_NAN: E_INFINITE;
+		default:
+			return E_NORMAL;
 	}
 }
 

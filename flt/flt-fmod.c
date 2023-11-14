@@ -27,15 +27,15 @@ FLT flt_fmod(const FLT f, const FLT g) {
 		/* Default to NaN */
 		result = FLT_NAN;
 		switch (t.c) {
-		case E_ZERO:
-		case E_NORMAL:
-			switch (u.c) {
-			case E_INFINITE:
+			case E_ZERO:
 			case E_NORMAL:
-				result = f;
+				switch (u.c) {
+					case E_INFINITE:
+					case E_NORMAL:
+						result = f;
+						break;
+				}
 				break;
-			}
-			break;
 		}
 	}
 	return result;

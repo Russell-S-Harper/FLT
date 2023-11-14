@@ -54,111 +54,111 @@ FLT flt_atof(const char *string) {
 	flt_tmp_copy(&w, &k1);
 	for (i = 0; can_continue && string[i]; ++i) {
 		switch (tolower(string[i])) {
-		case '+':
-			switch (mode) {
-			case E_INTEGER:
-			case E_FRACTION:
-				can_continue = false;
-				break;
-			}
-			break;
-		case '-':
-			switch (mode) {
-			case E_BEGIN:
-				mantissa_sign ^= 1;
-				break;
-			case E_EXPONENT:
-				if (!isdigit(string[i - 1]))
-					exponent_sign ^= 1;
-				else
-					can_continue = false;
-				break;
-			default:
-				can_continue = false;
-				break;
-			}
-			break;
-		case '.':
-			switch (mode) {
-			case E_BEGIN:
-			case E_INTEGER:
-				mode = E_FRACTION;
-				break;
-			default:
-				can_continue = false;
-				break;
-			}
-			break;
-		case 'e':
-			switch (mode) {
-			case E_INTEGER:
-			case E_FRACTION:
-				mode = E_EXPONENT;
-				break;
-			default:
-				can_continue = false;
-				break;
-			}
-			break;
-		case 'i':
-			switch (mode) {
-			case E_BEGIN:
-				if (tolower(string[i + 1]) == 'n' && tolower(string[i + 2]) == 'f')
-					flt_tmp_initialize(&t, E_INFINITE, mantissa_sign, 0, 0);
-			default:
-				can_continue = false;
-			}
-			break;
-		case 'n':
-			switch (mode) {
-			case E_BEGIN:
-				if (tolower(string[i + 1]) == 'a' && tolower(string[i + 2]) == 'n')
-					flt_tmp_init_nan(&t);
-			default:
-				can_continue = false;
-			}
-			break;
-		default:
-			if (isdigit(string[i])) {
+			case '+':
 				switch (mode) {
-				case E_BEGIN:
-					mode = E_INTEGER;
-				case E_INTEGER:
-					flt_tmp_multiply(&t, &k10);
-					if (string[i] > '0') {
-						flt_tmp_initialize(&u, E_NORMAL, 0, string[i] - '0', TMP_1_BITS);
-						flt_tmp_normalize(&u);
-						flt_tmp_add(&t, &u);
-					}
-					break;
-				case E_FRACTION:
-					flt_tmp_multiply(&v, &k1en1);
-					if (string[i] > '0') {
-						flt_tmp_initialize(&u, E_NORMAL, 0, string[i] - '0', TMP_1_BITS);
-						flt_tmp_normalize(&u);
-						flt_tmp_multiply(&u, &v);
-						flt_tmp_add(&t, &u);
-					}
-					break;
-				case E_EXPONENT:
-					exponent = 10 * exponent + string[i] - '0';
-					break;
+					case E_INTEGER:
+					case E_FRACTION:
+						can_continue = false;
+						break;
 				}
-				/* Allow leading spaces */
-			} else if (isspace(string[i])) {
+				break;
+			case '-':
 				switch (mode) {
-				case E_INTEGER:
-				case E_FRACTION:
-				case E_EXPONENT:
-					can_continue = false;
-					break;
+					case E_BEGIN:
+						mantissa_sign ^= 1;
+						break;
+					case E_EXPONENT:
+						if (!isdigit(string[i - 1]))
+							exponent_sign ^= 1;
+						else
+							can_continue = false;
+						break;
+					default:
+						can_continue = false;
+						break;
 				}
-				/* Stop if the character is not recognized */
-			} else {
-				if (mode == E_BEGIN)
-					flt_tmp_init_nan(&t);
-				can_continue = false;
-			}
+				break;
+			case '.':
+				switch (mode) {
+					case E_BEGIN:
+					case E_INTEGER:
+						mode = E_FRACTION;
+						break;
+					default:
+						can_continue = false;
+						break;
+				}
+				break;
+			case 'e':
+				switch (mode) {
+					case E_INTEGER:
+					case E_FRACTION:
+						mode = E_EXPONENT;
+						break;
+					default:
+						can_continue = false;
+						break;
+				}
+				break;
+			case 'i':
+				switch (mode) {
+					case E_BEGIN:
+						if (tolower(string[i + 1]) == 'n' && tolower(string[i + 2]) == 'f')
+							flt_tmp_initialize(&t, E_INFINITE, mantissa_sign, 0, 0);
+					default:
+						can_continue = false;
+				}
+				break;
+			case 'n':
+				switch (mode) {
+					case E_BEGIN:
+						if (tolower(string[i + 1]) == 'a' && tolower(string[i + 2]) == 'n')
+							flt_tmp_init_nan(&t);
+					default:
+						can_continue = false;
+				}
+				break;
+			default:
+				if (isdigit(string[i])) {
+					switch (mode) {
+						case E_BEGIN:
+							mode = E_INTEGER;
+						case E_INTEGER:
+							flt_tmp_multiply(&t, &k10);
+							if (string[i] > '0') {
+								flt_tmp_initialize(&u, E_NORMAL, 0, string[i] - '0', TMP_1_BITS);
+								flt_tmp_normalize(&u);
+								flt_tmp_add(&t, &u);
+							}
+							break;
+						case E_FRACTION:
+							flt_tmp_multiply(&v, &k1en1);
+							if (string[i] > '0') {
+								flt_tmp_initialize(&u, E_NORMAL, 0, string[i] - '0', TMP_1_BITS);
+								flt_tmp_normalize(&u);
+								flt_tmp_multiply(&u, &v);
+								flt_tmp_add(&t, &u);
+							}
+							break;
+						case E_EXPONENT:
+							exponent = 10 * exponent + string[i] - '0';
+							break;
+					}
+					/* Allow leading spaces */
+				} else if (isspace(string[i])) {
+					switch (mode) {
+						case E_INTEGER:
+						case E_FRACTION:
+						case E_EXPONENT:
+							can_continue = false;
+							break;
+					}
+					/* Stop if the character is not recognized */
+				} else {
+					if (mode == E_BEGIN)
+						flt_tmp_init_nan(&t);
+					can_continue = false;
+				}
 		}
 	}
 	/* Process for normal, zero, and infinity */
@@ -256,17 +256,17 @@ static const char *flt_tmp_e_format(flt_tmp *pt, const char *format) {
 		string[i] = '\0';
 	} else {
 		switch (pt->c) {
-		case E_INFINITE:
-			strcpy(string, pt->s? "-inf": "+inf");
-			break;
-		case E_NAN:
-			strcpy(string, "nan");
-			break;
-		case E_ZERO:
-			strcpy(string, pt->s? "-0.": "+0.");
-			strncat(string, "000000000", precision);
-			strcat(string, "e+00");
-			break;
+			case E_INFINITE:
+				strcpy(string, pt->s? "-inf": "+inf");
+				break;
+			case E_NAN:
+				strcpy(string, "nan");
+				break;
+			case E_ZERO:
+				strcpy(string, pt->s? "-0.": "+0.");
+				strncat(string, "000000000", precision);
+				strcat(string, "e+00");
+				break;
 		}
 	}
 	return printf_post_process(string, format, precision);
@@ -317,16 +317,16 @@ static const char *flt_tmp_f_format(flt_tmp *pt, const char *format) {
 		string[i] = '\0';
 	} else {
 		switch (pt->c) {
-		case E_INFINITE:
-			strcpy(string, pt->s? "-inf": "+inf");
-			break;
-		case E_NAN:
-			strcpy(string, "nan");
-			break;
-		case E_ZERO:
-			strcpy(string, pt->s? "-0.": "+0.");
-			strncat(string, "000000000", precision);
-			break;
+			case E_INFINITE:
+				strcpy(string, pt->s? "-inf": "+inf");
+				break;
+			case E_NAN:
+				strcpy(string, "nan");
+				break;
+			case E_ZERO:
+				strcpy(string, pt->s? "-0.": "+0.");
+				strncat(string, "000000000", precision);
+				break;
 		}
 	}
 	return printf_post_process(string, format, precision);

@@ -159,77 +159,77 @@ FLT flt_atanh(const FLT f) {
 /* Convenience function to handle sinh special cases */
 static FLT flt_tmp_sinh_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return pt->s? FLT_NEG_INF: FLT_POS_INF;
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+			return pt->s? FLT_NEG_INF: FLT_POS_INF;
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
 /* Convenience function to handle cosh special cases */
 static FLT flt_tmp_cosh_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return FLT_POS_INF;
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return FLT_POS_1;
+		case E_INFINITE:
+			return FLT_POS_INF;
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return FLT_POS_1;
 	}
 }
 
 /* Convenience function to handle tanh special cases */
 static FLT flt_tmp_tanh_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-	case E_NORMAL:
-		return pt->s? FLT_NEG_1: FLT_POS_1;
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+		case E_NORMAL:
+			return pt->s? FLT_NEG_1: FLT_POS_1;
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
 /* Convenience function to handle asinh special cases */
 static FLT flt_tmp_asinh_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return pt->s? FLT_NEG_INF: FLT_POS_INF;
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+			return pt->s? FLT_NEG_INF: FLT_POS_INF;
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
 /* Convenience function to handle acosh special cases */
 static FLT flt_tmp_acosh_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return pt->s? FLT_NAN: FLT_POS_INF;
-	case E_NAN:
-	case E_NORMAL:
-	case E_ZERO:
-		return FLT_NAN;
+		case E_INFINITE:
+			return pt->s? FLT_NAN: FLT_POS_INF;
+		case E_NAN:
+		case E_NORMAL:
+		case E_ZERO:
+			return FLT_NAN;
 	}
 }
 
 /* Convenience function to handle atanh special cases */
 static FLT flt_tmp_atanh_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-	case E_NAN:
-		return FLT_NAN;
-	case E_NORMAL:
-		/* t = 1? */
-		if (pt->m == TMP_1 && !pt->e)
-			return pt->s? FLT_NEG_INF: FLT_POS_INF;
-		else
+		case E_INFINITE:
+		case E_NAN:
 			return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_NORMAL:
+			/* t = 1? */
+			if (pt->m == TMP_1 && !pt->e)
+				return pt->s? FLT_NEG_INF: FLT_POS_INF;
+			else
+				return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }

@@ -23,15 +23,15 @@ bool flt_tmp_compare(const flt_tmp *pt, const flt_tmp *pu, E_COMPARE compare) {
 	flt_tmp_negate(&w);
 	flt_tmp_add(&v, &w);
 	switch (v.c) {
-	case E_NAN:
-		return (compare == E_NOT_EQUAL_TO);
-	case E_ZERO:
-		return (compare == E_EQUAL_TO || compare == E_LESS_THAN_OR_EQUAL_TO || compare == E_GREATER_THAN_OR_EQUAL_TO);
-	default:
-		if (v.s)
-			return (compare == E_LESS_THAN || compare == E_LESS_THAN_OR_EQUAL_TO || compare == E_NOT_EQUAL_TO);
-		else
-			return (compare == E_GREATER_THAN || compare == E_GREATER_THAN_OR_EQUAL_TO || compare == E_NOT_EQUAL_TO);
+		case E_NAN:
+			return (compare == E_NOT_EQUAL_TO);
+		case E_ZERO:
+			return (compare == E_EQUAL_TO || compare == E_LESS_THAN_OR_EQUAL_TO || compare == E_GREATER_THAN_OR_EQUAL_TO);
+		default:
+			if (v.s)
+				return (compare == E_LESS_THAN || compare == E_LESS_THAN_OR_EQUAL_TO || compare == E_NOT_EQUAL_TO);
+			else
+				return (compare == E_GREATER_THAN || compare == E_GREATER_THAN_OR_EQUAL_TO || compare == E_NOT_EQUAL_TO);
 	}
 }
 

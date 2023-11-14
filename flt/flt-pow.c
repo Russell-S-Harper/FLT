@@ -55,54 +55,54 @@ FLT flt_pow(const FLT f, const FLT g) {
 static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 	flt_tmp v;
 	switch (pt->c) {
-	case E_INFINITE:
-		if (pt->s) {
-			switch (pu->c) {
-			/*
-				pow(-Inf, u) returns +0 if u is a negative non-integer
-				pow(-Inf, u) returns +Inf if u is a positive non-integer
-			*/
-			case E_INFINITE:
-			case E_NORMAL:
-				return pu->s? FLT_POS_0: FLT_POS_INF;
+		case E_INFINITE:
+			if (pt->s) {
+				switch (pu->c) {
+					/*
+						pow(-Inf, u) returns +0 if u is a negative non-integer
+						pow(-Inf, u) returns +Inf if u is a positive non-integer
+					*/
+					case E_INFINITE:
+					case E_NORMAL:
+						return pu->s? FLT_POS_0: FLT_POS_INF;
+				}
+				break;
 			}
 			break;
-		}
-		break;
-	case E_ZERO:
-		switch (pu->c) {
-		/*
-			pow(+/-0, -Inf) returns +Inf
-			pow(+/-0, +Inf) returns +0
-			pow(+/-0, u), where u is a negative non-integer, returns +Inf
-			pow(+/-0, u), where u is a positive non-integer, returns +0
-		*/
-		case E_INFINITE:
-		case E_NORMAL:
-			return pu->s? FLT_POS_INF: FLT_POS_0;
-		}
-		break;
-	case E_NORMAL:
-		switch (pu->c) {
-		/*
-			pow(-1, +/-Inf) returns 1
-			pow(t, -Inf) returns +Inf for any |t|<1
-			pow(t, -Inf) returns +0 for any |t|>1
-			pow(t, +Inf) returns +0 for any |t|<1
-			pow(t, +Inf) returns +Inf for any |t|>1
-		*/
-		case E_INFINITE:
-			/* Compare t to -1 */
-			flt_tmp_initialize(&v, E_NORMAL, 1, TMP_1, 0);
-			if (flt_tmp_compare(pt, &v, E_EQUAL_TO))
-				return FLT_POS_1;
-			else {
-				/* Use absolute value of t and v */
-				pt->s = v.s = 0;
-				return flt_tmp_compare(pt, &v, pu->s? E_LESS_THAN: E_GREATER_THAN)? FLT_POS_INF: FLT_POS_0;
+		case E_ZERO:
+			switch (pu->c) {
+				/*
+					pow(+/-0, -Inf) returns +Inf
+					pow(+/-0, +Inf) returns +0
+					pow(+/-0, u), where u is a negative non-integer, returns +Inf
+					pow(+/-0, u), where u is a positive non-integer, returns +0
+				*/
+				case E_INFINITE:
+				case E_NORMAL:
+					return pu->s? FLT_POS_INF: FLT_POS_0;
 			}
-		}
-		break;
+			break;
+		case E_NORMAL:
+			switch (pu->c) {
+				/*
+					pow(-1, +/-Inf) returns 1
+					pow(t, -Inf) returns +Inf for any |t|<1
+					pow(t, -Inf) returns +0 for any |t|>1
+					pow(t, +Inf) returns +0 for any |t|<1
+					pow(t, +Inf) returns +Inf for any |t|>1
+				*/
+				case E_INFINITE:
+					/* Compare t to -1 */
+					flt_tmp_initialize(&v, E_NORMAL, 1, TMP_1, 0);
+					if (flt_tmp_compare(pt, &v, E_EQUAL_TO))
+						return FLT_POS_1;
+					else {
+						/* Use absolute value of t and v */
+						pt->s = v.s = 0;
+						return flt_tmp_compare(pt, &v, pu->s? E_LESS_THAN: E_GREATER_THAN)? FLT_POS_INF: FLT_POS_0;
+					}
+			}
+			break;
 	}
 	/* NaN handles the remaining cases */
 	return FLT_NAN;
@@ -140,40 +140,40 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 	} else {
 		/* Handle all the other cases */
 		switch (pt->c) {
-		case E_ZERO:
-			if (pu->s)
-				/*
-					pow(+0, u), where u is a negative odd integer, returns +Inf
-					pow(+0, u), where u is a positive odd integer, returns +0
-					pow(-0, u), where u is a negative odd integer, returns -Inf
-					pow(-0, u), where u is a positive odd integer, returns -0
-				*/
-				pt->c = E_INFINITE;
-			if (!u_is_odd)
-				/*
-					pow(+/-0, u), where u is a negative even integer, returns +Inf
-					pow(+/-0, u), where u is a positive even integer, returns +0
-				*/
-				pt->s = 0;
-			break;
-		case E_INFINITE:
-			if (pu->s)
-				/*
-					pow(-Inf, u), where u is a negative odd integer, returns -0
-					pow(-Inf, u), where u is a positive odd integer, returns -Inf
-				*/
-				pt->c = E_ZERO;
-			if (!u_is_odd)
-				/*
-					pow(-Inf, u), where u is a negative even integer, returns +0
-					pow(-Inf, u), where u is a positive even integer, returns +Inf
-				*/
-				pt->s = 0;
-			break;
-		default:
-			/* Anything else, set to NaN */
-			pt->c = E_NAN;
-			break;
+			case E_ZERO:
+				if (pu->s)
+					/*
+						pow(+0, u), where u is a negative odd integer, returns +Inf
+						pow(+0, u), where u is a positive odd integer, returns +0
+						pow(-0, u), where u is a negative odd integer, returns -Inf
+						pow(-0, u), where u is a positive odd integer, returns -0
+					*/
+					pt->c = E_INFINITE;
+				if (!u_is_odd)
+					/*
+						pow(+/-0, u), where u is a negative even integer, returns +Inf
+						pow(+/-0, u), where u is a positive even integer, returns +0
+					*/
+					pt->s = 0;
+				break;
+			case E_INFINITE:
+				if (pu->s)
+					/*
+						pow(-Inf, u), where u is a negative odd integer, returns -0
+						pow(-Inf, u), where u is a positive odd integer, returns -Inf
+					*/
+					pt->c = E_ZERO;
+				if (!u_is_odd)
+					/*
+						pow(-Inf, u), where u is a negative even integer, returns +0
+						pow(-Inf, u), where u is a positive even integer, returns +Inf
+					*/
+					pt->s = 0;
+				break;
+			default:
+				/* Anything else, set to NaN */
+				pt->c = E_NAN;
+				break;
 		}
 	}
 }

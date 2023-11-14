@@ -52,12 +52,12 @@ FLT flt_exp10(const FLT f) {
 /* Convenience function to handle exp2 special cases, also used by pow */
 FLT flt_tmp_exp2_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return pt->s? FLT_POS_0: FLT_POS_INF;
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return FLT_POS_1;
+		case E_INFINITE:
+			return pt->s? FLT_POS_0: FLT_POS_INF;
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return FLT_POS_1;
 	}
 }
 

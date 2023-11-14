@@ -154,11 +154,11 @@ static void flt_tmp_fmod_2pi(flt_tmp *pt) {
 /* Convenience function to handle sin special cases */
 static FLT flt_tmp_sin_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -201,11 +201,11 @@ static void flt_tmp_sin(flt_tmp *pt) {
 /* Convenience function to handle cos special cases */
 static FLT flt_tmp_cos_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return FLT_POS_1;
+		case E_INFINITE:
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return FLT_POS_1;
 	}
 }
 
@@ -237,11 +237,11 @@ static void flt_tmp_cos(flt_tmp *pt) {
 /* Convenience function to handle tan special cases */
 static FLT flt_tmp_tan_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -259,12 +259,12 @@ static void flt_tmp_tan(flt_tmp *pt) {
 /* Convenience function to handle asin special cases */
 static FLT flt_tmp_asin_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-	case E_NAN:
-	case E_NORMAL:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+		case E_NAN:
+		case E_NORMAL:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 
@@ -291,12 +291,12 @@ static void flt_tmp_asin(flt_tmp *pt) {
 /* Convenience function to handle acos special cases */
 static FLT flt_tmp_acos_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-	case E_NAN:
-	case E_NORMAL:
-		return FLT_NAN;
-	case E_ZERO:
-		return FLT_POS_PI_2;
+		case E_INFINITE:
+		case E_NAN:
+		case E_NORMAL:
+			return FLT_NAN;
+		case E_ZERO:
+			return FLT_POS_PI_2;
 	}
 }
 
@@ -326,12 +326,12 @@ static void flt_tmp_acos(flt_tmp *pt) {
 /* Convenience function to handle atan special cases */
 static FLT flt_tmp_atan_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return pt->s? FLT_NEG_PI_2: FLT_POS_PI_2;
-	case E_NAN:
-		return FLT_NAN;
-	case E_ZERO:
-		return pt->s? FLT_NEG_0: FLT_POS_0;
+		case E_INFINITE:
+			return pt->s? FLT_NEG_PI_2: FLT_POS_PI_2;
+		case E_NAN:
+			return FLT_NAN;
+		case E_ZERO:
+			return pt->s? FLT_NEG_0: FLT_POS_0;
 	}
 }
 

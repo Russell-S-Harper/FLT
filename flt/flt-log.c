@@ -52,13 +52,13 @@ FLT flt_log10(const FLT f) {
 /* Convenience function to handle log2 special cases */
 static FLT flt_tmp_log2_alt(flt_tmp *pt) {
 	switch (pt->c) {
-	case E_INFINITE:
-		return pt->s? FLT_NAN: FLT_POS_INF;
-	case E_NAN:
-	case E_NORMAL:
-		return FLT_NAN;
-	case E_ZERO:
-		return FLT_NEG_INF;
+		case E_INFINITE:
+			return pt->s? FLT_NAN: FLT_POS_INF;
+		case E_NAN:
+		case E_NORMAL:
+			return FLT_NAN;
+		case E_ZERO:
+			return FLT_NEG_INF;
 	}
 }
 
