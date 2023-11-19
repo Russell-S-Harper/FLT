@@ -7,8 +7,6 @@
 
 #include "flt-tmp.h"
 
-static void flt_tmp_exp2_wrk(flt_tmp *pt);
-
 FLT flt_exp2(const FLT f) {
 	FLT result;
 	flt_tmp t;
@@ -61,19 +59,7 @@ FLT flt_tmp_exp2_alt(flt_tmp *pt) {
 	}
 }
 
-/* Normalizes if t < 0, then calls flt_tmp_exp2_wrk to do the real work */
 void flt_tmp_exp2(flt_tmp *pt) {
-	if (pt->s) {
-		/* Convert 2^-t to 1/2^t */
-		flt_tmp_negate(pt);
-		flt_tmp_exp2_wrk(pt);
-		flt_tmp_invert(pt);
-	} else
-		flt_tmp_exp2_wrk(pt);
-}
-
-/* Handles 2^t for t > 0 */
-static void flt_tmp_exp2_wrk(flt_tmp *pt) {
 	/* These correspond to the nonic polynomial:
 		0.00000028872197873078t^9 - 0.00000014763563218824t^8 + 0.0000215261904753069t^7 + 0.000137098404058219t^6
 		+ 0.00136403623995336t^5 + 0.00958011887214725t^4 + 0.0555360129552747t^3 + 0.240209112897704t^2
@@ -85,13 +71,19 @@ static void flt_tmp_exp2_wrk(flt_tmp *pt) {
 	static int e[] = {-22, -23, -16, -13, -10, -7, -5, -3, -1, -1};
 	flt_tmp u;
 	int i, exponent;
-	/* Input is expected to be normal and non-negative */
-	if (pt->c != E_NORMAL || pt->s)
+	bool invert = false;
+	/* Input is expected to be normal */
+	if (pt->c != E_NORMAL)
 		exit(EXIT_FAILURE);
+	/* Convert 2^-t to 1/2^t */
+	if (pt->s) {
+		flt_tmp_negate(pt);
+		invert = true;
+	}
 	/* Handle out of range */
 	flt_tmp_initialize(&u, E_NORMAL, 0, 0x4A800000, 7);	/* 149.0 */
 	if (flt_tmp_compare(pt, &u, E_GREATER_THAN)) {
-		flt_tmp_initialize(pt, E_INFINITE, 0, 0, 0);
+		flt_tmp_initialize(pt, invert? E_ZERO: E_INFINITE, 0, 0, 0);
 		return;
 	}
 	/* Save the exponent and normalize 1 <= t < 2 */
@@ -109,4 +101,7 @@ static void flt_tmp_exp2_wrk(flt_tmp *pt) {
 	/* Negative powers */
 	for (i = 0; pt->c == E_NORMAL && i > exponent; --i)
 		flt_tmp_sqrt(pt);
+	/* Convert 2^-t to 1/2^t */
+	if (invert)
+		flt_tmp_invert(pt);
 }

@@ -97,7 +97,7 @@ void flt_tmp_log2(flt_tmp *pt) {
 	/*	These correspond to CORDIC coefficients:
 		m_r = 3/2, 5/4, 9/8, ... (exponents are all zero)
 		m_i = 2/3, 4/5, 8/9, ... (exponents are all -1)
-		m_l = log2(1.5), log2(1.25), log2(1.125), ... (exponents are -1 - index)	
+		m_l = log2(3/2), log2(5/4), log2(9/8), ... (exponents are -1 - index)
 	*/
 	static uint32_t m_r[] = {
 		0x60000000, 0x50000000, 0x48000000, 0x44000000, 0x42000000, 0x41000000,
@@ -131,10 +131,10 @@ void flt_tmp_log2(flt_tmp *pt) {
 	/* Shortcut if mantissa = 1.0 */
 	if (pt->m == TMP_1)
 		flt_tmp_init_0(pt);
-	/* Approximate using the CORDIC coeeficients */
+	/* Approximate using the CORDIC coefficients */
 	else {
 		flt_tmp_init_0(&u);
-		for (i = 0, j = sizeof(m_r) / sizeof(uint32_t) - 4; pt->m > TMP_1 && !pt->e && i < j; ++i) {
+		for (i = 0, j = sizeof(m_r) / sizeof(uint32_t); pt->m > TMP_1 && !pt->e && i < j; ++i) {
 			if (pt->m >= m_r[i] && !pt->e) {
 				flt_tmp_initialize(&v, E_NORMAL, 0, m_i[i], -1);
 				flt_tmp_multiply(pt, &v);

@@ -1507,7 +1507,7 @@ or  1/3  and  3/9  and  9/27 may disagree");
        V9 = (X - BInvrse) - (One - BInvrse);
       BadCond(Defect, "Calculated");
       printf(" %.17e for\n", POW(X,Z));
-      printf("\t(1 + (%.17e) ^ (%.17e);\n", V9, Z);
+      printf("\t(1 + %.17e) ^ (%.17e);\n", V9, Z);
       printf("\tdiffers from correct value by %.17e .\n", Q);
       printf("\tThis much error may spoil financial\n");
       printf("\tcalculations involving tiny interest rates.\n");

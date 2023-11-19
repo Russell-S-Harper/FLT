@@ -110,7 +110,7 @@ static FLT flt_tmp_pow_alt(flt_tmp *pt, flt_tmp *pu) {
 
 /* To handle t^u where u is an integer. Note +Inf^u, t^0, and 1^u are already handled. */
 static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
-	flt_tmp v, w;
+	flt_tmp v;
 	int sign;
 	bool u_is_odd = flt_tmp_is_odd(pu);
 	/* Continue */
