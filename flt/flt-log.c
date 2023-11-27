@@ -62,16 +62,16 @@ static FLT flt_tmp_log2_alt(flt_tmp *pt) {
 	}
 }
 
-#ifdef	FAST_LOG2
+#ifdef	POLY_LOG2
 void flt_tmp_log2(flt_tmp *pt) {
 	/* These correspond to the nonic polynomial:
-		0.00538325490414638t^9 - 0.0815016026617356t^8 + 0.55372629198425t^7 - 2.22638733617112t^6
-		+ 5.88190865410353t^5 - 10.7225750901639t^4 + 13.8105515335726t^3 - 12.7807734287356t^2
-		+ 9.13914614464219t - 3.57947841546609
+		0.00538325528778299t^9 - 0.0815016079263423t^8 + 0.553726323899935t^7 - 2.2263874483398t^6
+		+ 5.88190890593417t^5 - 10.7225754646689t^4 + 13.8105519024431t^3 - 12.7807736607554t^2
+		+ 9.13914622920568t - 3.57947842907196
 	*/
 	static int s[] = {0, 1, 0, 1, 0, 1, 0, 1, 0, 1};
-	static uint32_t m[] = {0x583301F1, 0x537527F8, 0x46E080CE, 0x473E90A8, 0x5E1C4C40,
-				0x55C7D573, 0x6E7C0271, 0x663F0624, 0x491CF8A7, 0x728B1651};
+	static uint32_t m[] = {0x5833025A, 0x53752852, 0x46E08112, 0x473E90E4, 0x5E1C4C83,
+				0x55C7D5A5, 0x6E7C02A3, 0x663F0643, 0x491CF8B3, 0x728B1659};
 	static int e[] = {-8, -4, -1, 1, 2, 3, 3, 3, 3, 1};
 	flt_tmp u;
 	int exponent;
@@ -149,4 +149,4 @@ void flt_tmp_log2(flt_tmp *pt) {
 	flt_tmp_normalize(&u);
 	flt_tmp_add(pt, &u);
 }
-#endif	/* FAST_LOG2 */
+#endif	/* POLY_LOG2 */
