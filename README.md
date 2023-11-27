@@ -116,13 +116,13 @@ These limitations may be revised as the project evolves:
 - Looking for sample real-world source code to test against.
 - Current worst-case precision for the default approximations, in decimal digits:
 
-|  fn  | digits |
-|------|--------|
-| sin  | 7.2<sup>†</sup> |
-| cos  | 7.2<sup>†</sup> |
-| atan | 6.9 |
-| exp2 | 6.6 |
-| log2 | 7.2<sup>†‡</sup> |
+   |  fn  | digits |
+   |------|--------|
+   | sin  | 7.2<sup>†</sup> |
+   | cos  | 7.2<sup>†</sup> |
+   | atan | 6.9 |
+   | exp2 | 6.6 |
+   | log2 | 7.2<sup>†‡</sup> |
 
 † The maximum possible precision for FLT is 7.2 decimal digits, so `sin`, `cos`, and `log2` are "good enough".
 
