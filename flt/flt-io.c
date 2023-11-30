@@ -279,14 +279,15 @@ static const char *flt_tmp_f_format(flt_tmp *pt, const char *format) {
 	static int _index = 0;
 	flt_tmp u;
 	char *string;
-	int base_10_exponent, precision, limit, i, j;
+	int base_10_exponent, precision, maximum_digits, limit, i, j;
 	/* Advance the index */
 	string = _strings + _index;
 	_index = (_index + FMT_F_MAX_LEN) % FMT_F_BFR_LEN;
 	/* Continue */
-	i = 0;
 	precision = printf_precision(format);
 	if (pt->c == E_NORMAL) {
+		i = 0;
+		maximum_digits = 10;
 		flt_tmp_prepare_constants();
 		flt_tmp_initialize(&u, pt->c, 0, pt->m, pt->e);
 		/* Initial sign */
@@ -296,22 +297,21 @@ static const char *flt_tmp_f_format(flt_tmp *pt, const char *format) {
 		/* Numbers one or higher */
 		if (base_10_exponent >= 0) {
 			/* Integer */
-			string[i++] = flt_tmp_get_next_digit(&u);
+			string[i++] = (maximum_digits-- > 0)? flt_tmp_get_next_digit(&u): '0';
 			for (j = 0; j < base_10_exponent; ++j)
-				string[i++] = flt_tmp_get_next_digit(&u);
+				string[i++] = (maximum_digits-- > 0)? flt_tmp_get_next_digit(&u): '0';
 			string[i++] = '.';
 			/* Fraction */
 			for (j = 0; j < precision; ++j)
-				string[i++] = flt_tmp_get_next_digit(&u);
+				string[i++] = (maximum_digits-- > 0)? flt_tmp_get_next_digit(&u): '0';
 			/* Numbers less than one */
 		} else {
 			string[i++] = '0';
 			string[i++] = '.';
 			for (j = 0, limit = -base_10_exponent - 1; j < limit; ++j)
 				string[i++] = '0';
-			for (j = 0, limit = precision + base_10_exponent + 1; j < limit;
-				 ++j)
-				string[i++] = flt_tmp_get_next_digit(&u);
+			for (j = 0, limit = precision + base_10_exponent + 1; j < limit; ++j)
+				string[i++] = (maximum_digits-- > 0)? flt_tmp_get_next_digit(&u): '0';
 		}
 		/* Done */
 		string[i] = '\0';
