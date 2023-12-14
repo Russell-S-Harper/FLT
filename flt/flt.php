@@ -101,8 +101,8 @@ function get_parameters($argc, $argv) {
 					"    lines, or the scanf example below. It is recommended to thoroughly test the".PHP_EOL.
 					"    programs after compiling to ensure correct functionality.".PHP_EOL.
 					"  - I/O functions are limited in how many float parameters can be specified in".PHP_EOL.
-					"    a single function call. For *printf, up to 15 \"e/E\" & five \"f/F\" parameters,".PHP_EOL.
-					"    and for *scanf, up to five parameters, can be specified.".PHP_EOL.
+					"    a single function call. For *printf, up to 15 \"%e/%E\" & five \"%f/%F\",".PHP_EOL.
+					"    parameters and for *scanf, up to five parameters, can be specified.".PHP_EOL.
 					"  - Some expressions involving *scanf may behave differently in FLT. In".PHP_EOL.
 					"    particular, constructions like:".PHP_EOL.
 					"        if (1 == scanf(\"%10f\", &f)) { ... }".PHP_EOL.
@@ -239,6 +239,12 @@ function compile(&$lines, &$substitutions, $pass, $debug) {
 				break;
 			case "wrong type argument to unary plus":
 				process_unary_plus($lines, $message, $modified);
+				break;
+			case "wrong type argument to increment":
+				process_increment_or_decrement($lines, $message, $modified, 'increment');
+				break;
+			case "wrong type argument to decrement":
+				process_increment_or_decrement($lines, $message, $modified, 'decrement');
 				break;
 			case "conversion to non-scalar type requested":
 				process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
@@ -676,6 +682,31 @@ function process_unary_plus(&$lines, $message, &$modified) {
 			$line = $lines[$l];
 			$lines[$l] = substr($line, 0, $start).substr($line, $finish + 1);
 			$modified[] = $l;
+		}
+	} else
+		process_unhandled($message);
+}
+
+function process_increment_or_decrement(&$lines, $message, &$modified, $op) {
+	if (count($message->locations) == 1) {
+		list($l, $start, $finish) = get_token_extent($message->locations[0]);
+		if (!in_array($l, $modified)) {
+			$line = $lines[$l];
+			$p1 = substr($line, 0, $start);
+			$p2 = substr($line, $finish + 1);
+			if (($token = get_previous_token($p1)) != '') {
+				$working = split_previous_token($token, $p1);
+				$p1 = $working[0].'flt_post_'.$op.'(&'.$token.')'.$working[1];
+				$lines[$l] = $p1.$p2;
+				$modified[] = $l;
+			} else if (($token = get_next_token($p2)) != '') {
+				$working = explode($token, $p2, 2);
+				$p2 = $working[0].'flt_pre_'.$op.'(&'.$token.')'.$working[1];
+				$lines[$l] = $p1.$p2;
+				$modified[] = $l;
+			} else
+			// Didn't find anything? Likely across multiple lines, gcc doesn't give enough info to address this case
+				process_unhandled($message);
 		}
 	} else
 		process_unhandled($message);

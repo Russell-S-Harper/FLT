@@ -99,6 +99,11 @@ FLT flt_subtract_into(FLT *pf, const FLT g);
 FLT flt_multiply_into(FLT *pf, const FLT g);
 FLT flt_divide_into(FLT *pf, const FLT g);
 
+FLT flt_pre_increment(FLT *pf);
+FLT flt_post_increment(FLT *pf);
+FLT flt_pre_decrement(FLT *pf);
+FLT flt_post_decrement(FLT *pf);
+
 FLT flt_atof(const char *string);
 const char *flt_ftoa(const FLT f, const char *format);
 char *flt_get_scanf_buffer(int offset);

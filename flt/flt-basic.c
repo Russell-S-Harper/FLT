@@ -95,6 +95,32 @@ FLT flt_divide_into(FLT *pf, const FLT g) {
 	return *pf;
 }
 
+FLT flt_pre_increment(FLT *pf) {
+	return flt_add_into(pf, FLT_POS_1);	
+}
+
+FLT flt_post_increment(FLT *pf) {
+	FLT g;
+	if (!pf)
+		return FLT_NAN;
+	g = *pf;
+	flt_add_into(pf, FLT_POS_1);
+	return g;
+}
+
+FLT flt_pre_decrement(FLT *pf) {
+	return flt_add_into(pf, FLT_NEG_1);	
+}
+
+FLT flt_post_decrement(FLT *pf) {
+	FLT g;
+	if (!pf)
+		return FLT_NAN;
+	g = *pf;
+	flt_add_into(pf, FLT_NEG_1);
+	return g;
+}
+
 FLT flt_negated(const FLT f) {
 	/* This seems wasteful given what little flt_tmp_negate does but we'll do it this way for consistency! */
 	FLT result;

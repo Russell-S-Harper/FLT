@@ -84,7 +84,7 @@ While the `cc65` suite of tools was the inspiration, there are a lot of other "t
 - As well as single-precision floating point, double-precision floating point literals, variables, and functions are also converted to `FLT` and `flt_*`. The C standard only specifies that the type `double` provides at LEAST as much precision as the type `float`, so this is permitted!
 - Provides NaN, ±infinity, ±zero, and subnormal numbers
 - Functions provided, can also use `float` versions, e.g. `sinf`, `cosf`, `tanf`, …
-    - mathematical operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`
+    - mathematical operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`, pre & post `++`, pre & post `--`
     - comparison operators: `==`, `>`, `<`, `>=`, `<=`, `!=`
     - `ldexp`, `frexp`, `modf`, `fmod`
     - `fabs`, `round`, `trunc`, `ceil`, `floor`
@@ -103,7 +103,7 @@ These limitations may be revised as the project evolves:
 - The accuracy of FLT is NOT professional grade and should NOT be used in mission-critical applications where errors can have serious consequences!
 - As well, FLT is NOT optimized for speed or space. It is basically a temporary solution to provide floating point support in C compilers currently lacking it.
 - Currently `gcc -fdiagnostics-format=json` v9.0+ does not provide enough information to parse certain constructions such as a cast spanning multiple lines, or the `scanf` example below. It is recommended to thoroughly test the programs after compiling to ensure correct functionality.
-- I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "e/E" & five "f/F" parameters, and for `*scanf`, up to five parameters, can be specified.
+- I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "%e/%E" & five "%f/%F" parameters, and for `*scanf`, up to five parameters, can be specified.
 - Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like: `if (1 == scanf("%10f", &f)) { … }` will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like: `if (scanf("%10f", &f) == 1) { … }`.
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", …);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
