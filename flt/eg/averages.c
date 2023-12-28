@@ -11,7 +11,7 @@ int main() {
 	float F[5], total;
 
 	for (;;) {
-		printf("Enter up to five numbers (Ctrl-C to exit): ");
+		printf("Enter up to five numbers (empty line to exit): ");
 		fgets(buffer, sizeof(buffer), stdin);
 		j = sscanf(buffer, "%f %f %f %f %f", F + 0, F + 1, F + 2, F + 3, F + 4);
 		for (i = count = 0, total = 0.0; i < j; ++i) {
@@ -23,7 +23,7 @@ int main() {
 		if (count)
 			printf("Average (%d): %.3g\n", count, total / count);
 		else
-			printf("No numbers entered!\n");
+			break;
 	}
 	return 0;
 }

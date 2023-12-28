@@ -21,7 +21,7 @@ To use FLT in your project:
 Example to generate `eg/averages`:
 
 ```
-	cd «repository-directory»/flt
+	cd «path-to»/flt
 	php flt.php -i eg/averages.c -o eg/averages-flt.c
 	gcc -o eg/averages eg/averages-flt.c flt-*.c
 ```
@@ -31,11 +31,11 @@ You can review `eg/averages-flt.c` (code will be at the end) and you will see it
 For the `cc65` suite, you will probably want to do something like this. Assumes the `flt-*.c` files have been compiled to `flt.lib`, and the paths of `cc65`, `ca65`, and `ld65` are in `$PATH`.
 
 ```
-	cd «repository-directory»/flt
-	php flt.php -i eg/averages.c -o eg/averages-flt.c -x '-I «repository-directory»/cc65/include'
+	cd «path-to»/flt
+	php flt.php -i eg/averages.c -o eg/averages-flt.c -x '-I «path-to»/cc65/include'
 	cc65 -t «target» eg/averages-flt.c
 	ca65 -t «target» eg/averages-flt.s
-	ld65 -o eg/averages -t «target» eg/averages-flt.o flt.lib
+	ld65 -o eg/averages -t «target» eg/averages-flt.o flt.lib -L «path-to»/cc65/lib «target».lib
 ```
 
 Another interesting example file is `eg/paranoia.c` adapted by [Sumner & Gay](https://people.math.sc.edu/Burkardt/c_src/paranoia/paranoia.html). Building and running this will give you an idea of any remaining defects or flaws in FLT and help you decide whether you want to use it.
@@ -43,7 +43,7 @@ Another interesting example file is `eg/paranoia.c` adapted by [Sumner & Gay](ht
 To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bit machine):
 
 ```
-	cd «repository-directory»/flt
+	cd «path-to»/flt
 	php flt.php -i eg/paranoia.c -o eg/paranoia-flt.c -x '-DNOSIGNAL -DSingle'
 	gcc -o eg/paranoia eg/paranoia-flt.c flt-*.c
 ```
@@ -51,8 +51,8 @@ To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bi
 Here is one way to build `flt.lib` using the `cc65` suite. This is recommended to reduce the size of executables. Assumes the paths of `cc65`, `ca65`, and `ar65` are in `$PATH`:
 
 ```
-	cd «repository-directory»/flt
-	for C in *.c ; do cc65 -O -I «repository-directory»/cc65/include -t «target» $C ; done 
+	cd «path-to»/flt
+	for C in *.c ; do cc65 -O -I «path-to»/cc65/include -t «target» $C ; done 
 	for S in *.s ; do ca65 -t «target» $S ; done
 	ar65 r flt.lib *.o
 	rm *.s *.o
