@@ -10,7 +10,7 @@ define('FLT_VERSION', '1.0');	// Initial release
 
 define('FLT_TYPE_REGEX', 'FLT');
 
-define('INT_TYPE_REGEX', '(?:(?:unsigned|signed|char|short|int|long)\s*)+');
+define('INT_TYPE_REGEX', '(?:(?:unsigned|signed|char|short|int|long|u?int[0-9]+_t)\s*)+');
 
 define('FLT_LITERAL_REGEX',
 	'[0-9]+\.[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
@@ -20,7 +20,7 @@ define('FLT_LITERAL_REGEX',
 	.'|[0-9]+\.[0-9]+[FfLl]?'
 	.'|\.[0-9]+[FfLl]?'
 	.'|[0-9]+\.[FfLl]?'
-	.'|[0-9]+[Ff]');
+	.'|\b[0-9]+[Ff]\b');
 
 main($argc, $argv);
 
@@ -255,6 +255,9 @@ function compile(&$lines, &$substitutions, $pass, $debug) {
 			case "expected declaration specifiers or ‘...’ before ‘*’ token":
 				process_non_gcc_extension($lines, $substitutions, $message, $modified);
 				break;
+			// Ignoring these cc65 vs. gcc incompatibilities
+			case "assignment to ‘FILE *’ {aka ‘struct _FILE *’} from ‘int’ makes pointer from integer without a cast":
+			case "cast from pointer to integer of different size":
 			case "useless type name in empty declaration":
 			case "‘fastcall’ attribute ignored";
 				if ($debug)
