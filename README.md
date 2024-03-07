@@ -134,7 +134,7 @@ These limitations may be revised as the project evolves:
 
 ## License
 
-This repository is governed by a dual license – one for individual users and another for commercial users. Please review the respective licenses in the repository for complete details. For commercial distribution rights, a separate Commercial License is required, which can be obtained by contacting the repository owner flt@russell-harper.com.
+This repository is governed by a dual license – one for individual users and another for commercial users. Please review the respective licenses in the repository for complete details. For commercial distribution rights, a separate Commercial License is required, which can be obtained by contacting the repository owner russell.s.harper@gmail.com.
 
 Your use of this code is subject to these license terms.
 
@@ -144,6 +144,6 @@ If you have any questions and/or suggestions, would like to discuss commercial d
 
 Russell Harper
 
-flt@russell-harper.com
+russell.s.harper@gmail.com
 
 2023-10-16

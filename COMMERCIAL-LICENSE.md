@@ -42,7 +42,7 @@ This Commercial License is a legal agreement between you (the "Licensee"), actin
 
     This Commercial License and Individual License constitute the entire agreement between the Licensee and the Repository Owner regarding the code in the "FLT" Repository.
 
-For inquiries regarding this Commercial License, please contact the Repository Owner at flt@russell-harper.com.
+For inquiries regarding this Commercial License, please contact the Repository Owner at russell.s.harper@gmail.com.
 
 [Date]
 

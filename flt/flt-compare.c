@@ -1,7 +1,7 @@
 /*
     Contents: "compare" C source code (c) 2023
   Repository: https://github.com/Russell-S-Harper/FLT
-     Contact: flt@russell-harper.com
+     Contact: russell.s.harper@gmail.com
 */
 #include "flt-tmp.h"
 

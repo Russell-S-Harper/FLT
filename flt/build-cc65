@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Set as required
+#XCC=«path-to-cc65-repo»
+#TGT=«target»
+
+XCC=~/Documents/development/cc65
+TGT=cx16
+
+for C in *.c ; do $XCC/bin/cc65 -O -I $XCC/include -t $TGT $C ; done 
+for S in *.s ; do $XCC/bin/ca65 -t $TGT $S ; done
+$XCC/bin/ar65 r flt.lib *.o
+rm *.s *.o

@@ -1,7 +1,7 @@
 /*
     Contents: "parse" C header file (c) 2023
   Repository: https://github.com/Russell-S-Harper/FLT
-     Contact: flt@russell-harper.com
+     Contact: russell.s.harper@gmail.com
 */
 #ifndef	_FLT_TDF
 #define	_FLT_TDF

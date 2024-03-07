@@ -2,7 +2,7 @@
 /*
     Contents: "FLT" PHP source code (c) 2023
   Repository: https://github.com/Russell-S-Harper/FLT
-     Contact: flt@russell-harper.com
+     Contact: russell.s.harper@gmail.com
 */
 // Usage: php flt.php [-i input-file] [-o output-file] [-d 0|1] [-x extra-gcc-options]
 
@@ -10,7 +10,7 @@ define('FLT_VERSION', '1.0');	// Initial release
 
 define('FLT_TYPE_REGEX', 'FLT');
 
-define('INT_TYPE_REGEX', '(?:(?:unsigned|signed|char|short|int|long|u?int[0-9]+_t)\s*)+');
+define('INT_TYPE_REGEX', '(?:(?:unsigned|signed|char|short|int|long|size_t|u?int[0-9]+_t)\s*)+');
 
 define('FLT_LITERAL_REGEX',
 	'[0-9]+\.[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
