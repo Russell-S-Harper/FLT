@@ -58,7 +58,7 @@ Be sure to adhere to the licensing terms provided in this and other repositories
 
 ## How It Works
 
-Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. The JSON indicates exactly where the issues is. With a bit of substitution hocus-pocus it is possible to use `gcc` and `PHP` to parse the source code and determine where to substitute FLT code!
+Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. The JSON indicates exactly where the issues are. With a bit of substitution hocus-pocus it is possible to use `gcc` and `PHP` to parse the source code and determine where to substitute FLT code!
 
 ## Inspiration
 
