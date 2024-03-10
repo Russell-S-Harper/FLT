@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set as required
-#XCC=«path-to-cc65-repo»
-#TGT=«target»
+# XCC=«path-to-cc65-repo»
+# TGT=«target»
 
 XCC=~/Documents/development/cc65
 TGT=cx16

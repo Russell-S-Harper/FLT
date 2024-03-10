@@ -21,7 +21,7 @@ To use FLT in your project:
 Example to generate `eg/averages`:
 
 ```
-	cd «path-to»/flt
+	cd «flt-repo»/flt
 	php flt.php -i eg/averages.c -o eg/averages-flt.c
 	gcc -o eg/averages eg/averages-flt.c flt-*.c
 ```
@@ -31,11 +31,11 @@ You can review `eg/averages-flt.c` (code will be at the end) and you will see it
 For the `cc65` suite, you will probably want to do something like this. Assumes the `flt-*.c` files have been compiled to `flt.lib`, and the paths of `cc65`, `ca65`, and `ld65` are in `$PATH`.
 
 ```
-	cd «path-to»/flt
-	php flt.php -i eg/averages.c -o eg/averages-flt.c -x '-I «path-to»/cc65/include'
+	cd «flt-repo»/flt
+	php flt.php -i eg/averages.c -o eg/averages-flt.c -x '-I «cc65-repo»/cc65/include'
 	cc65 -t «target» eg/averages-flt.c
 	ca65 -t «target» eg/averages-flt.s
-	ld65 -o eg/averages -t «target» eg/averages-flt.o flt.lib -L «path-to»/cc65/lib «target».lib
+	ld65 -o eg/averages -t «target» eg/averages-flt.o flt.lib -L «cc65-repo»/cc65/lib «target».lib
 ```
 
 Another interesting example file is `eg/paranoia.c` adapted by [Sumner & Gay](https://people.math.sc.edu/Burkardt/c_src/paranoia/paranoia.html). Building and running this will give you an idea of any remaining defects or flaws in FLT and help you decide whether you want to use it.
@@ -43,20 +43,12 @@ Another interesting example file is `eg/paranoia.c` adapted by [Sumner & Gay](ht
 To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bit machine):
 
 ```
-	cd «path-to»/flt
+	cd «flt-repo»/flt
 	php flt.php -i eg/paranoia.c -o eg/paranoia-flt.c -x '-DNOSIGNAL -DSingle'
 	gcc -o eg/paranoia eg/paranoia-flt.c flt-*.c
 ```
 
-Here is one way to build `flt.lib` using the `cc65` suite. This is recommended to reduce the size of executables. Assumes the paths of `cc65`, `ca65`, and `ar65` are in `$PATH`:
-
-```
-	cd «path-to»/flt
-	for C in *.c ; do cc65 -O -I «path-to»/cc65/include -t «target» $C ; done 
-	for S in *.s ; do ca65 -t «target» $S ; done
-	ar65 r flt.lib *.o
-	rm *.s *.o
-```
+It is recommend to build `flt.lib` and link to it to reduce the size of executables. For the `cc65` suite, there is a build script available as `«flt-repo»/flt/build-cc65`. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` as required, and run the script to build the `flt.lib` library.
 
 Other interesting examples [(missing licenses prevent inclusion in this repository)](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#choosing-the-right-license) which can be converted to FLT are:
 
@@ -66,7 +58,7 @@ Be sure to adhere to the licensing terms provided in this and other repositories
 
 ## How It Works
 
-Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. With a bit of substitution hocus-pocus it is possible to use `gcc` and `PHP` to parse the source code and determine where to substitute FLT code!
+Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. The JSON indicates exactly where the issues is. With a bit of substitution hocus-pocus it is possible to use `gcc` and `PHP` to parse the source code and determine where to substitute FLT code!
 
 ## Inspiration
 
@@ -110,11 +102,9 @@ These limitations may be revised as the project evolves:
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
 - The approximations used in `atan`, and `exp2` could display some accuracy issues near boundary conditions. This also includes these dependent functions: `asin`, `acos`, `atan2`, `exp`, `exp10`, `pow`, `sinh`, `cosh`, and `tanh`.
 
-## To Do
+## Precision
 
-- Expecting a lot of revisions!
-- Looking for sample real-world source code to test against.
-- Current worst-case precision for the default approximations, in decimal digits:
+Current worst-case precision for the default approximations, in decimal digits:
 
    |  fn  | digits |
    |------|--------|
@@ -128,9 +118,7 @@ These limitations may be revised as the project evolves:
 
 ‡ The default `log2` uses a CORDIC routine which requires between zero to 60 floating point operations per invocation (average of 30). Building with `-DPOLY_LOG2` will use a polynomial approximation which requires 20 floating point operations, but accuracy drops to 6.6 decimal digits.
 
-- Researching CORDIC, TAYLOR, and other routines:
-    - `exp2` seems resistant to any attempts to improve accuracy, always getting 6.6 decimal digits!
-    - looking into `atan`
+Currently researching CORDIC, TAYLOR, and other routines to improve `exp2` and `atan` accuracy.
 
 ## License
 
