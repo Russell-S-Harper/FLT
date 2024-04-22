@@ -118,7 +118,7 @@ Current worst-case precision for the default approximations, in decimal digits:
 
 ‡ The default `log2` uses a CORDIC routine which requires between zero to 60 floating point operations per invocation (average of 30). Building with `-DPOLY_LOG2` will use a polynomial approximation which requires 20 floating point operations, but accuracy drops to 6.6 decimal digits.
 
-Currently researching CORDIC, TAYLOR, and other routines to improve `exp2` and `atan` accuracy.
+Currently researching CORDIC, TAYLOR, and other routines to improve `atan` and `exp2` accuracy.
 
 ## License
 
