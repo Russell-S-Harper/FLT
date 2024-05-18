@@ -96,7 +96,7 @@ FLT flt_divide_into(FLT *pf, const FLT g) {
 }
 
 FLT flt_pre_increment(FLT *pf) {
-	return flt_add_into(pf, FLT_POS_1);	
+	return flt_add_into(pf, FLT_POS_1);
 }
 
 FLT flt_post_increment(FLT *pf) {
@@ -109,7 +109,7 @@ FLT flt_post_increment(FLT *pf) {
 }
 
 FLT flt_pre_decrement(FLT *pf) {
-	return flt_add_into(pf, FLT_NEG_1);	
+	return flt_add_into(pf, FLT_NEG_1);
 }
 
 FLT flt_post_decrement(FLT *pf) {
