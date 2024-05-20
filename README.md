@@ -50,9 +50,34 @@ To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bi
 
 It is recommend to build `flt.lib` and link to it to reduce the size of executables. For the `cc65` suite, there is a build script available as `«flt-repo»/flt/build-cc65`. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` as required, and run the script to build the `flt.lib` library.
 
-Other interesting examples [(missing licenses prevent inclusion in this repository)](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository#choosing-the-right-license) which can be converted to FLT are:
+Other interesting examples which can be converted to FLT are:
 
 - [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c) – See how blazing fast your machine is! :wink: Note that you may need to write your own `dtime()`.
+
+- [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c) – A fun little program. Sample output:
+
+```
+	********************
+	********************
+	*******#######******
+	*****###########****
+	****#############***
+	***##%%%$-$%######**
+	***%%%%$=*+$%#####**
+	**#%%%$-**-.$%#####*
+	**%%$=-%    -%%####*
+	**$=.       *%%####*
+	**          -$%####*
+	**$=.       *%%####*
+	**%%$=-%    -%%####*
+	**#%%%$-**-.$%#####*
+	***%%%%$=*+$%#####**
+	***##%%%$-$%######**
+	****#############***
+	*****###########****
+	*******#######******
+	********************
+```
 
 Be sure to adhere to the licensing terms provided in this and other repositories mentioned here to ensure proper usage and compliance.
 
@@ -104,21 +129,19 @@ These limitations may be revised as the project evolves:
 
 ## Precision
 
-Current worst-case precision for the default approximations, in decimal digits:
+The worst-case precisions for the default approximations, in decimal digits, are:
 
    |  fn  | digits |
    |------|--------|
-   | sin  | 7.2<sup>†</sup> |
-   | cos  | 7.2<sup>†</sup> |
-   | atan | 6.9 |
-   | exp2 | 6.6 |
+   | sin  | 7.4<sup>†</sup> |
+   | cos  | 7.4<sup>†</sup> |
+   | atan | 7.1 |
+   | exp2 | 6.9 |
    | log2 | 7.2<sup>†‡</sup> |
 
-† The maximum possible precision for FLT is 7.2 decimal digits, so `sin`, `cos`, and `log2` are "good enough".
+† The maximum precision for FLT would be expected to be 7.2 decimal digits. However the least significant bit can be inaccurate in `float` functions, so the FLT values were compared against the corresponding `double` functions. This is how we got precisions greater than 7.2 decimal digits. In summary, `sin` and `cos` are very good, while `log2` is "good enough".
 
-‡ The default `log2` uses a CORDIC routine which requires between zero to 60 floating point operations per invocation (average of 30). Building with `-DPOLY_LOG2` will use a polynomial approximation which requires 20 floating point operations, but accuracy drops to 6.6 decimal digits.
-
-Currently researching CORDIC, TAYLOR, and other routines to improve `atan` and `exp2` accuracy.
+‡ The default `log2` uses a CORDIC routine which requires between zero to 60 floating point operations per invocation (average of 30). Building with `-DPOLY_LOG2` will use a polynomial approximation which requires 20 floating point operations, but accuracy drops to 6.9 decimal digits.
 
 ## License
 
