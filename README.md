@@ -57,26 +57,26 @@ Other interesting examples which can be converted to FLT are:
 - [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c) – A fun little program. Sample output:
 
 ```
-	********************
-	********************
-	*******#######******
-	*****###########****
-	****#############***
-	***##%%%$-$%######**
-	***%%%%$=*+$%#####**
-	**#%%%$-**-.$%#####*
-	**%%$=-%    -%%####*
-	**$=.       *%%####*
-	**          -$%####*
-	**$=.       *%%####*
-	**%%$=-%    -%%####*
-	**#%%%$-**-.$%#####*
-	***%%%%$=*+$%#####**
-	***##%%%$-$%######**
-	****#############***
-	*****###########****
-	*******#######******
-	********************
+	****************************************
+	****************************************
+	*************###############************
+	**********#####################*********
+	*******###########################******
+	******###%%%%%%%$$-=$%%############*****
+	*****#%%%%%%%$$$==*++=$$%%##########****
+	****#%%%%%%$$=-#*%* -%.+$%%%#########***
+	***%%%%%$-==-.%        $-$%%%#########**
+	***%$$==.%   =          *$%%%#########**
+	***                    *-$$%%#########**
+	***%$$==.%   =          *$%%%#########**
+	***%%%%%$-==-.%        $-$%%%#########**
+	****#%%%%%%$$=-#*%* -%.+$%%%#########***
+	*****#%%%%%%%$$$==*++=$$%%##########****
+	******###%%%%%%%$$-=$%%############*****
+	*******###########################******
+	**********#####################*********
+	*************###############************
+	****************************************
 ```
 
 Be sure to adhere to the licensing terms provided in this and other repositories mentioned here to ensure proper usage and compliance.
@@ -119,6 +119,7 @@ These limitations may be revised as the project evolves:
 
 - The accuracy of FLT is NOT professional grade and should NOT be used in mission-critical applications where errors can have serious consequences!
 - As well, FLT is NOT optimized for speed or space. It is basically a temporary solution to provide floating point support in C compilers currently lacking it.
+- We currently do not support arithmetic expressions in the assignment of global or static floating point variables, e.g. the global variable assignment `double g_k6 = 2.0 * 3.0;` will be translated to `FLT g_k6 = flt_multiply(0x40000000 /* 2.0 */, 0x40400000 /* 3.0 */);` which will generate a compilation error. A workaround is to initialize these variables at runtime prior to being used. Note that simple assignments are permitted, e.g. `double g_k6 = 6.0;` will be translated to `FLT g_k6 = 0x40C00000 /* 6.0 */;` which will compile without issue.
 - Currently `gcc -fdiagnostics-format=json` v9.0+ does not provide enough information to parse certain constructions such as a cast spanning multiple lines, or the `scanf` example below. It is recommended to thoroughly test the programs after compiling to ensure correct functionality.
 - I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "%e/%E" & five "%f/%F" parameters, and for `*scanf`, up to five parameters, can be specified.
 - Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like: `if (1 == scanf("%10f", &f)) { … }` will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like: `if (scanf("%10f", &f) == 1) { … }`.

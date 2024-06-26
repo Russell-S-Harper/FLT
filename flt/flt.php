@@ -96,6 +96,10 @@ function get_parameters($argc, $argv) {
 					"  - As well, FLT is NOT optimized for speed or space. It is basically a".PHP_EOL.
 					"    temporary solution to provide floating point support in C compilers".PHP_EOL.
 					"    currently lacking it.".PHP_EOL.
+					"  - We currently do not support arithmetic expressions in the assignment of".PHP_EOL.
+					"    global or static floating point variables. A workaround is to initialize".PHP_EOL.
+					"    these variables at runtime prior to being used. Note that simple assignments".PHP_EOL.
+					"    are permitted.".PHP_EOL.
 					"  - Currently gcc v9.0+ '-fdiagnostics-format=json' does not provide enough".PHP_EOL.
 					"    information to parse certain constructions such as a cast spanning multiple".PHP_EOL.
 					"    lines, or the scanf example below. It is recommended to thoroughly test the".PHP_EOL.
