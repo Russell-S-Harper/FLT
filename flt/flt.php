@@ -39,7 +39,14 @@ function main($argc, $argv) {
 	do
 		$done = compile($lines, $substitutions, ++$pass, $params['-d']);
 	while (!$done && $pass < 50);
+	// Final passes to set global and static initializers
 	if ($done) {
+		do
+			$done = compile($lines, $substitutions, ++$pass, $params['-d'], true);
+		while (!$done && $pass < 50);
+	}
+	if ($done) {
+		// Postprocess to restore substitutions and convert assignments to literals
 		$code = postprocess($lines, $substitutions);
 		file_put_contents($params['-o'], $code);
 		array_map('unlink', glob('__FLT_TMP_*'));
@@ -96,10 +103,6 @@ function get_parameters($argc, $argv) {
 					"  - As well, FLT is NOT optimized for speed or space. It is basically a".PHP_EOL.
 					"    temporary solution to provide floating point support in C compilers".PHP_EOL.
 					"    currently lacking it.".PHP_EOL.
-					"  - We currently do not support arithmetic expressions in the assignment of".PHP_EOL.
-					"    global or static floating point variables. A workaround is to initialize".PHP_EOL.
-					"    these variables at runtime prior to being used. Note that simple assignments".PHP_EOL.
-					"    are permitted.".PHP_EOL.
 					"  - Currently gcc v9.0+ '-fdiagnostics-format=json' does not provide enough".PHP_EOL.
 					"    information to parse certain constructions such as a cast spanning multiple".PHP_EOL.
 					"    lines, or the scanf example below. It is recommended to thoroughly test the".PHP_EOL.
@@ -207,7 +210,7 @@ function preprocess($code, $pass, $extra) {
 	return $lines;
 }
 
-function compile(&$lines, &$substitutions, $pass, $debug) {
+function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false) {
 	// Normalize
 	$pass = substr('0'.$pass, -2);
 	// To keep track of which lines were modified
@@ -233,7 +236,12 @@ function compile(&$lines, &$substitutions, $pass, $debug) {
 		}
 		switch ($message->message) {
 			case "initializer element is not constant":
-				// Will handle in postprocessing
+				if ($final_passes)
+					process_initializer($lines, $message, $modified);
+				break;
+			case "invalid initializer":
+				if (!$final_passes)
+					process_unhandled($message);
 				break;
 			case "two or more data types in declaration specifiers":
 				process_non_gcc_extension($lines, $substitutions, $message, $modified);
@@ -458,6 +466,41 @@ function join_multiline_messages(&$lines, $messages, &$modified) {
 			}
 		}
 	}
+}
+
+// To use in process_initializer
+function flt_atof($a) { return floatval($a); }
+function flt_ltof($a) { return floatval($a); }
+function flt_ultof($a) { return floatval($a); }
+
+function flt_add($a, $b) { return $a + $b; }
+function flt_subtract($a, $b) { return $a - $b; }
+function flt_multiply($a, $b) { return $a * $b ; }
+function flt_divide($a, $b) { return $a / $b; }
+function flt_negated($a) { return -$a; }
+
+function process_initializer(&$lines, $message, &$modified) {
+	if (count($message->locations) == 1) {
+		list($l, $start, $finish) = get_token_extent($message->locations[0]);
+		if (!in_array($l, $modified)) {
+			$line = $lines[$l];
+			$p = substr($line, $start);
+			// Evaluate the initializer if possible
+			if (($token = get_next_token($p)) != '') {
+				try {
+					if (is_numeric($result = eval('return '.$token.';'))) {
+						$lines[$l] = str_replace($token, '0x'.strtoupper(bin2hex(pack('G', $result))).' /* '.sprintf('%g', $result).' */', $line);
+						$modified[] = $l;
+					}
+				} catch (Throwable $e) {
+    					process_unhandled($message);
+				}
+			} else
+				// Can find anything? Might be on the next line.
+				merge_next_line($lines, $modified, $l);
+		}
+	} else
+		process_unhandled($message);
 }
 
 function process_arithmetic_binary_operands(&$lines, $message, &$modified) {

@@ -783,7 +783,7 @@ static bool test_flt_ftoa() {
 static bool test_flt_ltof() {
 	char s[50];
 	unsigned short crc;
-	int32_t cases[] = {-2147483647, -65536, -65535, -1, 0, 1, 65536, 65536, 2147483647};
+	int32_t cases[] = {-2147483647, -65536, -65535, -1, 0, 1, 65535, 65536, 2147483647};
 	int i;
 	for (i = 0, crc = 0; i < sizeof(cases)/sizeof(int32_t); ++i) {
 		snprintf(s, sizeof(s), "ltof(%ld) = %s", (long)cases[i], flt_ftoa(flt_ltof(cases[i]), "%e"));
@@ -791,13 +791,13 @@ static bool test_flt_ltof() {
 		printf("ltof %ld %s\n", strlen(s), s);
 	}
 	printf("ltof 0x%04X\n", crc);
-	return crc == 0xFD75;
+	return crc == 0x8C97;
 }
 
 static bool test_flt_ultof() {
 	char s[50];
 	unsigned short crc;
-	uint32_t cases[] = {0, 1, 65536, 65536, 2147483647, 2147483648, 4294967295};
+	uint32_t cases[] = {0, 1, 65535, 65536, 2147483647, 2147483648, 4294967295};
 	int i;
 	for (i = 0, crc = 0; i < sizeof(cases)/sizeof(uint32_t); ++i) {
 		snprintf(s, sizeof(s), "ultof(%lu) = %s", (unsigned long)cases[i], flt_ftoa(flt_ultof(cases[i]), "%e"));
@@ -805,7 +805,7 @@ static bool test_flt_ultof() {
 		printf("ultof %ld %s\n", strlen(s), s);
 	}
 	printf("ultof 0x%04X\n", crc);
-	return crc == 0x8B81;
+	return crc == 0x2EB8;
 }
 
 static bool test_flt_ftol() {
