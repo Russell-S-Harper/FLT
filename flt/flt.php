@@ -89,7 +89,7 @@ function get_parameters($argc, $argv) {
 					"  - PHP v7.0 or later (v7.0+)".PHP_EOL.
 					"  - the target compiler, e.g. cc65, should support an unsigned 32-bit integer".PHP_EOL.
 					"    type, e.g. uint32_t".PHP_EOL.
-					"  - the source code should be ANSI C or later; we are NOT supporting K&R!".PHP_EOL.
+					"  - the source code should be ANSI C or later; K&R will NOT be supported!".PHP_EOL.
 					PHP_EOL.
 					"Limitations:".PHP_EOL.
 					"  - FLT corresponds to IEEE 754 single-precision floating point with one sign".PHP_EOL.
@@ -115,7 +115,7 @@ function get_parameters($argc, $argv) {
 					"    particular, constructions like:".PHP_EOL.
 					"        if (1 == scanf(\"%10f\", &f)) { ... }".PHP_EOL.
 					"    will be converted to incorrect code. The \"1 ==\" is problematic so rather".PHP_EOL.
-					"    than trying to support this construction, we recommend revising to something".PHP_EOL.
+					"    than trying to support this construction, suggest revising to something".PHP_EOL.
 					"    like:".PHP_EOL.
 					"        if (scanf(\"%10f\", &f) == 1) { ... }".PHP_EOL.
 					"  - Also note that FLT parameters in *scanf are handled as strings with reduced".PHP_EOL.

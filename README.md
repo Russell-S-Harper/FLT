@@ -9,7 +9,7 @@ FLT requirements:
 - `gcc` v9.0 or later (v9.0+); uses the `-fdiagnostics-format=json` option
 - `PHP` v7.0 or later (v7.0+)
 - the target compiler, e.g. `cc65`, should support an unsigned 32-bit integer type, e.g. `uint32_t`
-- the source code should be ANSI C or later; we are NOT supporting K&R!
+- the source code should be ANSI C or later; K&R will NOT be supported!
 
 To use FLT in your project:
 
@@ -87,11 +87,11 @@ Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output err
 
 ## Inspiration
 
-The [`cc65`](https://github.com/cc65/cc65) repository for the `cc65` suite of tools has a multi-user multi-year project under development to support [native floating point](https://github.com/mrdudz/cc65/tree/fptest/libsrc/float/), but as they mention "You can not use any of this to write software yet. Don't bother." There still appears to be a lot of work remaining. We considered contributing to the project but in reviewing the code, we felt the commitment to ramp-up was too much for what we can offer.
+The [`cc65`](https://github.com/cc65/cc65) repository for the `cc65` suite of tools has a multi-user multi-year project under development to support [native floating point](https://github.com/mrdudz/cc65/tree/fptest/libsrc/float/), but as they mention "You can not use any of this to write software yet. Don't bother." There still appears to be a lot of work remaining. I considered contributing to the project but in reviewing the code, I felt the commitment to ramp-up was too much for what I can offer.
 
-We thought instead "Would it be possible to do a light integration with no modifications to the existing compiler?" Say alias a 32-bit integer as a float type, and write functions with that? While writing the floating point routines was easy enough (except for `pow` – so many special cases!), we were stuck on converting floating point code to FLT. We researched many options like: adapting a [C99 parser in Python](https://github.com/eliben/pycparser), or using [CIL via OCaml](https://cil-project.github.io/cil/doc/html/cil/), or a [C++ to C converter](https://www.codeconvert.ai/c++-to-c-converter). But they were all lacking.
+I thought instead "Would it be possible to do a light integration with no modifications to the existing compiler?" Say alias a 32-bit integer as a float type, and write functions with that? While writing the floating point routines was easy enough (except for `pow` – so many special cases!), I was stuck on converting floating point code to FLT. I researched many options like: adapting a [C99 parser in Python](https://github.com/eliben/pycparser), or using [CIL via OCaml](https://cil-project.github.io/cil/doc/html/cil/), or a [C++ to C converter](https://www.codeconvert.ai/c++-to-c-converter). But they were all lacking.
 
-On a hunch, we looked at `gcc` v9.0+ and noticed it highlighted the locations of offending code during compilation. We thought, okay, we will have to write a clunky parser for the error output. But then we looked through the `man` options and saw `-fdiagnostics-format=json` to output errors in JSON. That was the key! The current version can still have problems with some C code, but it is a very good first step.
+On a hunch, I looked at `gcc` v9.0+ and noticed it highlighted the locations of offending code during compilation. I thought, okay, I'll have to write a clunky parser for the error output. But then I looked through the `man` options and saw `-fdiagnostics-format=json` to output errors in JSON. That was the key! The current version can still have problems with some C code, but it is a very good first step.
 
 While the `cc65` suite of tools was the inspiration, there are a lot of other "tiny" compilers targeting microprocessors without native floating point support which could benefit from FLT.
 
@@ -121,7 +121,7 @@ These limitations may be revised as the project evolves:
 - As well, FLT is NOT optimized for speed or space. It is basically a temporary solution to provide floating point support in C compilers currently lacking it.
 - Currently `gcc -fdiagnostics-format=json` v9.0+ does not provide enough information to parse certain constructions such as a cast spanning multiple lines, or the `scanf` example below. It is recommended to thoroughly test the programs after compiling to ensure correct functionality.
 - I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 `"%e"`/`"%E"` & five `"%f"`/`"%F"` parameters, and for `*scanf`, up to five parameters of any format can be specified.
-- Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like: `if (1 == scanf("%10f", &f)) { … }` will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like: `if (scanf("%10f", &f) == 1) { … }`.
+- Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like: `if (1 == scanf("%10f", &f)) { … }` will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, suggest revising to something like: `if (scanf("%10f", &f) == 1) { … }`.
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", …);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
@@ -139,7 +139,7 @@ The worst-case precisions for the default approximations, in decimal digits, are
    | exp2 | 6.9 |
    | log2 | 7.2<sup>†‡</sup> |
 
-† The maximum precision for FLT would be expected to be 7.2 decimal digits. However the least significant bit can be inaccurate in `float` functions, so the FLT values were compared against the corresponding `double` functions. This is how we got precisions greater than 7.2 decimal digits. In summary, `sin` and `cos` are very good, while `log2` is "good enough".
+† The maximum precision for FLT would be expected to be 7.2 decimal digits. However the least significant bit can be inaccurate in `float` functions, so the FLT values were compared against the corresponding `double` functions. This is how precisions greater than 7.2 decimal digits were achieved. In summary, `sin` and `cos` are very good, while `log2` is "good enough".
 
 ‡ The default `log2` uses a CORDIC routine which requires between zero to 60 floating point operations per invocation (average of 30). Building with `-DPOLY_LOG2` will use a polynomial approximation which requires 20 floating point operations, but accuracy drops to 6.9 decimal digits.
 
@@ -151,7 +151,7 @@ Your use of this code is subject to these license terms.
 
 ---
 
-If you have any questions and/or suggestions, would like to discuss commercial distribution rights, or if you find FLT useful for your project, we encourage you to reach out to:
+If you have any questions and/or suggestions, would like to discuss commercial distribution rights, or if you find FLT useful for your project, feel free to contact:
 
 Russell Harper
 
