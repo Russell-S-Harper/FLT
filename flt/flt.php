@@ -108,8 +108,9 @@ function get_parameters($argc, $argv) {
 					"    lines, or the scanf example below. It is recommended to thoroughly test the".PHP_EOL.
 					"    programs after compiling to ensure correct functionality.".PHP_EOL.
 					"  - I/O functions are limited in how many float parameters can be specified in".PHP_EOL.
-					"    a single function call. For *printf, up to 15 \"%e/%E\" & five \"%f/%F\",".PHP_EOL.
-					"    parameters and for *scanf, up to five parameters, can be specified.".PHP_EOL.
+					"    a single function call. For *printf, up to 15 \"%e\"/\"%E\" & five \"%f\"/\"%F\"".PHP_EOL.
+					"    parameters, and for *scanf, up to five parameters of any format can be".PHP_EOL.
+					"    specified.".PHP_EOL.
 					"  - Some expressions involving *scanf may behave differently in FLT. In".PHP_EOL.
 					"    particular, constructions like:".PHP_EOL.
 					"        if (1 == scanf(\"%10f\", &f)) { ... }".PHP_EOL.

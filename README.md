@@ -18,7 +18,7 @@ To use FLT in your project:
 - convert your C `*.c` with floating point code to FLT `*-flt.c` using the PHP script `flt.php`
 - compile `*-flt.c` as usual
 
-Example to generate `eg/averages`:
+Example to generate `«flt-repo»/flt/eg/averages`:
 
 ```
 	cd «flt-repo»/flt
@@ -26,9 +26,9 @@ Example to generate `eg/averages`:
 	gcc -o eg/averages eg/averages-flt.c flt-*.c
 ```
 
-You can review `eg/averages-flt.c` (code will be at the end) and you will see it has no floating point code – all converted to FLT.
+You can review `«flt-repo»/flt/eg/averages-flt.c` (code will be at the end) and you will see it has no floating point code – all converted to FLT.
 
-For the `cc65` suite, you will probably want to do something like this. Assumes the `flt-*.c` files have been compiled to `flt.lib`, and the paths of `cc65`, `ca65`, and `ld65` are in `$PATH`.
+For the `cc65` suite, you will probably want to do something like this. Assumes the `«flt-repo»/flt/flt-*.c` files have been compiled to `«flt-repo»/flt/flt.lib`, and the paths of `cc65`, `ca65`, and `ld65` are in `$PATH`.
 
 ```
 	cd «flt-repo»/flt
@@ -38,9 +38,9 @@ For the `cc65` suite, you will probably want to do something like this. Assumes 
 	ld65 -o eg/averages -t «target» eg/averages-flt.o flt.lib -L «cc65-repo»/cc65/lib «target».lib
 ```
 
-Another interesting example file is `eg/paranoia.c` adapted by [Sumner & Gay](https://people.math.sc.edu/Burkardt/c_src/paranoia/paranoia.html). Building and running this will give you an idea of any remaining defects or flaws in FLT and help you decide whether you want to use it.
+Another interesting example file is `«flt-repo»/flt/eg/paranoia.c` adapted by [Sumner & Gay](https://people.math.sc.edu/Burkardt/c_src/paranoia/paranoia.html). Building and running this will give you an idea of any remaining defects or flaws in FLT and help you decide whether you want to use it.
 
-To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bit machine):
+To compile `«flt-repo»/flt/eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bit machine):
 
 ```
 	cd «flt-repo»/flt
@@ -48,7 +48,7 @@ To compile `eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bi
 	gcc -o eg/paranoia eg/paranoia-flt.c flt-*.c
 ```
 
-It is recommend to build `flt.lib` and link to it to reduce the size of executables. For the `cc65` suite, there is a build script available as `«flt-repo»/flt/build-cc65`. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` as required, and run the script to build the `flt.lib` library.
+It is recommended to build `«flt-repo»/flt/flt.lib` and link to it to reduce the size of executables. For the `cc65` suite, there is a build script available as `«flt-repo»/flt/build-cc65`. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` as required, and run the script to build the `«flt-repo»/flt/flt.lib` library.
 
 Other interesting examples which can be converted to FLT are:
 
@@ -83,7 +83,7 @@ Be sure to adhere to the licensing terms provided in this and other repositories
 
 ## How It Works
 
-Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. The JSON indicates exactly where the issues are. With a bit of substitution hocus-pocus it is possible to use `gcc` and `PHP` to parse the source code and determine where to substitute FLT code!
+Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output errors and warnings in JSON. The JSON indicates exactly where the issues are including error messages, line numbers, and column positions. With a bit of substitution hocus-pocus to deliberately generate errors, it is possible to use `gcc` and `PHP` to parse the source code and determine where to substitute FLT code!
 
 ## Inspiration
 
@@ -120,7 +120,7 @@ These limitations may be revised as the project evolves:
 - The accuracy of FLT is NOT professional grade and should NOT be used in mission-critical applications where errors can have serious consequences!
 - As well, FLT is NOT optimized for speed or space. It is basically a temporary solution to provide floating point support in C compilers currently lacking it.
 - Currently `gcc -fdiagnostics-format=json` v9.0+ does not provide enough information to parse certain constructions such as a cast spanning multiple lines, or the `scanf` example below. It is recommended to thoroughly test the programs after compiling to ensure correct functionality.
-- I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 "%e/%E" & five "%f/%F" parameters, and for `*scanf`, up to five parameters, can be specified.
+- I/O functions are limited in how many float parameters can be specified in a single function call. For `*printf`, up to 15 `"%e"`/`"%E"` & five `"%f"`/`"%F"` parameters, and for `*scanf`, up to five parameters of any format can be specified.
 - Some expressions involving `*scanf` may behave differently in FLT. In particular, constructions like: `if (1 == scanf("%10f", &f)) { … }` will be converted to incorrect code. The `1 ==` is problematic so rather than trying to support this construction, we recommend revising to something like: `if (scanf("%10f", &f) == 1) { … }`.
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", …);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
