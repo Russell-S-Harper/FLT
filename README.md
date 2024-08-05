@@ -79,7 +79,7 @@ Other interesting examples:
 	**************************************************
 ```
 
-For the `cc65` suite, there is a build script available as `«flt-repo»/flt/eg/build-cc65` for the sample programs. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` and `EXT` as required, then run the script. For the ***target***, it will build executables for `averages`, `mandelfloat`, `flops`. For the ***host***, it will build executables for `errors` (needs to compare with standard math.h functions), `tests` (too large for 8-bit systems), and `paranoia` (also too large for 8-bit systems).
+For the `cc65` suite, there is a build script available as `«flt-repo»/flt/eg/build-cc65` for the sample programs. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` and `EXT` as required, then run the script. For the ***target***, it will build executables for `averages`, `mandelfloat`, and `flops`. For the ***host***, it will build executables for `errors` (needs to compare with standard math.h functions), `tests` (too large for 8-bit systems), and `paranoia` (also too large for 8-bit systems).
 
 Be sure to adhere to the licensing terms provided in this and other repositories mentioned here to ensure proper usage and compliance.
 
