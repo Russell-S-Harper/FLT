@@ -5,7 +5,7 @@
 */
 
 /*
-  To Compile: gcc -o test test.c -I ../ ../*.c
+  To Compile: gcc -o tests tests.c ../*.c -I ..
       To Run: ./test > /dev/null
        Notes: Any failures are outputted to stderr, run without
               redirection to see all the output to stdout.

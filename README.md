@@ -50,11 +50,11 @@ To compile `«flt-repo»/flt/eg/paranoia.c` using `gcc` (it is probably too big 
 
 It is recommended to build `«flt-repo»/flt/flt.lib` and link to it to reduce the size of executables. For the `cc65` suite, there is a build script available as `«flt-repo»/flt/build-cc65`. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` as required, and run the script to build the `«flt-repo»/flt/flt.lib` library.
 
-Other interesting examples which can be converted to FLT are:
+Other interesting examples:
 
-- [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c) – See how blazing fast your machine is! :wink: Note that you may need to write your own `dtime()`.
+- `«flt-repo»/flt/eg/flops.c»` – See how blazing fast your machine is :wink: (inspired by: [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c)!
 
-- [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c) – A fun little program. Sample output:
+- `«flt-repo»/flt/eg/mandelfloat.c»` – A fun little program (original: [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c)). Sample output:
 
 ```
 	**************************************************
@@ -78,6 +78,8 @@ Other interesting examples which can be converted to FLT are:
 	****************###################***************
 	**************************************************
 ```
+
+For the `cc65` suite, there is a build script available as `«flt-repo»/flt/eg/build-cc65`. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` and `EXT` as required, then run the script. For the ***target***, it will build executables for `averages`, `mandelfloat`, `flops`. For the ***host***, it will build executables for `errors` (need to compare with standard math.h functions), `tests` (too large for 8-bit), and `paranoia` (also too large for 8-bit).
 
 Be sure to adhere to the licensing terms provided in this and other repositories mentioned here to ensure proper usage and compliance.
 

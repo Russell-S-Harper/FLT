@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Set as required
+# XCC=«path-to-cc65-repo»
+# TGT=«target»
+# EXT=«target-executable-extension»
+
+XCC=~/Documents/development/cc65
+TGT=cx16
+EXT=prg
+
+if [[ ! -f ../flt.lib ]] ; then
+    echo 'Build flt.lib first!'
+    exit
+fi
+
+# Build averages and mandelfloat for target
+for C in averages mandelfloat
+do
+	php ../flt.php -i $C.c -o $C-flt.c -x "-I $XCC/include -I .."
+	$XCC/bin/cc65 -t $TGT -I $XCC/include $C-flt.c
+	$XCC/bin/ca65 -t $TGT $C-flt.s
+	$XCC/bin/ld65 -o $C.$EXT -t $TGT $C-flt.o -L .. flt.lib -L $XCC/lib $TGT.lib
+done
+
+# Build flops for target
+C=flops
+php ../flt.php -i $C.c -o $C-flt.c -x "-D__${TGT^^}__ -I $XCC/include -I .."
+$XCC/bin/cc65 -t $TGT -I $XCC/include $C-flt.c
+$XCC/bin/ca65 -t $TGT $C-flt.s
+$XCC/bin/ld65 -o $C.$EXT -t $TGT $C-flt.o -L .. flt.lib -L $XCC/lib $TGT.lib
+
+# Build errors, tests, and paranoia for host
+C=errors
+gcc -o $C $C.c ../*.c -I .. -lm
+
+C=tests
+gcc -o $C $C.c ../*.c -I ..
+
+C=paranoia
+php ../flt.php -i $C.c -o $C-flt.c -x "-DNOSIGNAL -DSingle -I .."
+gcc -o $C $C-flt.c ../*.c
+
+# Clean up
+rm *-flt.c *.s *.o
