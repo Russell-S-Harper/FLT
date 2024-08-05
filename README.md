@@ -52,9 +52,9 @@ It is recommended to build `«flt-repo»/flt/flt.lib` and link to it to reduce t
 
 Other interesting examples:
 
-- `«flt-repo»/flt/eg/flops.c»` – See how blazing fast your machine is :wink: (inspired by: [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c)!
+- `«flt-repo»/flt/eg/flops.c»` – Inspired by [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c), see how blazing fast your machine is! :wink:
 
-- `«flt-repo»/flt/eg/mandelfloat.c»` – A fun little program (original: [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c)). Sample output:
+- `«flt-repo»/flt/eg/mandelfloat.c»` – A fun little program borrowed from [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c). Sample output:
 
 ```
 	**************************************************
@@ -79,7 +79,7 @@ Other interesting examples:
 	**************************************************
 ```
 
-For the `cc65` suite, there is a build script available as `«flt-repo»/flt/eg/build-cc65`. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` and `EXT` as required, then run the script. For the ***target***, it will build executables for `averages`, `mandelfloat`, `flops`. For the ***host***, it will build executables for `errors` (need to compare with standard math.h functions), `tests` (too large for 8-bit), and `paranoia` (also too large for 8-bit).
+For the `cc65` suite, there is a build script available as `«flt-repo»/flt/eg/build-cc65` for the sample programs. Edit the build script to point `XCC` to where the ***cc65*** repo is located, revise `TGT` and `EXT` as required, then run the script. For the ***target***, it will build executables for `averages`, `mandelfloat`, `flops`. For the ***host***, it will build executables for `errors` (needs to compare with standard math.h functions), `tests` (too large for 8-bit systems), and `paranoia` (also too large for 8-bit systems).
 
 Be sure to adhere to the licensing terms provided in this and other repositories mentioned here to ensure proper usage and compliance.
 
