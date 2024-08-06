@@ -351,10 +351,10 @@ function postprocess($lines, $substitutions) {
 	$code = preg_replace_callback(
 		array(
 			'/flt_atof\(\s*"([^"]+)"\s*\)/',
-			'/flt_u?ltof\(\s*([-+]?[0-9]+)\s*\)/'
+			'/flt_u?ltof\(\s*([-+]?\s*[0-9]+)\s*\)/'
 		),
 		function ($matches) {
-			return '0x'.strtoupper(bin2hex(pack('G', floatval($matches[1])))).' /* '.$matches[1].' */';
+			return '0x'.strtoupper(bin2hex(pack('G', floatval(preg_replace('/\s/', '', $matches[1]))))).' /* '.$matches[1].' */';
 		}, $code);
 	// Restore substitutions
 	foreach (array_reverse($substitutions) as $substitution)
