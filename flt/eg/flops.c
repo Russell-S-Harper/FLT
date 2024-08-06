@@ -5,6 +5,7 @@
 */
 
 #include <stdio.h>
+#include <math.h>
 #include <time.h>
 
 #ifdef __CX16__
