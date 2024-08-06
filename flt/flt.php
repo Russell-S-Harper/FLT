@@ -401,7 +401,10 @@ function split_previous_token($token, $input) {
 function get_next_token($input, $fn = 'flt_') {
 	$token = '';
 	$input = trim($input);
-	for ($i = 0, $limit = strlen($input); $i < $limit && preg_match('/[A-Za-z0-9_]/', $input[$i]); ++$i)
+	// Allow leading signs and spaces
+	for ($i = 0, $limit = strlen($input); $i < $limit && preg_match('/[-+\s]/', $input[$i]); ++$i)
+		$token .= $input[$i];
+	for (; $i < $limit && preg_match('/[A-Za-z0-9_]/', $input[$i]); ++$i)
 		$token .= $input[$i];
 	// Function?
 	if (strpos($token, $fn) === 0 || ($i < $limit && $input[$i] == '(')) {
