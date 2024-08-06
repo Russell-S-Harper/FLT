@@ -11,11 +11,8 @@
 #define YMIN        -2.25f
 #define YMAX        2.25f
 
-// FIXME: Invalid operands for binary operator '-'
-// #define XRANGE      (XMAX - XMIN)
-// #define YRANGE      (YMAX - YMIN)
-#define XRANGE      4.5f
-#define YRANGE      4.5f
+#define XRANGE      (XMAX - XMIN)
+#define YRANGE      (YMAX - YMIN)
 
 #define XSTEP       (XRANGE / XRES)
 #define YSTEP       (YRANGE / YRES)
@@ -40,9 +37,9 @@ float u2, v2;
 
 int main(void)
 {
-    for (j = 0; j < YRES; j++) {
+    for (j = 0; j <= YRES; j++) {
         y = YMIN + j * YSTEP;
-        for(i = 0; i < XRES; i++) {
+        for(i = 0; i <= XRES; i++) {
 
             u = 0.0f;
             v = 0.0f;

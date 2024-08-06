@@ -277,32 +277,34 @@ function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false)
 					process_ignored($message);
 				break;
 			default:
+				// Needed for some cases
+				$fn = strpos($message->message, 'unsigned')? 'flt_ultof': 'flt_ltof';
 				if (preg_match("/incompatible types when assigning to type ‘".INT_TYPE_REGEX."’ from type ‘FLT’/", $message->message))
 					process_assignment($lines, $message, $modified, 'flt_ftol');
 				else if (preg_match("/incompatible types when assigning to type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} from type ‘FLT’/", $message->message))
 					process_assignment($lines, $message, $modified, 'flt_ftol');
 				else if (preg_match("/incompatible types when assigning to type ‘FLT’ from type ‘".INT_TYPE_REGEX."’/", $message->message))
-					process_assignment($lines, $message, $modified, 'flt_ltof');
+					process_assignment($lines, $message, $modified, $fn);
 				else if (preg_match("/incompatible types when assigning to type ‘FLT’ from type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\}/", $message->message))
-					process_assignment($lines, $message, $modified, 'flt_ltof');
+					process_assignment($lines, $message, $modified, $fn);
 				else if (preg_match("/invalid operands to binary [-\+\*\/]=? \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_arithmetic_binary_operands($lines, $message, $modified);
 				else if (preg_match("/invalid operands to binary (?:[<>]=?|[=!]=) \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_comparison_binary_operands($lines, $message, $modified);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘".INT_TYPE_REGEX."’ and ‘FLT’\)/", $message->message))
-					process_first_operand($lines, $message, $modified);
+					process_first_operand($lines, $message, $modified, $fn);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} and ‘FLT’\)/", $message->message))
-					process_first_operand($lines, $message, $modified);
+					process_first_operand($lines, $message, $modified, $fn);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘struct <anonymous>’ and ‘FLT’\)/", $message->message))
 					process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘".INT_TYPE_REGEX."’\)/", $message->message))
-					process_second_operand($lines, $message, $modified);
+					process_second_operand($lines, $message, $modified, $fn);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\}\)/", $message->message))
-					process_second_operand($lines, $message, $modified);
+					process_second_operand($lines, $message, $modified, $fn);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘struct <anonymous>’\)/", $message->message))
 					process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
 				else if (preg_match("/incompatible type for argument [0-9]+ of ‘flt_[^’]+’/", $message->message))
-					process_incompatible_type($lines, $message, $modified);
+					process_incompatible_type($lines, $message, $modified, $fn);
 				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double)’, but argument [0-9]+ has type ‘FLT’/", $message->message))
 					process_printf_argument($lines, $message, $modified);
 				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double) \*’, but argument [0-9]+ has type ‘FLT \*’/", $message->message))
@@ -780,11 +782,11 @@ function process_cast(&$lines, $message, &$modified, $regex) {
 	}
 }
 
-function process_incompatible_type(&$lines, $message, &$modified) {
+function process_incompatible_type(&$lines, $message, &$modified, $fn) {
 	if (count($message->locations) == 1) {
 		list($l, $start, $finish) = get_token_extent($message->locations[0]);
 		if (!in_array($l, $modified))
-			process_complex_operand($lines, $modified, $l, $start, $finish);
+			process_complex_operand($lines, $modified, $l, $start, $finish, $fn);
 	} else
 		process_unhandled($message);
 }
@@ -937,7 +939,7 @@ function process_assignment(&$lines, $message, &$modified, $fn) {
 		process_unhandled($message);
 }
 
-function process_first_operand(&$lines, $message, &$modified) {
+function process_first_operand(&$lines, $message, &$modified, $fn) {
 	$o = $p = $q = -1;
 	switch (count($message->locations)) {
 		case 3:
@@ -950,28 +952,28 @@ function process_first_operand(&$lines, $message, &$modified) {
 	// O is the operator, P is the left operand, Q is the right operand
 	if ($o >= 0 && $p >= 0 && $q >= 0) {
 		if (!in_array($p, $modified))
-			process_complex_operand($lines, $modified, $p, $p_start, $p_finish);
+			process_complex_operand($lines, $modified, $p, $p_start, $p_finish, $fn);
 	// O is the operator, P is the left or right operand
 	} else if ($o >= 0 && $p >= 0) {
 		if (!in_array($o, $modified) && !in_array($p, $modified)) {
 			// Have the left operand
 			if ($p < $o || $p_start < $o_start)
-				process_complex_operand($lines, $modified, $p, $p_start, $p_finish);
+				process_complex_operand($lines, $modified, $p, $p_start, $p_finish, $fn);
 			// Have the right operand, need the left, expected to be simple
 			else if ($p > $o || $p_start > $o_start)
-				process_simple_left_operand($lines, $modified, $o, $o_start);
+				process_simple_left_operand($lines, $modified, $o, $o_start, $fn);
 			else
 				process_unhandled($message);
 		}
 	// O is the operator, left operand is expected to be simple
 	} else if ($o >= 0) {
 		if (!in_array($o, $modified))
-			process_simple_left_operand($lines, $modified, $o, $o_start);
+			process_simple_left_operand($lines, $modified, $o, $o_start, $fn);
 	} else
 		process_unhandled($message);
 }
 
-function process_second_operand(&$lines, $message, &$modified) {
+function process_second_operand(&$lines, $message, &$modified, $fn) {
 	$o = $p = $q = -1;
 	switch (count($message->locations)) {
 		case 3:
@@ -984,56 +986,56 @@ function process_second_operand(&$lines, $message, &$modified) {
 	// O is the operator, P is the left operand, Q is the right operand
 	if ($o >= 0 && $p >= 0 && $q >= 0) {
 		if (!in_array($q, $modified))
-			process_complex_operand($lines, $modified, $q, $q_start, $q_finish);
+			process_complex_operand($lines, $modified, $q, $q_start, $q_finish, $fn);
 	// O is the operator, P is the left or right operand
 	} else if ($o >= 0 && $p >= 0) {
 		if (!in_array($o, $modified) && !in_array($p, $modified)) {
 			// Have the right operand
 			if ($p > $o || $p_start > $o_start)
-				process_complex_operand($lines, $modified, $p, $p_start, $p_finish);
+				process_complex_operand($lines, $modified, $p, $p_start, $p_finish, $fn);
 			// Have the left operand, need the right, expected to be simple
 			else if ($p < $o || $p_start < $o_start)
-				process_simple_right_operand($lines, $modified, $o, $o_finish);
+				process_simple_right_operand($lines, $modified, $o, $o_finish, $fn);
 			else
 				process_unhandled($message);
 		}
 	// O is the operator, right operand is expected to be simple
 	} else if ($o >= 0) {
 		if (!in_array($o, $modified))
-			process_simple_right_operand($lines, $modified, $o, $o_finish);
+			process_simple_right_operand($lines, $modified, $o, $o_finish, $fn);
 	} else
 		process_unhandled($message);
 }
 
-function process_simple_left_operand(&$lines, &$modified, $o, $o_start) {
+function process_simple_left_operand(&$lines, &$modified, $o, $o_start, $fn) {
 	$line = $lines[$o];
 	$p1 = substr($line, 0, $o_start);
 	$left = get_previous_token($p1);
 	if ($left != '') {
 		$working = split_previous_token($left, $p1);
-		$lines[$o] = $working[0].(is_numeric($left)? 'flt_atof("'.$left.'")': 'flt_ltof('.$left.')').$working[1].substr($line, $o_start);
+		$lines[$o] = $working[0].(is_numeric($left)? 'flt_atof("'.$left.'")': $fn.'('.$left.')').$working[1].substr($line, $o_start);
 		$modified[] = $o;
 	} else
 		// Can't find the left operand, might be on the previous line
 		merge_previous_line($lines, $modified, $o);
 }
 
-function process_simple_right_operand(&$lines, &$modified, $o, $o_finish) {
+function process_simple_right_operand(&$lines, &$modified, $o, $o_finish, $fn) {
 	$line = $lines[$o];
 	$p1 = substr($line, $o_finish + 1);
 	$right = get_next_token($p1);
 	if ($right != '') {
 		$working = explode($right, $p1, 2);
-		$lines[$o] = substr($line, 0, $o_finish + 1).$working[0].(is_numeric($right)? 'flt_atof("'.$right.'")': 'flt_ltof('.$right.')').$working[1];
+		$lines[$o] = substr($line, 0, $o_finish + 1).$working[0].(is_numeric($right)? 'flt_atof("'.$right.'")': $fn.'('.$right.')').$working[1];
 		$modified[] = $o;
 	} else
 		// Can't find the right operand, might be on the next line
 		merge_next_line($lines, $modified, $o);
 }
 
-function process_complex_operand(&$lines, &$modified, $l, $start, $finish) {
+function process_complex_operand(&$lines, &$modified, $l, $start, $finish, $fn) {
 	$line = $lines[$l];
-	$lines[$l] = substr($line, 0, $start).'flt_ltof('.substr($line, $start, $finish - $start + 1).')'.substr($line, $finish + 1);
+	$lines[$l] = substr($line, 0, $start).$fn.'('.substr($line, $start, $finish - $start + 1).')'.substr($line, $finish + 1);
 	$modified[] = $l;
 }
 
