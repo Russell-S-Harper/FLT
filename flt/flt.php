@@ -431,18 +431,22 @@ function get_next_token($input, $fn = 'flt_') {
 
 function merge_next_line(&$lines, &$modified, $i) {
 	$j = $i + 1;
-	$lines[$i] .= ' '.trim($lines[$j]);
-	$modified[] = $i;
-	$lines[$j] = '';
-	$modified[] = $j;
+	if ($j < count($lines)) {
+		$lines[$i] .= ' '.trim($lines[$j]);
+		$modified[] = $i;
+		$lines[$j] = '';
+		$modified[] = $j;
+	}
 }
 
 function merge_previous_line(&$lines, &$modified, $i) {
 	$j = $i - 1;
-	$lines[$j] .= ' '.trim($lines[$i]);
-	$modified[] = $j;
-	$lines[$i] = '';
-	$modified[] = $i;
+	if ($j >= 0) {
+		$lines[$j] .= ' '.trim($lines[$i]);
+		$modified[] = $j;
+		$lines[$i] = '';
+		$modified[] = $i;
+	}
 }
 
 function join_multiline_messages(&$lines, $messages, &$modified) {
