@@ -131,7 +131,7 @@ static void flt_tmp_powN(flt_tmp *pt, flt_tmp *pu) {
 				flt_tmp_multiply(&v, pt);
 			/* Square the base */
 			flt_tmp_multiply(pt, pt);
-			/* Halve the exponent */
+			/* Reduce the exponent */
 			pu->e -= 1;
 		}
 		flt_tmp_copy(pt, &v);
