@@ -142,7 +142,7 @@ The worst-case precisions for the default approximations, in decimal digits, are
    | exp2 | 6.9 |
    | log2 | 7.2<sup>†‡</sup> |
 
-† The maximum precision for FLT would be expected to be 7.2 decimal digits. However the least significant bit can be inaccurate in `float` functions, so the FLT values were compared against the corresponding `double` functions. This is how precisions greater than 7.2 decimal digits were achieved. In summary, `sin` & `cos` are very good, `log2` is satisfactory, and `atan` is "good enough".
+† The maximum precision for FLT would be expected to be 7.2 decimal digits. Note however the ULP is permitted to be inaccurate in standard floating point functions, so instead of compounding errors by comparing FLT values with those from `float` functions, they were compared with those from `double` functions. This is how precisions greater than 7.2 decimal digits were achieved. In summary, `sin` & `cos` are very good, `log2` is satisfactory, and `atan` is "good enough".
 
 ‡ The default `log2` uses a CORDIC routine which requires between zero to 60 floating point operations per invocation (average of 30). Building with `-DPOLY_LOG2` will use a polynomial approximation which requires 20 floating point operations, but accuracy drops to 6.6 decimal digits.
 
