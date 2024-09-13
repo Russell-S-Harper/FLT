@@ -34,11 +34,15 @@ This Commercial License is a legal agreement between you (the "Licensee"), actin
 
     The Licensee shall comply with all the terms and conditions of the Individual License associated with the "FLT" Repository in addition to the terms set forth in this Commercial License.
 
-7. Termination:
+7. Acting in Good Faith:
+
+    The Repository Owner and Commercial User agree to act in good faith, including, but not limited to: demonstrating honesty and fairness in all dealings, fulfilling obligations with diligence and integrity, adhering to established standards of fair practice, and refraining from any actions that could be construed as deceptive or fraudulent.
+
+8. Termination:
 
     The Repository Owner reserves the right to terminate this Commercial License if the Licensee is found in violation of the terms set forth herein or the Individual License.
 
-8. Entire Agreement:
+9. Entire Agreement:
 
     This Commercial License and Individual License constitute the entire agreement between the Licensee and the Repository Owner regarding the Code in the "FLT" Repository.
 
