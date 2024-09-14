@@ -36,7 +36,7 @@ This Commercial License is a legal agreement between you (the "Licensee"), actin
 
 7. Acting in Good Faith:
 
-    The Repository Owner and Commercial User agree to act in good faith, including, but not limited to: demonstrating honesty and fairness in all dealings, fulfilling obligations with diligence and integrity, adhering to established standards of fair practice, and refraining from any actions that could be construed as deceptive or fraudulent.
+    The Repository Owner and Licensee agree to act in good faith, including, but not limited to: demonstrating honesty and fairness in all dealings, fulfilling obligations with diligence and integrity, adhering to established standards of fair practice, and refraining from any actions that could be construed as deceptive or fraudulent.
 
 8. Termination:
 
