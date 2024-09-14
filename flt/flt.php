@@ -13,14 +13,14 @@ define('FLT_TYPE_REGEX', 'FLT');
 define('INT_TYPE_REGEX', '(?:(?:unsigned|signed|char|short|int|long|size_t|u?int[0-9]+_t)\s*)+');
 
 define('FLT_LITERAL_REGEX',
-	'[0-9]+\.[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
-	.'|[0-9]+\.[Ee][-+]?[0-9]+[FfLl]?'
-	.'|\.[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
-	.'|[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
-	.'|[0-9]+\.[0-9]+[FfLl]?'
-	.'|\.[0-9]+[FfLl]?'
-	.'|[0-9]+\.[FfLl]?'
-	.'|\b[0-9]+[Ff]\b');
+	'\b[0-9]+\.[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
+	.'|\b[0-9]+\.[Ee][-+]?[0-9]+[FfLl]?'
+	.'|\b\.[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
+	.'|\b[0-9]+[Ee][-+]?[0-9]+[FfLl]?'
+	.'|\b[0-9]+\.[0-9]+[FfLl]?'
+	.'|\b\.[0-9]+[FfLl]?'
+	.'|\b[0-9]+\.[FfLl]?'
+	.'|\b[0-9]+[Ff]');
 
 main($argc, $argv);
 
@@ -313,7 +313,10 @@ function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false)
 					process_non_gcc_extension($lines, $substitutions, $message, $modified);
 				else if (preg_match("/conflicting types for built-in function ‘[^’]+’; expected ‘[^’]+’/", $message->message))
 					process_conflicting_types($lines, $substitutions, $message, $modified);
-				else if (preg_match("/(?:incompatible)? *implicit declaration of (?:built-in)? *function ‘[^’]+’/", $message->message) && $message->kind != 'error') {
+				else if (preg_match("/initialization of ‘[^’]+’ from ‘int’ makes pointer from integer without a cast/", $message->message) && $message->kind != 'error') {
+					if ($debug)
+						process_ignored($message);
+				} else if (preg_match("/(?:incompatible)? *implicit declaration of (?:built-in)? *function ‘[^’]+’/", $message->message) && $message->kind != 'error') {
 					if ($debug)
 						process_ignored($message);
 				} else if (preg_match("/unknown type name ‘[^’]+’/", $message->message)) {
@@ -322,8 +325,7 @@ function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false)
 				} else if ($message->kind == 'note') {
 					if ($debug)
 						process_ignored($message);
-				}
-				else
+				} else
 					process_unhandled($message);
 				break;
 		}
@@ -385,8 +387,19 @@ function get_previous_token($input, $allow = '') {
 	$allow = str_split($allow);
 	$token = '';
 	$input = trim($input);
-	for ($i = strlen($input) - 1; $i >= 0 && (preg_match('/[A-Za-z0-9_]/', $input[$i]) || in_array($input[$i], $allow, true)); --$i)
+	// Get trailing )
+	for ($i = strlen($input) - 1, $c = 0; $i >= 0 && in_array($input[$i], array(')', ' ', "\t")); --$i) {
 		$token = $input[$i].$token;
+		++$c;
+	}
+	// Get token
+	for (; $i >= 0 && (preg_match('/[A-Za-z0-9_]/', $input[$i]) || in_array($input[$i], $allow, true)); --$i)
+		$token = $input[$i].$token;
+	// Get leading (
+	for (; $i >= 0 && $c > 0 && in_array($input[$i], array('(', ' ', "\t")); --$i) {
+		$token = $input[$i].$token;
+		--$c;
+	}
 	return $token;
 }
 
