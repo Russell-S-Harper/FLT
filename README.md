@@ -90,7 +90,7 @@ Versions of `gcc` v9.0+ have an option `-fdiagnostics-format=json` to output err
 
 ## Inspiration
 
-The [`cc65`](https://github.com/cc65/cc65) repository for the `cc65` suite of tools has a multi-user multi-year project under development to support [native floating point](https://github.com/mrdudz/cc65/tree/fptest/libsrc/float/), but as they mention "You can not use any of this to write software yet. Don't bother." There still appears to be a lot of work remaining. I considered contributing to the project but in reviewing the code, I felt the commitment to ramp-up was too much for what I can offer.
+The [`cc65`](https://github.com/cc65/cc65) repository for the `cc65` suite of tools has a multi-user multi-year project under development to support [native floating point](https://github.com/mrdudz/cc65/blob/fptest/Floating-point.md), but as they mention "You can not use any of this to write software yet. Don't bother." There still appears to be a lot of work remaining. I considered contributing to the project but in reviewing the code, I felt the commitment to ramp-up was too much for what I can offer.
 
 I thought instead "Would it be possible to do a light integration with no modifications to the existing compiler?" Say alias a 32-bit integer as a float type, and write functions with that? While writing the floating point routines was easy enough (except for `pow` – so many special cases!), I was stuck on converting floating point code to FLT. I researched many options like: adapting a [C99 parser in Python](https://github.com/eliben/pycparser), or using [CIL via OCaml](https://cil-project.github.io/cil/doc/html/cil/), or a [C++ to C converter](https://www.codeconvert.ai/c++-to-c-converter). But they were all lacking.
 
