@@ -8,8 +8,8 @@
 #include <math.h>
 #include <time.h>
 
-#ifdef __CX16__
-/* <time.h> doesn't provide CLOCKS_PER_SEC for __CX16__, so hard coding! */
+/* <time.h> may not provide CLOCKS_PER_SEC for __CX16__, so hard coding as a fallback! */
+#if  defined (__CX16__) && !defined (CLOCKS_PER_SEC)
 #define CLOCKS_PER_SEC	60
 #endif
 
