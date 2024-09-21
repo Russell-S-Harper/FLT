@@ -4,7 +4,7 @@
   Repository: https://github.com/Russell-S-Harper/FLT
      Contact: russell.s.harper@gmail.com
 */
-// Usage: php flt.php [-i input-file] [-o output-file] [-d 0|1] [-x extra-gcc-options]
+// Usage: php flt.php [-d] [-i input-file] [-o output-file] [-x extra-gcc-options]
 
 define('FLT_VERSION', '1.0');	// Initial release
 
@@ -53,35 +53,41 @@ function main($argc, $argv) {
 	} else
 		file_put_contents('php://stderr', '*** ERROR: conversion failure ***'.PHP_EOL.
 			'Ensure the input has no errors or warnings when compiled normally.'.PHP_EOL.
-			'Rerun with debug enabled and review STDERR output.'.PHP_EOL.
+			'Rerun with debug enabled "-d" and review STDERR output.'.PHP_EOL.
 			'Also review the generated __FLT_TMP_* files for more information.'.PHP_EOL, FILE_APPEND);
 	// Done
 	exit($done? 0: 1);
 }
 
-// Converts the $argc, $argv values to an associative array for easier lookup, expects key/value pairs as '-<character> <argument>'
+// Converts the $argc, $argv values to an associative array for easier lookup, typically expects key/value pairs as '-<character> <argument>'
 function get_parameters($argc, $argv) {
 	$params = array(
+		'-d' => 0,
 		'-i' => 'php://stdin',
 		'-o' => 'php://stdout',
-		'-d' => '0',
 		'-x' => ''
 	);
 	for ($i = 1; $i < $argc; ++$i) {
 		$working = $argv[$i];
 		if (strlen($working) == 2 && $working[0] == '-') {
-			if ($working != '-h') {
+			// Options not requiring an argument
+			if (in_array($working, array('-d', '-D')))
+				$params[strtolower($working)] = 1;
+			// Options requiring an argument
+			else if (in_array($working, array('-i', '-I', '-o', '-O', '-x', '-X')))
 				if ($i + 1 < $argc)
-					$params[$working] = $argv[++$i];
-			} else {
+					$params[strtolower($working)] = $argv[++$i];
+				else
+					file_put_contents('php://stderr', 'Warning: option "'.$working.'" requires an argument!'.PHP_EOL);
+			else {
 				$base = basename(__FILE__);
 				file_put_contents('php://stdout', $base.' v'.FLT_VERSION.' -- convert C code to use FLT and flt_* vs. float/double'.PHP_EOL.
 					PHP_EOL.
-					'Usage: php '.$base.' -h | [-i input] [-o output] [-d 0|1] [-x extra-gcc-options]'.PHP_EOL.
+					'Usage: php '.$base.' -h | [-d] [-i input] [-o output] [-x extra-gcc-options]'.PHP_EOL.
 					"  -h\t\toutput this message to php://stdout and exit".PHP_EOL.
+					"  -d\t\toutput debug info to php://stderr".PHP_EOL.
 					"  -i FILE\tinput file/stream, default is php://stdin".PHP_EOL.
 					"  -o FILE\toutput file/stream, default is php://stdout".PHP_EOL.
-					"  -d 0|1\toutput debug info to php://stderr, default is 0".PHP_EOL.
 					"  -x OPTIONS\textra options to pass to gcc".PHP_EOL.
 					PHP_EOL.
 					"Requirements:".PHP_EOL.
@@ -135,7 +141,8 @@ function get_parameters($argc, $argv) {
 					"  php flt.php -i eg/averages.c -o eg/averages-flt.c -x '-I cc65/include'".PHP_EOL, FILE_APPEND);
 				exit(1);
 			}
-		}
+		} else
+			file_put_contents('php://stderr', 'Warning: input "'.$working.'" ignored!'.PHP_EOL);
 	}
 	// Done
 	return $params;
