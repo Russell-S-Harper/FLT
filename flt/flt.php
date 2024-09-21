@@ -151,19 +151,19 @@ function get_parameters($argc, $argv) {
 function preprocess($code, $pass, $extra) {
 	// List of (mostly) functions to replace
 	$fns = array(
-		array('float', 'FLT'),		array('double', 'FLT'),			array('long FLT', 'long double'),
-		array('DBL_MIN', 'FLT_MIN'),	array('DBL_TRUE_MIN', 'FLT_TRUE_MIN'),	array('DBL_MAX', 'FLT_MAX'),			array('DBL_EPSILON', 'FLT_EPSILON'),
-		array('acosf?', 'flt_acos'),	array('acoshf?', 'flt_acosh'),		array('asinf?', 'flt_asin'),			array('asinhf?', 'flt_asinh'),
-		array('atan2f?', 'flt_atan2'),	array('atanf?', 'flt_atan'),		array('atanhf?', 'flt_atanh'),			array('atoff?', 'flt_atof'),
-		array('ceilf?', 'flt_ceil'),	array('cosf?', 'flt_cos'),		array('coshf?', 'flt_cosh'),			array('exp10f?', 'flt_exp10'),
-		array('exp2f?', 'flt_exp2'),	array('expf?', 'flt_exp'),		array('fabsf?', 'flt_fabs'),			array('floorf?', 'flt_floor'),
-		array('fmaxf?', 'flt_fmax'),	array('fminf?', 'flt_fmin'),		array('fmodf?', 'flt_fmod'),			array('frexpf?', 'flt_frexp'),
-		array('fsgnf?', 'flt_fsgn'),	array('hypotf?', 'flt_hypot'),		array('isfinite', 'flt_isfinite'),		array('isinf', 'flt_isinf'),
-		array('isnan', 'flt_isnan'),	array('isnormal', 'flt_isnormal'),	array('issubnormal', 'flt_issubnormal'),	array('iszero', 'flt_iszero'),
-		array('ldexpf?', 'flt_ldexp'),	array('log10f?', 'flt_log10'),		array('log2f?', 'flt_log2'),			array('logf?', 'flt_log'),
-		array('modff?', 'flt_modf'),	array('powf?', 'flt_pow'),		array('roundf?', 'flt_round'),			array('sinf?', 'flt_sin'),
-		array('sinhf?', 'flt_sinh'),	array('sqrtf?', 'flt_sqrt'),		array('tanf?', 'flt_tan'),			array('tanhf?', 'flt_tanh'),
-		array('truncf?', 'flt_trunc')
+		'float' => 'FLT',		'double' => 'FLT',			'long FLT' => 'long double',
+		'DBL_MIN' => 'FLT_MIN',		'DBL_TRUE_MIN' => 'FLT_TRUE_MIN',	'DBL_MAX' => 'FLT_MAX',			'DBL_EPSILON' => 'FLT_EPSILON',
+		'acosf?' => 'flt_acos',		'acoshf?' => 'flt_acosh',		'asinf?' => 'flt_asin',			'asinhf?' => 'flt_asinh',
+		'atan2f?' => 'flt_atan2',	'atanf?' => 'flt_atan',			'atanhf?' => 'flt_atanh',		'atoff?' => 'flt_atof',
+		'ceilf?' => 'flt_ceil',		'cosf?' => 'flt_cos',			'coshf?' => 'flt_cosh',			'exp10f?' => 'flt_exp10',
+		'exp2f?' => 'flt_exp2',		'expf?' => 'flt_exp',			'fabsf?' => 'flt_fabs',			'floorf?' => 'flt_floor',
+		'fmaxf?' => 'flt_fmax',		'fminf?' => 'flt_fmin',			'fmodf?' => 'flt_fmod',			'frexpf?' => 'flt_frexp',
+		'fsgnf?' => 'flt_fsgn',		'hypotf?' => 'flt_hypot',		'isfinite' => 'flt_isfinite',		'isinf' => 'flt_isinf',
+		'isnan' => 'flt_isnan',		'isnormal' => 'flt_isnormal',		'issubnormal' => 'flt_issubnormal',	'iszero' => 'flt_iszero',
+		'ldexpf?' => 'flt_ldexp',	'log10f?' => 'flt_log10',		'log2f?' => 'flt_log2',			'logf?' => 'flt_log',
+		'modff?' => 'flt_modf',		'powf?' => 'flt_pow',			'roundf?' => 'flt_round',		'sinf?' => 'flt_sin',
+		'sinhf?' => 'flt_sinh',		'sqrtf?' => 'flt_sqrt',			'tanf?' => 'flt_tan',			'tanhf?' => 'flt_tanh',
+		'truncf?' => 'flt_trunc'
 	);
 	// First check if gcc is installed and is a supported version
 	$version = floatval(shell_exec('which gcc > /dev/null && gcc -dumpfullversion -dumpversion'));
@@ -201,8 +201,8 @@ function preprocess($code, $pass, $extra) {
 		$code = str_replace($match, $key, $code);
 	}
 	// Replace existing functions
-	foreach ($fns as $fn)
-		$code = preg_replace('/\b'.$fn[0].'\b/', $fn[1], $code);
+	foreach ($fns as $regex => $fn)
+		$code = preg_replace('/\b'.$regex.'\b/', $fn, $code);
 	// Substitute floating point literals
 	$code = preg_replace('/('.FLT_LITERAL_REGEX.')/', 'flt_atof("\1")', $code);
 	// Remove unnecessary FLT casts
