@@ -52,9 +52,9 @@ It is recommended to build `«flt-repo»/flt/flt.lib` and link to it to reduce t
 
 Other interesting examples:
 
-- `«flt-repo»/flt/eg/flops.c»` – Inspired by [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c), see how blazing fast your machine is! :wink:
+- `«flt-repo»/flt/eg/flops.c` – Inspired by [flops.c](https://github.com/AMDmi3/flops/blob/master/flops.c), see how blazing fast your machine is! :wink:
 
-- `«flt-repo»/flt/eg/mandelfloat.c»` – A fun little program borrowed from [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c). Sample output:
+- `«flt-repo»/flt/eg/mandelfloat.c` – A fun little program borrowed from [mandelfloat.c](https://github.com/mrdudz/cc65/blob/fptest/samples/mandelfloat.c). Sample output:
 
 ```
 	***************************************************
