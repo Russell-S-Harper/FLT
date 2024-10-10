@@ -5,7 +5,7 @@
 */
 #include "flt-tmp.h"
 
-static uint32_t uint_multiply(const uint16_t a, const uint16_t b);
+#define uint_multiply(a, b)	((uint32_t)(a) * (uint32_t)(b))
 
 FLT flt_add(const FLT f, const FLT g) {
 	FLT result;
@@ -331,19 +331,4 @@ void flt_tmp_invert(flt_tmp *pt) {
 				break;
 		}
 	}
-}
-
-/* Optimized routine to multiply two 16-bit inputs to generate a 32-bit result */
-static uint32_t uint_multiply(const uint16_t a, const uint16_t b) {
-	uint32_t result = 0;
-	uint16_t i = 0x8000;
-	if (a && b) {
-		while (i) {
-			result <<= 1;
-			if (i & b)
-				result += a;
-			i >>= 1;
-		}
-	}
-	return result;
 }
