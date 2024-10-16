@@ -12,7 +12,7 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
     b. Without a Commercial License, Commercial Users are expressly prohibited from distributing the Code to third parties or end users.
 
-    c. If Commercial Users wish to distribute the Code, a separate Commercial License must be acquired from the Repository Owner, subject to a one-time nominal fee. This separate Commercial License will grant distribution rights.
+    c. If Commercial Users wish to distribute the Code, a separate Commercial License must be acquired from the Repository Owner, subject to a licensing and/or royalty fee. This separate Commercial License will grant distribution rights.
 
     d. It is recommended that Commercial Users take advantage of the allowances provided in this License with respect to development, prototyping, and demonstrations to confirm that the "FLT" Repository is sufficient for their needs, prior to obtaining a Commercial License.
 

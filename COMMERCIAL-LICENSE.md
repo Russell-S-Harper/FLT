@@ -6,9 +6,9 @@ This Commercial License is a legal agreement between you (the "Licensee"), actin
 
     The Repository Owner grants the Licensee a worldwide, royalty-free, non-exclusive, non-transferable license to distribute the Code contained in the "FLT" Repository.
 
-2. One-time Nominal Fee:
+2. Licensing and/or Royalty Fee:
 
-    a. To acquire this Commercial License, the Licensee shall pay a one-time nominal fee to the Repository Owner, as agreed upon between the parties.
+    a. To acquire this Commercial License, the Licensee shall pay a licensing and/or royalty fee to the Repository Owner, as agreed upon between the parties.
 
     b. The purpose of the fee is to offset the Repository Owner's costs in managing the increased support load and the time critical nature of tasks associated with Commercial Users.
 
