@@ -312,6 +312,10 @@ function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false)
 					process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
 				else if (preg_match("/incompatible type for argument [0-9]+ of ‘flt_[^’]+’/", $message->message))
 					process_incompatible_type($lines, $message, $modified, $fn);
+				else if (preg_match("/incompatible type for argument [0-9]+ of ‘[^’]+’/", $message->message)
+					&& (preg_match ("/expected ‘".INT_TYPE_REGEX."’ but argument is of type ‘FLT’/", $message->children[0]->message)
+						|| preg_match ("/expected ‘".INT_TYPE_REGEX."’ \{aka ‘".INT_TYPE_REGEX."’\} but argument is of type ‘FLT’/", $message->children[0]->message)))
+					process_incompatible_type($lines, $message, $modified, strpos($message->children[0]->message, 'unsigned')? 'flt_ftoul': 'flt_ftol');
 				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double)’, but argument [0-9]+ has type ‘FLT’/", $message->message))
 					process_printf_argument($lines, $message, $modified);
 				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double) \*’, but argument [0-9]+ has type ‘FLT \*’/", $message->message))
