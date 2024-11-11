@@ -7,7 +7,7 @@
 
 XCC=~/Documents/development/cc65
 TGT=cx16
-EXT=prg
+EXT=PRG
 
 if [[ ! -f ../flt.lib ]] ; then
     echo 'Build flt.lib first!'
@@ -20,7 +20,7 @@ do
 	php ../flt.php -i $C.c -o $C-flt.c -x "-I $XCC/include -I .."
 	$XCC/bin/cc65 -t $TGT -I $XCC/include $C-flt.c
 	$XCC/bin/ca65 -t $TGT $C-flt.s
-	$XCC/bin/ld65 -o $C.$EXT -t $TGT $C-flt.o -L .. flt.lib -L $XCC/lib $TGT.lib
+	$XCC/bin/ld65 -o ${C^^}.$EXT -t $TGT $C-flt.o -L .. flt.lib -L $XCC/lib $TGT.lib
 done
 
 # Build flops for target
@@ -28,7 +28,7 @@ C=flops
 php ../flt.php -i $C.c -o $C-flt.c -x "-D__${TGT^^}__ -I $XCC/include -I .."
 $XCC/bin/cc65 -t $TGT -I $XCC/include $C-flt.c
 $XCC/bin/ca65 -t $TGT $C-flt.s
-$XCC/bin/ld65 -o $C.$EXT -t $TGT $C-flt.o -L .. flt.lib -L $XCC/lib $TGT.lib
+$XCC/bin/ld65 -o ${C^^}.$EXT -t $TGT $C-flt.o -L .. flt.lib -L $XCC/lib $TGT.lib
 
 # Build accuracy, tests, and paranoia for host
 C=accuracy
