@@ -2,11 +2,17 @@
 
 This Individual License is a legal agreement between you (the "Licensee"), acting as an "Individual User" or a "Commercial User", and the owner of the "FLT" Repository (the "Repository Owner"). The "Code" refers to the original source files, in whole or in part, contained in the "FLT" Repository, or compiled forms thereof. By accessing, using, or distributing the Code contained in the "FLT" Repository, you agree to comply with these terms and conditions:
 
-1. Grant of Rights to Individual Users:
+1. Types of Users
+
+    a. An Individual User is any private person using the Code solely for personal, non-commercial, or recreational purposes. They do not intend to generate income, financial gain, or other commercial benefits from using the Code.
+
+    b. A Commercial User refers to any individual, company, organization, or entity that utilizes the Code primarily for financial gain, business activities, or any other commercial purposes. This includes, but is not limited to, generating revenue, supporting commercial operations, enhancing business functions, or providing services to third parties where a fee is involved.
+
+2. Grant of Rights to Individual Users:
 
     Individual Users are hereby granted a worldwide, royalty-free, non-exclusive, non-transferable license to use and distribute the Code for personal and non-commercial purposes.
 
-2. Grant of Rights to Commercial Users:
+3. Grant of Rights to Commercial Users:
 
     a. Commercial Users are hereby granted a worldwide, royalty-free, non-exclusive, non-transferable license to use the Code for internal product development, prototyping, and demonstrations at exhibitions.
 
@@ -16,7 +22,7 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
     d. It is recommended that Commercial Users take advantage of the allowances provided in this License with respect to development, prototyping, and demonstrations to confirm that the "FLT" Repository is sufficient for their needs, prior to obtaining a Commercial License.
 
-3. Code Modification:
+4. Code Modification:
 
     a. All Users, both Individual and Commercial, are required to ensure that if the Code is modified prior to distribution, then the comments at the top of the modified file should be appended with the specific revisions made and correct contact information regarding these modifications.
 
@@ -24,19 +30,19 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
     c. It is preferable to make any revisions through the existing mechanisms provided by GitHub, where they may benefit all users.
 
-4. Reminder of Issues:
+5. Reminder of Issues:
 
     All Users, both Individual and Commercial, are encouraged to maintain open communication with the Repository Owner and notify them of any issues or problems encountered while using the code.
 
-5. No Warranty:
+6. No Warranty:
 
     The Code in the "FLT" Repository is provided "as is," without any warranties or guarantees of its functionality, reliability, or fitness for any particular purpose.
 
-6. Termination:
+7. Termination:
 
     The Repository Owner reserves the right to terminate the License for any User, Individual or Commercial, or any other entity found in violation of the terms of this License.
 
-7. Entire Agreement:
+8. Entire Agreement:
 
     This Individual License and, if applicable, Commercial License, constitute the entire agreement between the Licensee and the Repository Owner regarding the Code contained in the "FLT" Repository.
 
