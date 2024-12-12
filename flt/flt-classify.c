@@ -5,8 +5,7 @@
 */
 #include "flt-tmp.h"
 
-E_CLASS
-flt_classify(const FLT f) {
+E_CLASS flt_classify(const FLT f) {
 	/* Get the mantissa and exponent */
 	uint32_t temporary, mantissa, exponent;
 	temporary = *(uint32_t *)&f;
