@@ -515,7 +515,6 @@ function flt_subtract($a, $b) { return $a - $b; }
 function flt_multiply($a, $b) { return $a * $b ; }
 function flt_divide($a, $b) { return $a / $b; }
 function flt_negated($a) { return -$a; }
-function flt_iszero($a) { return $a == 0.0; }
 
 function process_initializer(&$lines, $message, &$modified) {
 	if (count($message->locations) == 1) {
