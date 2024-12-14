@@ -292,8 +292,7 @@ static const char *flt_tmp_f_format(flt_tmp *pt, const char *format) {
 		flt_tmp_initialize(&u, pt->c, 0, pt->m, pt->e);
 		/* Initial sign */
 		string[i++] = "+-"[pt->s];
-		base_10_exponent =
-			flt_tmp_normalize_to_base_10(&u, precision, E_BEFORE);
+		base_10_exponent = flt_tmp_normalize_to_base_10(&u, precision, E_BEFORE);
 		/* Numbers one or higher */
 		if (base_10_exponent >= 0) {
 			/* Integer */
