@@ -260,6 +260,9 @@ function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false)
 			case "wrong type argument to unary plus":
 				process_unary_plus($lines, $message, $modified);
 				break;
+			case "wrong type argument to unary exclamation mark":
+				process_unary_exclamation_mark($lines, $message, $modified);
+				break;
 			case "wrong type argument to increment":
 				process_increment_or_decrement($lines, $message, $modified, 'increment');
 				break;
@@ -512,6 +515,7 @@ function flt_subtract($a, $b) { return $a - $b; }
 function flt_multiply($a, $b) { return $a * $b ; }
 function flt_divide($a, $b) { return $a / $b; }
 function flt_negated($a) { return -$a; }
+function flt_iszero($a) { return $a == 0.0; }
 
 function process_initializer(&$lines, $message, &$modified) {
 	if (count($message->locations) == 1) {
@@ -766,6 +770,27 @@ function process_unary_plus(&$lines, $message, &$modified) {
 			$line = $lines[$l];
 			$lines[$l] = substr($line, 0, $start).substr($line, $finish + 1);
 			$modified[] = $l;
+		}
+	} else
+		process_unhandled($message);
+}
+
+function process_unary_exclamation_mark(&$lines, $message, &$modified) {
+	if (count($message->locations) == 1) {
+		list($l, $start, $finish) = get_token_extent($message->locations[0]);
+		if (!in_array($l, $modified)) {
+			$line = $lines[$l];
+			$p1 = substr($line, 0, $start);
+			$p2 = substr($line, $finish + 1);
+			// Update an expression
+			if (($token = get_next_token($p2)) != '') {
+				$working = explode($token, $p2, 2);
+				$p2 = $working[0].'flt_iszero('.$token.')'.$working[1];
+				$lines[$l] = $p1.$p2;
+				$modified[] = $l;
+			} else
+				// Can find anything? Might be on the next line.
+				merge_next_line($lines, $modified, $l);
 		}
 	} else
 		process_unhandled($message);

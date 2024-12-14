@@ -104,7 +104,7 @@ While the `cc65` suite of tools was the inspiration, there are a lot of other "t
 - As well as single-precision floating point, double-precision floating point literals, variables, and functions are also converted to `FLT` and `flt_*`. The C standard only specifies that the type `double` provides at LEAST as much precision as the type `float`, so this is permitted!
 - Provides NaN, ±infinity, ±zero, and subnormal numbers
 - Functions provided, can also use `float` versions, e.g. `sinf`, `cosf`, `tanf`, …
-    - mathematical operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`, `++`, `--`
+    - mathematical operators: `+`, `-`, `*`, `/`, `+=`, `-=`, `*=`, `/=`, `++`, `--`, `!`
     - comparison operators: `==`, `>`, `<`, `>=`, `<=`, `!=`
     - `ldexp`, `frexp`, `modf`, `fmod`
     - `fabs`, `round`, `trunc`, `ceil`, `floor`
