@@ -4,7 +4,7 @@ This Commercial License is a legal agreement between you (the "Licensee"), actin
 
 1. Grant of Distribution Rights:
 
-    The Repository Owner grants the Licensee a worldwide, royalty-free, non-exclusive, non-transferable license to distribute the Code contained in the "FLT" Repository.
+    The Repository Owner grants the Licensee a worldwide, non-exclusive, non-transferable license to distribute the Code contained in the "FLT" Repository.
 
 2. Licensing and/or Royalty Fee:
 

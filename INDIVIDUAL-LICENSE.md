@@ -14,7 +14,7 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
 3. Grant of Rights to Commercial Users:
 
-    a. Commercial Users are hereby granted a worldwide, royalty-free, non-exclusive, non-transferable license to use the Code for internal product development, prototyping, and demonstrations at exhibitions.
+    a. Commercial Users are hereby granted a worldwide, non-exclusive, non-transferable license to use the Code for internal product development, prototyping, and demonstrations at exhibitions.
 
     b. Without a Commercial License, Commercial Users are expressly prohibited from distributing the Code to third parties or end users.
 
