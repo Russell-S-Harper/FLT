@@ -138,9 +138,9 @@ function get_parameters($argc, $argv) {
 					"  - Similar to above, FLT parameters in *printf are also handled as strings, so".PHP_EOL.
 					"    padding is restricted to spaces for FLT values.".PHP_EOL.
 					"  - The variadic functions vprintf, vscanf, and related are not supported.".PHP_EOL.
-					"  - Polynomial approximations are used for sin, cos, atan, exp2, and log2. Near".PHP_EOL.
-					"    boundary conditions, these functions, as well as those dependent on them,".PHP_EOL.
-					"    could display some accuracy issues.".PHP_EOL.
+					"  - The approximations used in atan and exp2 could display some accuracy issues".PHP_EOL.
+					"    near boundary conditions. This also includes these dependent functions:".PHP_EOL.
+					"    asin, acos, atan2, exp, exp10, pow, sinh, cosh, and tanh.".PHP_EOL.
 					PHP_EOL.
 					"Examples:".PHP_EOL.
 					"  php flt.php -i eg/paranoia.c -o eg/paranoia-flt.c -x '-DNOSIGNAL -DSingle'".PHP_EOL.

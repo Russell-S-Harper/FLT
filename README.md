@@ -129,7 +129,7 @@ These limitations may be revised as the project evolves:
 - Also note that FLT parameters in `*scanf` are handled as strings with reduced criteria with respect to what is valid or not. So a call like `sscanf("X Y Z", "%f %f %f", …);` may return 3 indicating three "matches". A workaround is to use `!isnan()` on each variable to confirm if it is valid.
 - Similar to above, FLT parameters in `*printf` are also handled as strings, so padding is restricted to spaces for FLT values.
 - The variadic functions `vprintf`, `vscanf`, and related are not supported.
-- The approximations used in `atan`, and `exp2` could display some accuracy issues near boundary conditions. This also includes these dependent functions: `asin`, `acos`, `atan2`, `exp`, `exp10`, `pow`, `sinh`, `cosh`, and `tanh`.
+- The approximations used in `atan` and `exp2` could display some accuracy issues near boundary conditions. This also includes these dependent functions: `asin`, `acos`, `atan2`, `exp`, `exp10`, `pow`, `sinh`, `cosh`, and `tanh`.
 
 ## Precision
 
