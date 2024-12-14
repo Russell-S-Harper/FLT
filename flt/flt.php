@@ -113,6 +113,12 @@ function get_parameters($argc, $argv) {
 					"    information to parse certain constructions such as a cast spanning multiple".PHP_EOL.
 					"    lines, or the scanf example below. It is recommended to thoroughly test the".PHP_EOL.
 					"    programs after compiling to ensure correct functionality.".PHP_EOL.
+					"  - Direct integer assignments to floating point like:".PHP_EOL.
+					"        float f = 0, g = 1, h = 2;".PHP_EOL.
+					"    aren't handled. Suggest using explicit floating point literals, for example:".PHP_EOL.
+					"        float f = 0.0, g = 1f, h = 2e0;".PHP_EOL.
+					"    This is recommended best practice anyway and avoids conversion warnings in".PHP_EOL.
+					"    some compilers.".PHP_EOL.
 					"  - I/O functions are limited in how many float parameters can be specified in".PHP_EOL.
 					"    a single function call. For *printf, up to 15 \"%e\"/\"%E\" & five \"%f\"/\"%F\"".PHP_EOL.
 					"    parameters, and for *scanf, up to five parameters of any format can be".PHP_EOL.
