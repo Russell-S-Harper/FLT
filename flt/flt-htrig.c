@@ -86,7 +86,7 @@ FLT flt_asinh(const FLT f) {
 	flt_tmp t, u, v;
 	int sign;
 	flt_to_tmp(&f, &t);
-	/* asinh(t) = log(t + sqrt(t^2 + 1)) = log(2)*log(t + sqrt(t^2 + 1)) */
+	/* asinh(t) = log(t + sqrt(t^2 + 1)) = log(2)*log2(t + sqrt(t^2 + 1)) */
 	if (t.c == E_NORMAL) {
 		/* The positive side is much more accurate, so use asinh(-t) = -asinh(t) for t < 0 */
 		/* Save the sign and set t > 0 */
@@ -113,7 +113,7 @@ FLT flt_acosh(const FLT f) {
 	FLT result;
 	flt_tmp t, u, v;
 	flt_to_tmp(&f, &t);
-	/* arcosh(t) = log(t + sqrt(t^2 - 1)) = log(2)*log(t + sqrt(t^2 - 1)) */
+	/* arcosh(t) = log(t + sqrt(t^2 - 1)) = log(2)*log2(t + sqrt(t^2 - 1)) */
 	/* t.e >= 0 is a quick check for t >= 1 */
 	if (t.c == E_NORMAL && !t.s && t.e >= 0) {
 		flt_tmp_copy(&u, &t);		/* t */
@@ -136,7 +136,7 @@ FLT flt_atanh(const FLT f) {
 	FLT result;
 	flt_tmp t, u, v;
 	flt_to_tmp(&f, &t);
-	/* arctanh(t) = log((1 + t)/(1 - t))/2 = log(2)*log((1 + t)/(1 - t))/2 */
+	/* arctanh(t) = log((1 + t)/(1 - t))/2 = log(2)*log2((1 + t)/(1 - t))/2 */
 	/* t.e < 0 is a quick check for t < 1 */
 	if (t.c == E_NORMAL && t.e < 0) {
 		flt_tmp_init_1(&u);
