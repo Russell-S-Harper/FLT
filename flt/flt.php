@@ -294,37 +294,38 @@ function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false)
 				break;
 			default:
 				// Needed for some cases
-				$fn = strpos($message->message, 'unsigned')? 'flt_ultof': 'flt_ltof';
+				$fn1 = check_for_signed_or_unsigned($message, 'flt_ltof', 'flt_ultof');
+				$fn2 = check_for_signed_or_unsigned($message, 'flt_ftol', 'flt_ftoul');
 				if (preg_match("/incompatible types when assigning to type ‘".INT_TYPE_REGEX."’ from type ‘FLT’/", $message->message))
-					process_assignment($lines, $message, $modified, 'flt_ftol');
+					process_assignment($lines, $message, $modified, $fn2);
 				else if (preg_match("/incompatible types when assigning to type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} from type ‘FLT’/", $message->message))
-					process_assignment($lines, $message, $modified, 'flt_ftol');
+					process_assignment($lines, $message, $modified, $fn2);
 				else if (preg_match("/incompatible types when assigning to type ‘FLT’ from type ‘".INT_TYPE_REGEX."’/", $message->message))
-					process_assignment($lines, $message, $modified, $fn);
+					process_assignment($lines, $message, $modified, $fn1);
 				else if (preg_match("/incompatible types when assigning to type ‘FLT’ from type ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\}/", $message->message))
-					process_assignment($lines, $message, $modified, $fn);
+					process_assignment($lines, $message, $modified, $fn1);
 				else if (preg_match("/invalid operands to binary [-\+\*\/]=? \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_arithmetic_binary_operands($lines, $message, $modified);
 				else if (preg_match("/invalid operands to binary (?:[<>]=?|[=!]=) \(have ‘FLT’ and ‘FLT’\)/", $message->message))
 					process_comparison_binary_operands($lines, $message, $modified);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘".INT_TYPE_REGEX."’ and ‘FLT’\)/", $message->message))
-					process_first_operand($lines, $message, $modified, $fn);
+					process_first_operand($lines, $message, $modified, $fn1);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\} and ‘FLT’\)/", $message->message))
-					process_first_operand($lines, $message, $modified, $fn);
+					process_first_operand($lines, $message, $modified, $fn1);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘struct <anonymous>’ and ‘FLT’\)/", $message->message))
 					process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘".INT_TYPE_REGEX."’\)/", $message->message))
-					process_second_operand($lines, $message, $modified, $fn);
+					process_second_operand($lines, $message, $modified, $fn1);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘[_a-zA-Z0-9]+’ \{aka ‘".INT_TYPE_REGEX."’\}\)/", $message->message))
-					process_second_operand($lines, $message, $modified, $fn);
+					process_second_operand($lines, $message, $modified, $fn1);
 				else if (preg_match("/invalid operands to binary [-\+\*\/<>=!]+ \(have ‘FLT’ and ‘struct <anonymous>’\)/", $message->message))
 					process_cast($lines, $message, $modified, FLT_TYPE_REGEX);
 				else if (preg_match("/incompatible type for argument [0-9]+ of ‘flt_[^’]+’/", $message->message))
-					process_incompatible_type($lines, $message, $modified, $fn);
+					process_incompatible_type($lines, $message, $modified, $fn1);
 				else if (preg_match("/incompatible type for argument [0-9]+ of ‘[^’]+’/", $message->message)
 					&& (preg_match ("/expected ‘".INT_TYPE_REGEX."’ but argument is of type ‘FLT’/", $message->children[0]->message)
 						|| preg_match ("/expected ‘".INT_TYPE_REGEX."’ \{aka ‘".INT_TYPE_REGEX."’\} but argument is of type ‘FLT’/", $message->children[0]->message)))
-					process_incompatible_type($lines, $message, $modified, strpos($message->children[0]->message, 'unsigned')? 'flt_ftoul': 'flt_ftol');
+					process_incompatible_type($lines, $message, $modified, check_for_signed_or_unsigned($message->children[0], 'flt_ftol', 'flt_ftoul'));
 				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double)’, but argument [0-9]+ has type ‘FLT’/", $message->message))
 					process_printf_argument($lines, $message, $modified);
 				else if (preg_match("/format ‘%l?[EeFfGg]’ expects argument of type ‘(?:float|double) \*’, but argument [0-9]+ has type ‘FLT \*’/", $message->message))
@@ -463,6 +464,11 @@ function get_next_token($input, $fn = 'flt_') {
 			$token = '';
 	}
 	return $token;
+}
+
+function check_for_signed_or_unsigned($message, $signed, $unsigned) {
+	return (is_numeric(strpos($message->message, 'unsigned'))
+		|| preg_match('/uint[0-9]+_t/', $message->message))? $unsigned: $signed;
 }
 
 function merge_next_line(&$lines, &$modified, $i) {
