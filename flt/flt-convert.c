@@ -11,7 +11,7 @@ FLT flt_ltof(const int32_t a) {
 	FLT result;
 	flt_tmp t;
 	if (a) {
-		flt_tmp_initialize(&t, E_NORMAL, a < 0, abs(a), TMP_1_BITS);
+		flt_tmp_initialize(&t, E_NORMAL, a < 0, labs(a), TMP_1_BITS);
 		flt_tmp_normalize(&t);
 	} else
 		flt_tmp_init_0(&t);
