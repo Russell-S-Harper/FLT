@@ -334,7 +334,13 @@ function compile(&$lines, &$substitutions, $pass, $debug, $final_passes = false)
 					process_non_gcc_extension($lines, $substitutions, $message, $modified);
 				else if (preg_match("/conflicting types for built-in function ‘[^’]+’; expected ‘[^’]+’/", $message->message))
 					process_conflicting_types($lines, $substitutions, $message, $modified);
-				else if (preg_match("/initialization of ‘[^’]+’ from ‘int’ makes pointer from integer without a cast/", $message->message) && $message->kind != 'error') {
+				else if (preg_match("/incompatible types when initializing type ‘[^’]+’ using type ‘FLT’/", $message->message)) {
+					if ($debug)
+						process_ignored($message);
+				} else if (preg_match("/overflow in conversion from ‘[^’]+’ to ‘short int’ changes value from/", $message->message) && $message->kind != 'error') {
+					if ($debug)
+						process_ignored($message);
+				} else if (preg_match("/initialization of ‘[^’]+’ from ‘int’ makes pointer from integer without a cast/", $message->message) && $message->kind != 'error') {
 					if ($debug)
 						process_ignored($message);
 				} else if (preg_match("/(?:incompatible)? *implicit declaration of (?:built-in)? *function ‘[^’]+’/", $message->message) && $message->kind != 'error') {
