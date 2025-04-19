@@ -38,7 +38,7 @@ For the `cc65` suite, you will probably want to do something like this. Assumes 
 	ld65 -o eg/averages -t «target» eg/averages-flt.o flt.lib -L «cc65-repo»/cc65/lib «target».lib
 ```
 
-Another interesting example file is `«flt-repo»/flt/eg/paranoia.c` adapted by [Sumner & Gay](https://people.math.sc.edu/Burkardt/c_src/paranoia/paranoia.html). Building and running this will give you an idea of any remaining defects or flaws in FLT and help you decide whether you want to use it.
+Another interesting example is `«flt-repo»/flt/eg/paranoia.c` adapted by [Sumner & Gay](https://people.math.sc.edu/Burkardt/c_src/paranoia/paranoia.html). Building and running this will give you an idea of any remaining defects or flaws in FLT and help you decide whether you want to use it.
 
 To compile `«flt-repo»/flt/eg/paranoia.c` using `gcc` (it is probably too big to run in an 8-bit system):
 
