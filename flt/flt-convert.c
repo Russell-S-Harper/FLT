@@ -80,8 +80,8 @@ void flt_to_tmp(const FLT *pf, flt_tmp *pt) {
 	/* Get the sign, mantissa, and exponent */
 	temporary = *(uint32_t *)pf;
 	sign = temporary >> 31;
-	mantissa = temporary & 0x7FFFFF;
 	exponent = (temporary >> 23) & 0xFF;
+	mantissa = temporary & 0x7FFFFF;
 	flt_tmp_init_0(pt);
 	switch (pt->c = flt_classify(*pf)) {
 		case E_INFINITE:
@@ -102,7 +102,7 @@ void flt_to_tmp(const FLT *pf, flt_tmp *pt) {
 }
 
 void tmp_to_flt(const flt_tmp *pt, FLT *pf) {
-	uint32_t sign, mantissa, exponent;
+	uint32_t sign, exponent, mantissa;
 	int remainder;
 	if (pt->c == E_NORMAL) {
 		if (pt->e <= 127 && pt->e >= -126) {
