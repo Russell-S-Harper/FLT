@@ -469,7 +469,7 @@ static char *printf_post_process(char *string, const char *format, const int pre
 		/* Remove trailing zeroes for g format */
 		else if (strchr(format, 'G') || strchr(format, 'g')) {
 			if (exponent_marker = strchr(string, 'e')) {
-				for (c = exponent_marker - 1; ; --c) {
+				for (c = exponent_marker - 1; c > string ; --c) {
 					if (*c == '.')
 						break;
 					else if (*c != '0') {
