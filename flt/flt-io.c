@@ -161,6 +161,9 @@ FLT flt_atof(const char *string) {
 				}
 		}
 	}
+	/* Handle just leading plus or minus */
+	if (mode == E_BEGIN && can_continue)
+		flt_tmp_init_nan(&t);
 	/* Process for normal, zero, and infinity */
 	if (t.c != E_NAN) {
 		/* Process the sign */
@@ -333,6 +336,9 @@ static const char *flt_tmp_f_format(flt_tmp *pt, const char *format) {
 
 static const char *flt_tmp_g_format(flt_tmp *pt, const char *format) {
 	flt_tmp u;
+	/* Shortcut to handle zero */
+	if (pt->c == E_ZERO)
+		return flt_tmp_f_format(pt, format);
 	flt_tmp_prepare_constants();
 	flt_tmp_initialize(&u, pt->c, 0, pt->m, pt->e);
 	return flt_tmp_compare(&u, &k1e5, E_GREATER_THAN_OR_EQUAL_TO) || flt_tmp_compare(&u, &k1en5, E_LESS_THAN)?
