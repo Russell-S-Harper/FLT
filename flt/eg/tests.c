@@ -762,7 +762,7 @@ static bool test_flt_atof() {
 		}
 	}
 	printf("atof 0x%04X\n", crc);
-	return crc == 0x36A9;
+	return crc == 0xDC73;
 }
 
 static bool test_flt_ftoa() {
@@ -777,7 +777,7 @@ static bool test_flt_ftoa() {
 		}
 	}
 	printf("ftoa 0x%04X\n", crc);
-	return crc == 0x4A0F;
+	return crc == 0xF2D4;
 }
 
 static bool test_flt_ltof() {

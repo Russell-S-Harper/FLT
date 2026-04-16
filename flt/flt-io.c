@@ -459,16 +459,30 @@ static int printf_precision(const char *format) {
 
 /* Convenience function to post-process depending on format and precision */
 static char *printf_post_process(char *string, const char *format, const int precision) {
-	char *decimal_marker;
 	int i;
 	/* Convert to uppercase if required */
 	if (strchr(format, 'E') || strchr(format, 'F') || strchr(format, 'G')) {
 		for (i = 0; string[i]; ++i)
 			string[i] = toupper(string[i]);
 	}
-	/* Remove the decimal marker if precision is zero */
-	if (!precision && (decimal_marker = strchr(string, '.')))
-		memmove(decimal_marker, decimal_marker + 1, strlen(decimal_marker + 1) + 1);
+	/* Decimal marker processing */
+	if (strchr(string, '.')) {
+		/* Remove the decimal marker if precision is zero */
+		if (!precision)
+			string[strlen(string) - 1] = '\0';
+		/* Remove trailing zeroes for g format */
+		else if (strchr(format, 'G') || strchr(format, 'g')) {
+			for (i = strlen(string) - 1; i > 0; --i)
+				if (string[i] == '0')
+					string[i] = '\0';
+				else if (string[i] == '.') {
+					string[i] = '\0';
+					break;
+				}
+				else
+					break;
+		}
+	}
 	/* Strip leading plus if required */
 	if (!strchr(format, '+') && string[0] == '+')
 		memmove(string, string + 1, strlen(string + 1) + 1);
