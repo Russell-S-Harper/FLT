@@ -42,11 +42,12 @@ FLT flt_atof(const char *string) {
 	FLT result;
 	flt_tmp t, u, v, w;
 	E_MODE mode;
-	bool can_continue;
+	bool can_continue, has_digits;
 	int exponent, mantissa_sign, exponent_sign;
 	int i;
 	mode = E_BEGIN;
 	can_continue = true;
+	has_digits = false;
 	exponent = mantissa_sign = exponent_sign = 0;
 	flt_tmp_prepare_constants();
 	flt_tmp_init_0(&t);
@@ -120,6 +121,7 @@ FLT flt_atof(const char *string) {
 				break;
 			default:
 				if (isdigit(string[i])) {
+					has_digits = true;
 					switch (mode) {
 						case E_BEGIN:
 							mode = E_INTEGER;
@@ -163,6 +165,9 @@ FLT flt_atof(const char *string) {
 	}
 	/* Handle just leading plus or minus */
 	if (mode == E_BEGIN && can_continue)
+		flt_tmp_init_nan(&t);
+	/* Handle garbage input */
+	if (t.c == E_ZERO && !has_digits)
 		flt_tmp_init_nan(&t);
 	/* Process for normal, zero, and infinity */
 	if (t.c != E_NAN) {
