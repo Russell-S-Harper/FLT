@@ -1,6 +1,6 @@
-# Individual License for "FLT" Repository
+# Individual License for “FLT” Repository
 
-This Individual License is a legal agreement between you (the "Licensee"), acting as an "Individual User" or a "Commercial User", and the owner of the "FLT" Repository (the "Repository Owner"). The "Code" refers to the original source files, in whole or in part, contained in the "FLT" Repository, or compiled forms thereof. By accessing, using, or distributing the Code contained in the "FLT" Repository, you agree to comply with these terms and conditions:
+This Individual License is a legal agreement between you (the “Licensee”), acting as an “Individual User” or a “Commercial User”, and the owner of the “FLT” Repository (the “Repository Owner”). The “Code” refers to the original source files, in whole or in part, contained in the “FLT” Repository, or compiled forms thereof. By accessing, using, or distributing the Code contained in the “FLT” Repository, you agree to comply with these terms and conditions:
 
 1. Types of Users
 
@@ -20,13 +20,13 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
     c. If Commercial Users wish to distribute the Code, a separate Commercial License must be acquired from the Repository Owner, subject to a licensing and/or royalty fee. This separate Commercial License will grant distribution rights.
 
-    d. It is recommended that Commercial Users take advantage of the allowances provided in this License with respect to development, prototyping, and demonstrations to confirm that the "FLT" Repository is sufficient for their needs, prior to obtaining a Commercial License.
+    d. It is recommended that Commercial Users take advantage of the allowances provided in this License with respect to development, prototyping, and demonstrations to confirm that the “FLT” Repository is sufficient for their needs, prior to obtaining a Commercial License.
 
 4. Code Modification:
 
     a. All Users, both Individual and Commercial, are required to ensure that if the Code is modified prior to distribution, then the comments at the top of the modified file should be appended with the specific revisions made and correct contact information regarding these modifications.
 
-    b. The existing comments at the top of each source and header file with headings "Contents", "Repository", and "Contact" should not be altered.
+    b. The existing comments at the top of each source and header file with headings “Contents”, “Repository”, and “Contact” should not be altered.
 
     c. It is preferable to make any revisions through the existing mechanisms provided by GitHub, where they may benefit all users.
 
@@ -36,7 +36,7 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
 6. No Warranty:
 
-    The Code in the "FLT" Repository is provided "as is," without any warranties or guarantees of its functionality, reliability, or fitness for any particular purpose.
+    The Code in the “FLT” Repository is provided “as is,” without any warranties or guarantees of its functionality, reliability, or fitness for any particular purpose.
 
 7. Termination:
 
@@ -44,6 +44,6 @@ This Individual License is a legal agreement between you (the "Licensee"), actin
 
 8. Entire Agreement:
 
-    This Individual License and, if applicable, Commercial License, constitute the entire agreement between the Licensee and the Repository Owner regarding the Code contained in the "FLT" Repository.
+    This Individual License and, if applicable, Commercial License, constitute the entire agreement between the Licensee and the Repository Owner regarding the Code contained in the “FLT” Repository.
 
 For inquiries regarding this Individual License, please contact the Repository Owner at russell.s.harper@gmail.com.
