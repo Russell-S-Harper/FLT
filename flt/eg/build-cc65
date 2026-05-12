@@ -4,15 +4,27 @@
 # XCC=«path-to-cc65-repo»
 # TGT=«target»
 # EXT=«target-executable-extension»
+# OUT=«target-filename-case-upper-or-lower»
 
 XCC=~/Documents/development/cc65
 TGT=cx16
-EXT=PRG
+EXT=prg
+OUT=lower
 
 if [[ ! -f ../flt-$TGT.lib ]] ; then
     echo "Build flt-$TGT.lib first!"
     exit
 fi
+
+xform() {
+    local x="$1"
+
+    if [[ $OUT == upper ]]; then
+        echo "${x^^}"
+    else
+        echo "${x,,}"
+    fi
+}
 
 # Build averages and mandelfloat for target
 for C in averages mandelfloat
@@ -20,7 +32,7 @@ do
 	php ../flt.php -i $C.c -o $C-flt.c -x "-I $XCC/include -I .."
 	$XCC/bin/cc65 -t $TGT -I $XCC/include $C-flt.c
 	$XCC/bin/ca65 -t $TGT $C-flt.s
-	$XCC/bin/ld65 -o ${C^^}.$EXT -t $TGT $C-flt.o -L .. flt-$TGT.lib -L $XCC/lib $TGT.lib
+	$XCC/bin/ld65 -o $(xform $C.$EXT) -t $TGT $C-flt.o -L .. flt-$TGT.lib -L $XCC/lib $TGT.lib
 done
 
 # Build flops for target
@@ -28,7 +40,7 @@ C=flops
 php ../flt.php -i $C.c -o $C-flt.c -x "-D__${TGT^^}__ -I $XCC/include -I .."
 $XCC/bin/cc65 -t $TGT -I $XCC/include $C-flt.c
 $XCC/bin/ca65 -t $TGT $C-flt.s
-$XCC/bin/ld65 -o ${C^^}.$EXT -t $TGT $C-flt.o -L .. flt-$TGT.lib -L $XCC/lib $TGT.lib
+$XCC/bin/ld65 -o $(xform $C.$EXT) -t $TGT $C-flt.o -L .. flt-$TGT.lib -L $XCC/lib $TGT.lib
 
 # Build accuracy, tests, and paranoia for host
 C=accuracy
