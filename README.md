@@ -14,7 +14,7 @@ FLT requirements:
 To use FLT in your project:
 
 - clone this repository or download the source code
-- (optional) create a FLT library `flt.lib` by compiling the source files `flt-*.c` (see below for an example)
+- (optional) create a FLT library `«flt-repo»/flt/flt-«target».lib` by compiling the source files `flt-*.c` (see below for an example)
 - convert your C `*.c` with floating point code to FLT `*-flt.c` using the PHP script `flt.php`
 - compile `*-flt.c` as usual
 
@@ -28,14 +28,14 @@ Example to generate `«flt-repo»/flt/eg/averages`:
 
 You can review `«flt-repo»/flt/eg/averages-flt.c` (code will be at the end) and you will see it has no floating point code – all converted to FLT.
 
-For the `cc65` suite, you will probably want to do something like this. Assumes the `«flt-repo»/flt/flt-*.c` files have been compiled to `«flt-repo»/flt/flt.lib`, and the paths of `cc65`, `ca65`, and `ld65` are in `$PATH`.
+For the `cc65` suite, you will probably want to do something like this. Assumes the `«flt-repo»/flt/flt-*.c` files have been compiled to `«flt-repo»/flt/flt-«target».lib`, and the paths of `cc65`, `ca65`, and `ld65` are in `$PATH`.
 
 ```
 	cd «flt-repo»/flt
 	php flt.php -i eg/averages.c -o eg/averages-flt.c -x '-I «cc65-repo»/cc65/include'
 	cc65 -t «target» eg/averages-flt.c
 	ca65 -t «target» eg/averages-flt.s
-	ld65 -o eg/averages -t «target» eg/averages-flt.o flt.lib -L «cc65-repo»/cc65/lib «target».lib
+	ld65 -o eg/averages -t «target» eg/averages-flt.o flt-«target».lib -L «cc65-repo»/cc65/lib «target».lib
 ```
 
 Another interesting example is `«flt-repo»/flt/eg/paranoia.c` adapted by [Sumner & Gay](https://people.math.sc.edu/Burkardt/c_src/paranoia/paranoia.html). Building and running this will give you an idea of any remaining defects or flaws in FLT and help you decide whether you want to use it.
@@ -48,7 +48,7 @@ To compile `«flt-repo»/flt/eg/paranoia.c` using `gcc` (it is probably too big 
 	gcc -o eg/paranoia eg/paranoia-flt.c flt-*.c
 ```
 
-It is recommended to build `«flt-repo»/flt/flt.lib` and link to it to reduce the size of executables. For the `cc65` suite, there is a build script available as `«flt-repo»/flt/build-cc65`. Edit the build script to point `XCC` to where the `cc65` repo is located, revise `TGT` as required, and run the script to build the `«flt-repo»/flt/flt.lib` library.
+It is recommended to build `«flt-repo»/flt/flt-«target».lib` and link to it to reduce the size of executables. For the `cc65` suite, there is a build script available as `«flt-repo»/flt/build-cc65`. Edit the build script to point `XCC` to where the `cc65` repo is located and run the script to build the `«flt-repo»/flt/flt-«target».lib` library.
 
 Other interesting examples:
 
@@ -96,7 +96,7 @@ I thought instead “Would it be possible to do a light integration with no modi
 
 On a hunch, I looked at `gcc` v9.0+ and noticed it highlighted the locations of offending code during compilation. I thought, okay, I’ll have to write a clunky parser for the error output. But then I looked through the `man` options and saw `-fdiagnostics-format=json` to output errors in JSON. That was the key! The current version can still have problems with some C code, but it is a very good first step.
 
-While the `cc65` suite of tools was the inspiration, there are a lot of other “tiny” compilers targeting microprocessors without native floating point support that could benefit from FLT.
+While the `cc65` suite of tools was the inspiration, there are other “tiny” compilers targeting microprocessors without native floating point support that could benefit from FLT.
 
 ## Features
 
