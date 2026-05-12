@@ -9,7 +9,7 @@
 XCC=~/Documents/development/cc65
 TGT=cx16
 EXT=prg
-OUT=lower
+OUT=upper
 
 if [[ ! -f ../flt-$TGT.lib ]] ; then
     echo "Build flt-$TGT.lib first!"
@@ -19,7 +19,7 @@ fi
 xform() {
     local x="$1"
 
-    if [[ $OUT == upper ]]; then
+    if [[ $OUT == upper ]] ; then
         echo "${x^^}"
     else
         echo "${x,,}"
@@ -27,8 +27,7 @@ xform() {
 }
 
 # Build averages and mandelfloat for target
-for C in averages mandelfloat
-do
+for C in averages mandelfloat ; do
 	php ../flt.php -i $C.c -o $C-flt.c -x "-I $XCC/include -I .."
 	$XCC/bin/cc65 -t $TGT -I $XCC/include $C-flt.c
 	$XCC/bin/ca65 -t $TGT $C-flt.s
