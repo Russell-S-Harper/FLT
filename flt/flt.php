@@ -1149,8 +1149,8 @@ function process_conflicting_types(&$lines, &$substitutions, $message, &$modifie
 				$substitutions[] = array($lines[$l], $line);
 			} else {
 				$token = substr($line, $start, $finish - $start + 1);
-				// Ignore v* functions, anything else is unhandled
-				if (!in_array($token, array('vfprintf', 'vfscanf', 'vprintf', 'vscanf', 'vsnprintf', 'vsprintf', 'vsscanf')))
+				// Ignore v* and non-standard ctype functions, anything else is unhandled
+				if (!in_array($token, array('vfprintf', 'vfscanf', 'vprintf', 'vscanf', 'vsnprintf', 'vsprintf', 'vsscanf', 'isascii', 'toascii')))
 					process_unhandled($message);
 			}
 		}
