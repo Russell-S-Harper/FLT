@@ -5,7 +5,7 @@
 
 XCC=~/Documents/development/cc65
 
-for TGT in apple2 apple2enh atari c64 cx16 ; do
+for TGT in apple2enh atari c64 cx16 ; do
 	for C in *.c ; do $XCC/bin/cc65 -O -I $XCC/include -t $TGT $C ; done 
 	for S in *.s ; do $XCC/bin/ca65 -t $TGT $S ; done
 	$XCC/bin/ar65 r flt-$TGT.lib *.o
